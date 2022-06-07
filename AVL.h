@@ -11,11 +11,11 @@ struct bNode
     int d;
     bNode *left, *right;
 
-    bNode();
+    bNode(string k);
 
     void clear();
 
-    bNode* insert(string k, int& MSG);
+    int height();
 };
 
 class AVL
@@ -31,7 +31,6 @@ public:
     bool remove(string k);
 
     bNode* search(string x);
-    int height();
 
     bool read(string dir);
     bool save(string dir);
