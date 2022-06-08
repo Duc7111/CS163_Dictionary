@@ -28,11 +28,11 @@ public:
 
     bool maketree(string dir);
     bNode* insert(string k);
-    bool remove(string k);
+    bool remove(string k);//unnessessary
 
     bNode* search(string x);
 
-    bool read(string dir);
+    bool load(string dir);
     bool save(string dir);
 };
 

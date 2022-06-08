@@ -97,6 +97,13 @@ bNode* AVL::search(string x)
     return temp;
 }
 
+bool AVL::save(string dir)
+{
+    if(root == nullptr) return true;
+    ofstream fout(dir, ios_base::binary);
+    
+}
+
 bNode* lrotate(bNode* root)
 {
     bNode* temp;
