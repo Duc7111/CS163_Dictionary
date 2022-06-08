@@ -85,6 +85,18 @@ bNode* AVL::insert(string k)
     }
 }
 
+bNode* AVL::search(string x)
+{
+    bNode* temp = root;
+    while(temp)
+    {
+        if(temp->key > x) temp = temp->left;
+        else if(temp->key < x) temp = temp->right;
+        else break;
+    }
+    return temp;
+}
+
 bNode* lrotate(bNode* root)
 {
     bNode* temp;
