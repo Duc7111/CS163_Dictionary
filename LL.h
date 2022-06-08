@@ -37,6 +37,12 @@ struct stack
             return head->data;
         }
 
+        bool empty()
+        {
+            if(head) return false;
+            return true;
+        }
+
         void clear()
         {
             while(head)

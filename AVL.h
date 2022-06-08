@@ -35,3 +35,6 @@ public:
     bool read(string dir);
     bool save(string dir);
 };
+
+bNode* lrotate(bNode* root);
+bNode* rrotate(bNode* root);
