@@ -1,9 +1,20 @@
 #include "LL.h"
-
 #include "AVL.h"
+#include "Const.h"
 
-bNode::bNode(string k) : key(k), left(nullptr), right(nullptr){}
+bNode::bNode(string k, int D) : key(k), d(D), left(nullptr), right(nullptr){}
 
+bool bNode::add(string k, int D)
+{
+    if(key == k) return false;
+    if(key > k)
+        if(left) return left->add(k, D);
+        else left = new bNode(k, D);
+    else
+        if(right) return right->add(k, D);
+        else right = new bNode(k, D);
+    return true;
+}
 
 void bNode::clear()
 {
@@ -20,13 +31,21 @@ int bNode::height()
     return r;
 }
 
+void bNode::save(ofstream& fout)
+{
+    int s = key.length();
+    fout.write((char*)&s, sizeof(int));
+    fout.write(&key[0], s);
+    fout.write((char*)&d, sizeof(int));
+}
+
 AVL::AVL() : root(nullptr){}
 AVL::~AVL()
 {
     root->clear();
 }
 
-bNode* AVL::insert(string k)
+bNode* AVL::insert(string k, int d)
 {
     //insert phase
     stack<bNode*> s;
@@ -42,7 +61,7 @@ bNode* AVL::insert(string k)
             }
             else
             {
-                temp->left = new bNode(k);
+                temp->left = new bNode(k, d);
                 break;
             }
         else
@@ -53,7 +72,7 @@ bNode* AVL::insert(string k)
             }
             else
             {
-                temp->right = new bNode(k);
+                temp->right = new bNode(k, d);
                 break;
             }
     }
@@ -97,11 +116,41 @@ bNode* AVL::search(string x)
     return temp;
 }
 
+bool AVL::load(string dir)
+{
+    ifstream fin(dir, ios_base::binary);
+    if(!fin.is_open()) return false;
+    int k;
+    fin.read((char*)&k, sizeof(int));
+    string s;
+    fin.read(&s[0], k);
+    fin.read((char*)&k, sizeof(int));
+    root = new bNode(s, k);
+    while(!fin.eof())
+    {
+        fin.read((char*)&k, sizeof(int));
+        fin.read(&s[0], k);
+        fin.read((char*)&k, sizeof(int));
+        if(!root->add(s, k)) return false;
+    }
+    return true;
+}
+
 bool AVL::save(string dir)
 {
     if(root == nullptr) return true;
     ofstream fout(dir, ios_base::binary);
-    
+    if(!fout.is_open()) return false;
+    queue<bNode*> q; q.push(root);
+    while(!q.empty())
+    {
+        bNode* temp = q.front();
+        if(temp->left) q.push(temp->left);
+        if(temp->right) q.push(temp->right);
+        temp->save(fout);
+        q.pop();
+    }
+    return true;
 }
 
 bNode* lrotate(bNode* root)

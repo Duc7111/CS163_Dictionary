@@ -11,11 +11,15 @@ struct bNode
     int d;
     bNode *left, *right;
 
-    bNode(string k);
+    bNode(string k, int D);
+
+    bool add(string k, int D);
 
     void clear();
 
     int height();
+
+    void save(ofstream& fout);
 };
 
 class AVL
@@ -27,7 +31,7 @@ public:
     ~AVL();
 
     bool maketree(string dir);
-    bNode* insert(string k);
+    bNode* insert(string k, int d);
     bool remove(string k);//unnessessary
 
     bNode* search(string x);
