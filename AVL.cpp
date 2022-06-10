@@ -2,7 +2,7 @@
 #include "AVL.h"
 #include "Const.h"
 
-bNode::bNode(string k, int D) : key(k), d(D), left(nullptr), right(nullptr){}
+bNode::bNode(string k, int D) : key(k), d(D), f(false), left(nullptr), right(nullptr){}
 
 bool bNode::add(string k, int D)
 {

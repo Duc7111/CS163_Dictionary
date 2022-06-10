@@ -9,17 +9,18 @@ struct bNode
 {
     string key;
     int d;
+    bool f;
     bNode *left, *right;
 
-    bNode(string k, int D);
+    bNode(string, int);
 
-    bool add(string k, int D);
+    bool add(string, int);
 
     void clear();
 
     int height();
 
-    void save(ofstream& fout);
+    void save(ofstream&);
 };
 
 class AVL
@@ -30,15 +31,15 @@ public:
     AVL();
     ~AVL();
 
-    bool maketree(string dir);
-    bNode* insert(string k, int d);
+    bool maketree(string);
+    bNode* insert(string, int);
     bool remove(string k);//unnessessary
 
-    bNode* search(string x);
+    bNode* search(string);
 
-    bool load(string dir);
-    bool save(string dir);
+    bool load(string);
+    bool save(string);
 };
 
-bNode* lrotate(bNode* root);
-bNode* rrotate(bNode* root);
+bNode* lrotate(bNode*);
+bNode* rrotate(bNode*);

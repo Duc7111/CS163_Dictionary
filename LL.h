@@ -8,6 +8,14 @@ struct Node
 
     Node() : next(nullptr){}
     Node(T, Node* n) : data(T), next(n);
+
+    void clear()
+    {
+        if(this == nullptr) return;
+        left->clear();
+        right->clear();
+        delete this;
+    }
 };
 
 template<class T>
@@ -19,12 +27,7 @@ struct stack
         stack() : head(nullptr){}
         ~stack()
         {
-            while(head)
-            {
-                Node<T>* temp = head;
-                head = head->next;
-                delete temp;
-            }
+            head->clear();
         }
 
         void push(T)
@@ -54,12 +57,8 @@ struct stack
 
         void clear()
         {
-            while(head)
-            {
-                Node<T>* temp = head;
-                head = head->next;
-                delete temp;
-            }
+            head->clear;
+            head = nullptr;
         }
 };
 
@@ -76,12 +75,7 @@ struct queue
         }
         ~queue()
         {
-            while(head)
-            {
-                tail = head;
-                head = head->next;
-                delete tail;
-            }
+            head->clear();
         }
         
         void push(T t)
@@ -106,5 +100,11 @@ struct queue
         {
             if(head->next == nullptr) return true;
             return false;
+        }
+
+        void clear()
+        {
+            head->next->clear();
+            tail = head;
         }
 };
