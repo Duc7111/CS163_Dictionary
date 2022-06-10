@@ -18,13 +18,13 @@ struct Node
 };
 
 template<class T>
-struct stack
+struct stacks
 {
     private:
         Node<T>* head;
     public:
-        stack() : head(nullptr){}
-        ~stack()
+        stacks() : head(nullptr){}
+        ~stacks()
         {
             head->clear();
         }

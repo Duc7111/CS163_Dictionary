@@ -1,4 +1,3 @@
-#include "LL.h"
 #include "AVL.h"
 #include "Const.h"
 
@@ -48,7 +47,7 @@ AVL::~AVL()
 bNode* AVL::insert(string k, int d)
 {
     //insert phase
-    stack<bNode*> s;
+    stacks<bNode*> s;
     bNode* temp = root;
     while(temp)
     {
@@ -102,6 +101,7 @@ bNode* AVL::insert(string k, int d)
             return nullptr;
         }
     }
+    return root;
 }
 
 bNode* AVL::search(string x)
