@@ -7,13 +7,12 @@ struct Node
     Node* next;
 
     Node() : next(nullptr){}
-    Node(T, Node* n) : data(T), next(n);
-
+    Node(T a, Node* n) : data(a), next(n){}
     void clear()
     {
         if(this == nullptr) return;
-        left->clear();
-        right->clear();
+        next->clear();
+        next->clear();
         delete this;
     }
 };
@@ -30,9 +29,9 @@ struct stack
             head->clear();
         }
 
-        void push(T)
+        void push(T a)
         {
-            head = new Node(T, head);
+            head = new Node(a, head);
         }
 
         bool pop()
@@ -78,9 +77,9 @@ struct queue
             head->clear();
         }
         
-        void push(T t)
+        void push(T a)
         {
-            tail->next = new Node(t, nullptr);
+            tail -> next = new Node<T> (a, nullptr);
             tail = tail->next;
         }
 
