@@ -7,7 +7,10 @@ struct Node
     Node* next;
 
     Node() : next(nullptr){}
-    Node(T a, Node* n) : data(a), next(n){}
+    Node(T a, Node<T>* n) {
+        this->data = a;
+        next = n;
+    }
     void clear()
     {
         if(this == nullptr) return;
@@ -31,7 +34,7 @@ struct stacks
 
         void push(T a)
         {
-            head = new Node(a, head);
+            head = new Node<T>(a, head);
         }
 
         bool pop()

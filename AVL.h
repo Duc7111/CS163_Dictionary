@@ -20,7 +20,7 @@ struct bNode
     void clear();
 
     int height();
-
+    void Add(string word, string dir);
     void save(ofstream&);
 };
 
@@ -40,6 +40,7 @@ public:
 
     bool load(string);
     bool save(string);
+    bNode* Add(AVL,string, int,string,string);
 };
 
 bNode* lrotate(bNode*);
