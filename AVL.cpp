@@ -137,7 +137,7 @@ void AVL::lrotate(bNode*& root)
     root->updateH();
 }
 
-void rrotate(bNode*& root)
+void AVL::rrotate(bNode*& root)
 {
     if(!root->left) return;
     bNode* temp = root->left;

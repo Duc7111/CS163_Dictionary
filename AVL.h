@@ -38,7 +38,7 @@ public:
     AVL();
     ~AVL();
 
-    bool maketree(string);
+    //bool maketree(string);
     bool insert(string, int);
     bool remove(string k);//unnessessary
 

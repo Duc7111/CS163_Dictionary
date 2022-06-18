@@ -18,9 +18,11 @@ int main()
 
         //options
         cout << "OPTIONS:" << endl;
-        cout << setw(tap) << "[0]" << " Exist";
-        cout << setw(tap) << "[1]" << " Search";
+        cout << setw(tap) << "[0]" << " Exist"  << endl;
+        cout << setw(tap) << "[1]" << " Search" << endl;
         //input
+        cout << "Enter your choice: ";
+        cin >> i;
 
         //processing
         switch(i)
@@ -37,4 +39,9 @@ int main()
         }
     } while (i != 0);
     return 0;
+}
+
+void S_screen() //sreen drawing add searching
+{
+
 }
