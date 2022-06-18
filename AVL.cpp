@@ -25,9 +25,14 @@ void bNode::clear()
 int bNode::height()
 {
     if(this == nullptr) return 0;
-    int l = left->height(), r = right->height();
-    if(l > r) return l;
-    return r;
+    return h;
+}
+
+void bNode::updateH()
+{
+    h = left->height();
+    if(right->height() > h) h = right->h;
+    ++h;
 }
 
 void bNode::save(ofstream& fout)
@@ -38,70 +43,30 @@ void bNode::save(ofstream& fout)
     fout.write((char*)&d, sizeof(int));
 }
 
+bool AVL::subadd(bNode*& root, string k, int x)
+{
+    if(!root) root = new bNode(k, x);
+    if(root->key == k) return false;
+    bool b;
+    if(root->key > k) b = subadd(root->left, k, x);
+    else b = subadd(root->right, k, x);
+    if(!b) return false;
+    int l = root->left->height(), r = root->right->height();
+    if(l - r == 2) rrotate(root);
+    else if(r - l == 2) lrotate(root);
+    else root->updateH();
+    return true;
+}
+
 AVL::AVL() : root(nullptr){}
 AVL::~AVL()
 {
     root->clear();
 }
 
-bNode* AVL::insert(string k, int d)
+bool AVL::insert(string k, int d)
 {
-    //insert phase
-    stacks<bNode*> s;
-    bNode* temp = root;
-    while(temp)
-    {
-        if(temp->key == k) return temp;
-        if(temp->key > k)
-            if(temp->left)
-            {
-                s.push(temp);
-                temp = temp->left;
-            }
-            else
-            {
-                temp->left = new bNode(k, d);
-                break;
-            }
-        else
-            if(temp->right)
-            {
-                s.push(temp);
-                temp = temp->right;
-            }
-            else
-            {
-                temp->right = new bNode(k, d);
-                break;
-            }
-    }
-    //balancing phase
-    while(!s.empty())
-    {
-        if(s.top()->left->height() - s.top()->right->height() == 2)
-        {
-            if(s.top() != root)
-            {
-                temp = s.top(); s.pop();
-                if(s.top()->left == temp) s.top()->left = rrotate(temp);
-                else s.top()->left = rrotate(temp);
-            }
-            else root = rrotate(root);
-            return nullptr;
-        }
-        if(s.top()->right->height() - s.top()->left->height() == 2)
-        {
-            if(s.top() != root)
-            {
-                temp = s.top(); s.pop();
-                if(s.top()->left == temp) s.top()->left = lrotate(temp);
-                else s.top()->left = lrotate(temp);
-            }
-            else root = lrotate(root);
-            return nullptr;
-        }
-    }
-    return root;
+    return subadd(root, k, d);
 }
 
 bNode* AVL::search(string x)
@@ -153,36 +118,40 @@ bool AVL::save(string dir)
     return true;
 }
 
-bNode* lrotate(bNode* root)
+void AVL::lrotate(bNode*& root)
 {
-    bNode* temp;
-    if(root->right->left->height() > root->right->right->height())
+    if(!root->right) return;
+    bNode* temp = root->right;
+    if(root->right->left && root->right->left->height() > root->right->right->height())
     {
-        temp = root->right;
-        root->right = temp->left;
+        root ->right = temp->left;
         temp->left = temp->left->right;
         root->right->right = temp;
+        temp = root->right;
+        temp->right->updateH();
     }
-    temp = root;
-    root = root->right;
-    temp->right = root->left;
-    root->left = temp;
-    return root;
+    root->right = temp->left;
+    root->updateH();
+    temp->left = root;
+    root = temp;
+    root->updateH();
 }
 
-bNode* rrotate(bNode* root)
+void rrotate(bNode*& root)
 {
-    bNode* temp;
-    if(root->left->right->height() > root->left->left->height())
+    if(!root->left) return;
+    bNode* temp = root->left;
+    if(root->left->right && root->left->right->height() > root->left->left->height())
     {
-        temp = root->left;
-        root->left = temp->right;
+        root ->left = temp->right;
         temp->right = temp->right->left;
         root->left->left = temp;
+        temp = root->left;
+        temp->left->updateH();
     }
-    temp = root;
-    root = root->left;
-    temp->left = root->right;
-    root->right = temp;
-    return root;
+    root->left = temp->right;
+    root->updateH();
+    temp->right = root;
+    root = temp;
+    root->updateH();
 }

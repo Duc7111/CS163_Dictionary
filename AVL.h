@@ -9,7 +9,7 @@ using namespace std;
 struct bNode
 {
     string key;
-    int d;
+    int h, d;
     bool f;
     bNode *left, *right;
 
@@ -20,6 +20,8 @@ struct bNode
     void clear();
 
     int height();
+    void updateH();
+    
     void Add(string word, string dir);
     void save(ofstream&);
 };
@@ -28,20 +30,21 @@ class AVL
 {
 private:
     bNode* root;
+
+    bool subadd(bNode*&, string, int);
+    void lrotate(bNode*&);
+    void rrotate(bNode*&);
 public:
     AVL();
     ~AVL();
 
     bool maketree(string);
-    bNode* insert(string, int);
+    bool insert(string, int);
     bool remove(string k);//unnessessary
 
     bNode* search(string);
 
     bool load(string);
     bool save(string);
-    bNode* Add(AVL,string, int,string,string);
+    int Add(AVL& ,string ,string ,string);
 };
-
-bNode* lrotate(bNode*);
-bNode* rrotate(bNode*);
