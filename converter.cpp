@@ -6,7 +6,7 @@ void convert_txt (string dir)
     ofstream fout;
     ifstream fin;
     fin.open (dir);
-    fout.open ("output.txt");
+    fout.open ("output1.txt");
     while (fin.eof() == false)
     {
         tmp2.clear();
@@ -32,12 +32,27 @@ void convert_txt (string dir)
                     tmp2.push_back(':');
                     iskey = true;
                 }
-                
             }
             //cout << tmp2 <<endl;
-            fout << tmp2 ;
+            fout << tmp2 << endl;
         }
     }
     fout.close();
     fin.close();
+}
+void ignore_blank (string dir)
+{
+    int i = 0;
+    string tmp;
+    ifstream fin (dir);
+    ofstream fout("output.txt");
+    while (fin.eof() == false)
+    {
+        getline (fin,tmp);
+        if (i%2 == 0)
+            fout << tmp ;
+        i++;
+    }
+    fin.close();
+    fout.close();
 }
