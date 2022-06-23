@@ -13,8 +13,8 @@ FL::~FL()
 
 bNode*& FL::operator[](int i)
 {
-    if(i < c_size) return arr[i];
-    i -= c_size;
+    if(i < m_size) return arr[i];
+    i -= m_size;
     Node<bNode*>* temp = t_arr;
     while(i--)
     {
@@ -27,8 +27,9 @@ bNode*& FL::operator[](int i)
 bool FL::add(bNode* b)
 {
     if(b->f) return false;
-    if(m_size > c_size) arr[c_size++] = b;
+    if(m_size > c_size) arr[c_size] = b;
     else t_arr = new Node<bNode*>(b, t_arr);
+    ++c_size;
     return true;
 }
 
