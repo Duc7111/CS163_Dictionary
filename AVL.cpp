@@ -81,10 +81,7 @@ AVL::~AVL()
 bool AVL::maketree(string dir, string def_dir)
 {
     ifstream fin(dir);
-    dir[dir.length() - 3] = 'b';
-    dir[dir.length() - 2] = 'i';
-    dir[dir.length() - 1] = 'n';
-    ofstream fout(dir, ios_base::binary | ios_base::trunc);
+    ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
     if(!fin.is_open()) return false;
     string temp, cur = "";
     int i = 0, d = 0;
