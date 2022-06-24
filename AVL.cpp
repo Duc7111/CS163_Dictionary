@@ -1,17 +1,18 @@
 #include "AVL.h"
 #include "Const.h"
 
-bNode::bNode(string k, int D) : key(k), d(D), f(false), left(nullptr), right(nullptr){}
+bNode::bNode() : left(nullptr), right(nullptr){}
+bNode::bNode(string s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr){}
 
-bool bNode::add(string k, int D)
+bool bNode::add(bNode*& root)
 {
-    if(key == k) return false;
-    if(key > k)
-        if(left) return left->add(k, D);
-        else left = new bNode(k, D);
+    if(key == root->key) return false;
+    if(key > root->key)
+        if(left) return left->add(root);
+        else left = root;
     else
-        if(right) return right->add(k, D);
-        else right = new bNode(k, D);
+        if(right) return right->add(root);
+        else right = root;
     return true;
 }
 
@@ -39,8 +40,21 @@ void bNode::save(ofstream& fout)
 {
     int s = key.length();
     fout.write((char*)&s, sizeof(int));
-    fout.write(&key[0], s);
+    fout.write(key.c_str(), s + 1);
+    fout.write((char*)&h, sizeof(int));
     fout.write((char*)&d, sizeof(int));
+    fout.write((char*)&f, sizeof(bool));
+}
+
+void bNode::load(ifstream& fin)
+{
+    fin.read((char*)&h, sizeof(int));
+    char* temp = new char[h + 1];
+    fin.read(temp, h + 1);
+    key = temp; delete[] temp;
+    fin.read((char*)h, sizeof(int));
+    fin.read((char*)d, sizeof(int));
+    fin.read((char*)f, sizeof(bool));
 }
 
 bool AVL::subadd(bNode*& root, string k, int x)
@@ -51,9 +65,9 @@ bool AVL::subadd(bNode*& root, string k, int x)
     if(root->key > k) b = subadd(root->left, k, x);
     else b = subadd(root->right, k, x);
     if(!b) return false;
-    int l = root->left->height(), r = root->right->height();
-    if(l - r == 2) rrotate(root);
-    else if(r - l == 2) lrotate(root);
+    int d = root->left->height() - root->right->height();
+    if(d == 2) rrotate(root);
+    else if(d == -2) lrotate(root);
     else root->updateH();
     return true;
 }
@@ -64,9 +78,47 @@ AVL::~AVL()
     root->clear();
 }
 
+bool AVL::maketree(string dir, string def_dir)
+{
+    ifstream fin(dir);
+    dir[dir.length() - 3] = 'b';
+    dir[dir.length() - 2] = 'i';
+    dir[dir.length() - 1] = 'n';
+    ofstream fout(dir, ios_base::binary | ios_base::trunc);
+    if(!fin.is_open()) return false;
+    string temp, cur = "";
+    int i = 0, d = 0;
+    while(!fin.eof())
+    {
+        getline(fin, temp, ':');
+        if(temp != cur)//new node
+        {
+            fout.seekp(d);
+            fout.write((char*)&i, sizeof(int));
+            fout.seekp(0, ios_base::end);
+            cur = temp;
+            d = fout.tellp();
+            insert(cur, d);
+            fout.write((char*)&i, sizeof(int));//just make a spot for later writing
+            i = 0;
+        }
+        fin.ignore();
+        getline(fin, temp);
+        int l = temp.length() + 1;
+        fout.write((char*)&l, sizeof(int));
+        fout.write(temp.c_str(), l);
+    }
+    return true;
+}
+
 bool AVL::insert(string k, int d)
 {
     return subadd(root, k, d);
+}
+
+bool AVL::remove(string k)
+{
+    return true;
 }
 
 bNode* AVL::search(string x)
@@ -81,30 +133,22 @@ bNode* AVL::search(string x)
     return temp;
 }
 
-bool AVL::load(string dir)
+bool AVL::load(ifstream& fin)
 {
-    ifstream fin(dir, ios_base::binary);
     if(!fin.is_open()) return false;
-    int k;
-    fin.read((char*)&k, sizeof(int));
-    string s;
-    fin.read(&s[0], k);
-    fin.read((char*)&k, sizeof(int));
-    root = new bNode(s, k);
+    root = new bNode;
+    root->load(fin);
     while(!fin.eof())
     {
-        fin.read((char*)&k, sizeof(int));
-        fin.read(&s[0], k);
-        fin.read((char*)&k, sizeof(int));
-        if(!root->add(s, k)) return false;
+        bNode* temp = new bNode; temp->load(fin);
+        if(!root->add(temp)) return false;
     }
     return true;
 }
 
-bool AVL::save(string dir)
+bool AVL::save(ofstream& fout)
 {
     if(root == nullptr) return true;
-    ofstream fout(dir, ios_base::binary);
     if(!fout.is_open()) return false;
     queue<bNode*> q; q.push(root);
     while(!q.empty())

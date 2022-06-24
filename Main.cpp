@@ -50,7 +50,7 @@ int main()
         switch(i)
         {
         case 0://exist
-            return;
+            return 0;
 
         case 1://setting
 

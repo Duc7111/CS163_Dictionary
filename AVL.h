@@ -13,9 +13,10 @@ struct bNode
     bool f;
     bNode *left, *right;
 
+    bNode();
     bNode(string, int);
 
-    bool add(string, int);
+    bool add(bNode*&);
 
     void clear();
 
@@ -24,6 +25,7 @@ struct bNode
     
     void Add(string word, string dir);
     void save(ofstream&);
+    void load(ifstream&);
 };
 
 class AVL
@@ -38,13 +40,13 @@ public:
     AVL();
     ~AVL();
 
-    //bool maketree(string);
+    bool maketree(string, string);
     bool insert(string, int);
-    bool remove(string k);//unnessessary
+    bool remove(string);//unnessessary
 
     bNode* search(string);
 
-    bool load(string);
-    bool save(string);
+    bool load(ifstream&);
+    bool save(ofstream&);
     int Add(AVL& ,string ,string ,string);
 };
