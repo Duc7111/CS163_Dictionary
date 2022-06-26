@@ -50,7 +50,7 @@ void ignore_blank (string dir)
     {
         getline (fin,tmp);
         if (i%2 == 0)
-            fout << tmp ;
+            fout << tmp <<endl ;
         i++;
     }
     fin.close();
