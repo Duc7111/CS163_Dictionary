@@ -1,6 +1,6 @@
 #include "FL.h"
 
-FL::FL(int size) : arr(new bNode*[size]), m_size(size), c_size(size)
+FL::FL(int size) : arr({new bNode*[size]}), m_size(size), c_size(size)
 {
     t_arr = new Node<bNode*>(new bNode("errMSG", -1), nullptr);
 }
@@ -13,45 +13,90 @@ FL::~FL()
 
 bNode*& FL::operator[](int i)
 {
+    if(i >= c_size) return t_arr->data;
     if(i < m_size) return arr[i];
     i -= m_size;
     Node<bNode*>* temp = t_arr;
-    while(i--)
-    {
-        if(temp->data->d != -1) temp = temp->next;
-        else return temp->data;
-    }
+    while(i--) temp = temp->next;
     return temp->data;
 }
 
-bool FL::add(bNode* b)
+void FL::AoR(bNode* b)
 {
-    if(b->f) return false;
-    if(m_size > c_size) arr[c_size] = b;
-    else t_arr = new Node<bNode*>(b, t_arr);
-    ++c_size;
-    return true;
+    b->f = !b->f;
+    if(b->f)
+    {
+        if(m_size > c_size) arr[c_size] = b;
+        else t_arr = new Node<bNode*>(b, t_arr);
+        ++c_size;
+        return;
+    }
+    for(int i = 0; i < m_size; ++i)
+    {
+        if(arr[i] == b)
+        {
+            while(i < m_size - 1)
+            {
+                ++i;
+                arr[i - 1] = arr[i];
+            }
+            bNode* temp = nullptr;
+            if(c_size > m_size)
+            {
+                Node<bNode*>* t = t_arr;
+                t_arr = t_arr->next;
+                temp = t->data;
+                delete t;
+            }
+            arr[i] = temp;
+            --c_size;
+            return;
+        }
+    }
+    Node<bNode*>* t = t_arr;
+    if(t_arr->data == b)
+    {
+        t_arr = t_arr->next;
+        delete t;
+        return;
+    }
+    while(t->next->data != b) t = t->next;
+    Node<bNode*>* temp = t->next;
+    t->next = temp->next;
+    delete temp;
 }
 
 bool FL::remove(int i)
 {
-    if(i < c_size)
+    if(i < m_size)
     {
-        while(i < c_size)
+        arr[i] = false;
+        while(i < m_size - 1)
         {
-            arr[i] = arr[i + 1];
             ++i;
+            arr[i - 1] = arr[i];
         }
+        bNode* temp = nullptr;
+        if(c_size > m_size)
+        {
+            Node<bNode*>* t = t_arr;
+            t_arr = t_arr->next;
+            temp = t->data;
+            delete t;
+        }
+        arr[i] = temp;
+        --c_size;
         return true;
     }
     else
     {
-        i -= c_size;
+        i -= m_size;
         if(t_arr->data->d == -1) return false;
         Node<bNode*>* temp = t_arr;
         if(i == 0)
         {
             t_arr = t_arr->next;
+            temp->data->f = false;
             delete temp;
             --c_size;
             return true;
@@ -63,6 +108,7 @@ bool FL::remove(int i)
         }
         Node<bNode*>* t = temp->next;
         temp->next = t->next;
+        t->data->f = false;
         delete t;
         --c_size;
         return true;
@@ -73,13 +119,6 @@ bool FL::save(string dir)
 {
     ofstream fout(dir, ios_base::binary);
     if(!fout.is_open()) return false;
-    int s = c_size;
-    Node<bNode*>* temp = t_arr;
-    while(temp->data->d != -1)
-    {
-        ++s;
-        temp = temp->next;
-    }
-    fout.write((char*)&s, sizeof(int));
+    fout.write((char*)&c_size, sizeof(int));
     return true;
 }

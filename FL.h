@@ -15,7 +15,7 @@ class FL
 
         bNode*& operator[](int);
         
-        bool add(bNode*);
+        void AoR(bNode*);
         bool remove(int);
 
         bool save(string);

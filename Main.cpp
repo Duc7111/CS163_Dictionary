@@ -55,7 +55,7 @@ int main()
         case 1://setting
 
         case 2://change
-            S_screen();
+            S_screen(tree, fl);
             break;
 
         case 3://favorite word
@@ -65,6 +65,7 @@ int main()
             cout << "Unknow command, please try again";
         }
     } while (i != 0);
+
     return 0;
 }
 
@@ -97,7 +98,7 @@ char Init_screen(AVL& tree, FL& fl)
             break;
 
         default:
-            cout << "Invaid input, please try again << endl";
+            cout << "Invaid input, please try again" << endl;
             system("pause");
             break;
         }
@@ -105,9 +106,57 @@ char Init_screen(AVL& tree, FL& fl)
     return '0';
 }
 
-void S_screen() //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl) //sreen drawing add searching
 {
+    string k;
+    int i = 1;
+    do
+    {
+        //searching
+        system("clear");
+        cout << "Enter a word (0 to quit): ";
+        cin.ignore(1000);
+        getline(cin, k);
+        bNode* temp = tree.search(k);
+        if(temp)
+        {
+            cout << "No result" << endl;
+            system("pause");
+            continue;
+        }
+        //cout definition (undone)
+        system("clear");
+        cout << k << ':' << endl;
+        //def
 
+        //options
+        do
+        {
+            cout << setw(tap) << "[0]" << " Back to searching" << endl;
+            cout << setw(tap) << "[1]";
+            if(temp->f) cout << " Like" << endl;
+            else cout << " Unlike" << endl;
+            cout << setw(tap) << "[2]" << " Modify" << endl;
+            cout << "Enter your choise";
+            cin >> i;
+            switch (i)
+            {
+            case 0:
+                break;
+            case 1:
+                temp->f = !temp->f;
+                fl.AoR(temp);
+                break;
+            case 2://modifying functions
+
+                break;
+            default:
+                cout << "Invalid input, please try again" << endl;
+                system("pause");
+                break;
+            }
+        } while (i != 0);
+    }while(k != "0");
 }
 
 
@@ -120,7 +169,7 @@ void F_screen(FL& fl)
         cout << "Favorite words: " << endl;
         int i = -1;
         while(fl[++i]->d > -1)
-        cout << setw(tap) << '[' << i + 1 << ']' << fl[i]->key << endl;
+            cout << setw(tap - 2) << '[' << i + 1 << ']' << fl[i]->key << endl;
         if(i == 0)
         {
             cout << "No word added to this list" << endl;
@@ -135,6 +184,5 @@ void F_screen(FL& fl)
             system("pause");
         }
         //show def and modifing stuff
-    } while (t != 0);
-    
+    } while (t != 0);   
 }
