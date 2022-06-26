@@ -104,6 +104,7 @@ bool AVL::maketree(string dir, string def_dir)
         int l = temp.length() + 1;
         fout.write((char*)&l, sizeof(int));
         fout.write(temp.c_str(), l);
+        ++i;
     }
     return true;
 }

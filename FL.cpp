@@ -70,7 +70,7 @@ bool FL::remove(int i)
 {
     if(i < m_size)
     {
-        arr[i] = false;
+        arr[i]->f = false;
         while(i < m_size - 1)
         {
             ++i;
