@@ -143,13 +143,16 @@ void S_screen(AVL& tree, FL& fl) //sreen drawing add searching
             {
             case 0:
                 break;
+
             case 1:
                 temp->f = !temp->f;
                 fl.AoR(temp);
                 break;
+
             case 2://modifying functions
 
                 break;
+                
             default:
                 cout << "Invalid input, please try again" << endl;
                 system("pause");
@@ -167,22 +170,49 @@ void F_screen(FL& fl)
     {
         system("clear");
         cout << "Favorite words: " << endl;
-        int i = -1;
-        while(fl[++i]->d > -1)
-            cout << setw(tap - 2) << '[' << i + 1 << ']' << fl[i]->key << endl;
-        if(i == 0)
+        int size = fl.size();
+        if(size == 0)
         {
             cout << "No word added to this list" << endl;
             system("pause");
             return;
         }
+        for(int i = 0; i < size; ++i)
+            cout << setw(tap - 2) << '[' << i + 1 << ']' << fl[i]->key << endl;
         cout << "Enter an index (0 to quit): ";
         cin >> t;
-        if(t > i) 
+        if(t < 0 || t > size)
         {
             cout << "Invalid input, please try again!" << endl;
             system("pause");
         }
-        //show def and modifing stuff
+        //show def and modifying stuff
+        //def
+        system("clear");
+        cout << fl[t] << ':' << endl;
+
+        //modifying
+        int i;
+        do
+        {
+            cout << setw(tap) << "[0]" << " Back to favorite list" << endl;
+            cout << setw(tap) << "[1]" << " Remove this from favorite list" << endl;
+            cout << "Enter your choise: ";
+            cin >> i;
+            switch (i)
+            {
+            case 0:
+                break;
+
+            case 1:
+                fl.remove(t);
+                break;
+            
+            default:
+                cout << "Invalid input, please try again" << endl;
+                system("pause");
+                break;
+            }
+        } while (i != 0);
     } while (t != 0);   
 }

@@ -18,5 +18,6 @@ class FL
         void AoR(bNode*);
         bool remove(int);
 
+        int size();
         bool save(string);
 };

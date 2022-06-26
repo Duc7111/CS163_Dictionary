@@ -115,6 +115,11 @@ bool FL::remove(int i)
     }
 }
 
+int FL::size()
+{
+    return c_size;
+}
+
 bool FL::save(string dir)
 {
     ofstream fout(dir, ios_base::binary);
