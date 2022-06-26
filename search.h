@@ -5,5 +5,8 @@
 #endif /* search_h */
 #include "AVL.h"
 #include <cstring>
+#include <vector>
+#include <iostream>
+using namespace std;
 
-string search_for_def (AVL tree);
+vector<string> search_for_def (bNode* root,string dir);
