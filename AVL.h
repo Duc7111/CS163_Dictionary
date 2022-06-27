@@ -49,4 +49,9 @@ public:
     bool load(ifstream&);
     bool save(ofstream&);
     int Add(AVL& ,string ,string ,string);
+    bNode* get_root ()
+    {
+        return root;
+    }
+    int height (bNode* tree);
 };
