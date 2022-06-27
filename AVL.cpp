@@ -20,7 +20,7 @@ void bNode::clear()
 {
     if(left) left->clear();
     if(right) right->clear();
-    delete this;
+    //delete this;
 }
 
 int bNode::height()

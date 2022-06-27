@@ -7,6 +7,8 @@
 #include <cstring>
 #include <vector>
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 vector<string> search_for_def (bNode* root,string dir);
+vector<vector<string>> random_word (AVL tree,string dir);
