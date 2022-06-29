@@ -2,6 +2,7 @@
 
 #include<string>
 #include<fstream>
+#include <vector>
 #include "LL.h"
 
 using namespace std;
@@ -53,5 +54,6 @@ public:
     {
         return root;
     }
-    int height (bNode* tree);
+    int height (bNode*);
+    void num_of_words (bNode*, int&);
 };

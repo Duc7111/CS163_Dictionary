@@ -210,3 +210,12 @@ int AVL::height (bNode* tree)
     else
         return sright + 1;
 }
+
+void AVL::num_of_words (bNode* root,int &a)
+{
+    if (root == nullptr)
+        return;
+    num_of_words(root -> left, a);
+    num_of_words(root -> right, a);
+    a += 1;
+}
