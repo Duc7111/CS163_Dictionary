@@ -91,7 +91,7 @@ vector<vector<string>> random_word (AVL tree, string dir, int n)
         vector <string> stmps;
         stmps.push_back(nodes[j]->key);
         vector<string> def_str  = search_for_def(tree.search(nodes[j]->key), dir);
-        stmps.push_back(def_str[rand()%(def_str.size())]);
+        stmps.push_back(def_str[rand()%(def_str.size() - 1)]);
         strs.push_back(stmps);
     }
     return strs;
@@ -117,4 +117,36 @@ vector<bNode*> random_take (bNode* root , vector<int> lists) //sorted list
         nodes.push_back(qu.rear());
     }
     return nodes;
+}
+
+bool random_game (vector<vector<string>> lists)
+{
+    int random,t = 0,tmp, choice;
+    srand(time(NULL));
+    vector <bool> is_take;
+    is_take.resize(4);
+    fill(is_take.begin(),is_take.end(),false);
+    random = rand()%4;
+    cout << "Can you guess the meaning of ''"  << lists[random][0] << "'' ?" << endl;
+    while (t < 4)
+    {
+        do
+        {
+            tmp = rand() % 4;
+        }while (is_take[tmp] == true);
+        is_take[tmp] = true;
+        if (tmp == random)
+            random = t;
+        cout << setw(10) << t + 1 << ". " << lists[tmp][1] << endl;
+        t += 1;
+    }
+    do
+    {
+        cout << "your choice: ";
+        cin >> choice;
+    }while (choice <= 0 || choice > 4);
+    if (choice == random + 1)
+        return true;
+    else
+        return false;
 }
