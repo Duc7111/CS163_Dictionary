@@ -121,13 +121,13 @@ vector<bNode*> random_take (bNode* root , vector<int> lists) //sorted list
 
 bool random_game (vector<vector<string>> lists)
 {
-    int random,t = 0,tmp, choice;
+    int random,t = 0,tmp, choice, cmp;
     srand(time(NULL));
     vector <bool> is_take;
     is_take.resize(4);
     fill(is_take.begin(),is_take.end(),false);
     random = rand()%4;
-    cout << "Can you guess the meaning of ''"  << lists[random][0] << "'' ?" << endl;
+    cout << "Can you guess the meaning of "<< char(34)  << lists[random][0] << char(34) << " ?" << endl;
     while (t < 4)
     {
         do
@@ -136,7 +136,7 @@ bool random_game (vector<vector<string>> lists)
         }while (is_take[tmp] == true);
         is_take[tmp] = true;
         if (tmp == random)
-            random = t;
+            cmp = t;
         cout << setw(10) << t + 1 << ". " << lists[tmp][1] << endl;
         t += 1;
     }
@@ -145,7 +145,7 @@ bool random_game (vector<vector<string>> lists)
         cout << "your choice: ";
         cin >> choice;
     }while (choice <= 0 || choice > 4);
-    if (choice == random + 1)
+    if (choice == cmp + 1)
         return true;
     else
         return false;
