@@ -15,7 +15,7 @@ struct Node
     {
         if(this == nullptr) return;
         next->clear();
-        next->clear();
+        //next->clear();
         delete this;
     }
 };
@@ -85,6 +85,14 @@ struct queue
             tail -> next = new Node<T> (a, nullptr);
             tail = tail->next;
         }
+        Node<T>* dequeue ()
+        {
+
+            Node<T>* tmp;
+            tmp = head -> next;
+            head = head -> next;
+            return tmp;
+        }
 
         void pop()
         {
@@ -96,6 +104,11 @@ struct queue
         T front()
         {
             return head->next->data;
+        }
+    
+        T rear()
+        {
+            return tail->data;
         }
 
         bool empty()

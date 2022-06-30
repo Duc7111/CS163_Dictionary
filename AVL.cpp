@@ -20,7 +20,7 @@ void bNode::clear()
 {
     if(left) left->clear();
     if(right) right->clear();
-    delete this;
+    //delete this;
 }
 
 int bNode::height()
@@ -197,4 +197,26 @@ void AVL::rrotate(bNode*& root)
     temp->right = root;
     root = temp;
     root->updateH();
+}
+
+int AVL::height (bNode* tree)
+{
+    if (tree == nullptr)
+        return 0;
+    int sleft,sright;
+    sleft = height(tree ->left);
+    sright = height(tree->right);
+    if (sleft > sright)
+        return sleft + 1;
+    else
+        return sright + 1;
+}
+
+void AVL::num_of_words (bNode* root,int &a)
+{
+    if (root == nullptr)
+        return;
+    num_of_words(root -> left, a);
+    num_of_words(root -> right, a);
+    a += 1;
 }
