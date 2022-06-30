@@ -87,7 +87,7 @@ int AVL::maketree(string dir, string def_dir)
     int i = 0, d = 0, c = 0;
     while (!fin.eof())
     {
-        getline(fin, temp, ':');
+        getline(fin, temp, '\t');
         if (temp != cur)//new node
         {
             ++c;
@@ -100,7 +100,6 @@ int AVL::maketree(string dir, string def_dir)
             fout.write((char*)&i, sizeof(int));//just make a spot for later writing
             i = 0;
         }
-        fin.ignore();
         getline(fin, temp);
         int l = temp.length() + 1;
         fout.write((char*)&l, sizeof(int));
