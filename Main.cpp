@@ -1,5 +1,6 @@
 #include<iostream>
 #include<iomanip>
+
 #include"Main.h"
 #include"Const.h"
 
@@ -7,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    string dir; //  base on mode of dictionary
+    string dir; // bin file that save the tree (based on mode of dictionary)
     int i = 1, size;
     AVL tree;
     FL fl(0);
@@ -17,7 +18,7 @@ int main()
         //choose language
         if(i == 1) 
         {
-            switch(Init_screen(tree, fl, size, dir))
+            switch(Init_screen(tree, fl, size))
             {
             case 'E':
                 return 0;
@@ -69,7 +70,7 @@ int main()
     return 0;
 }
 
-char Init_screen(AVL& tree, FL& fl, int& size,string dir)
+char Init_screen(AVL& tree, FL& fl, int& size)
 {
     int i;
     do
@@ -99,7 +100,7 @@ char Init_screen(AVL& tree, FL& fl, int& size,string dir)
             break;
 
         case 3://init e-e
-            tree.maketree("database//eng-eng//1English definition", dir); // txt,bin
+            tree.maketree("database\\eng-eng\\1English definition", "database\\");
 
             break;
 
@@ -120,17 +121,17 @@ char Init_screen(AVL& tree, FL& fl, int& size,string dir)
     return '0';
 }
 
-void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl,string dir) //sreen drawing add searching
 {
-    vector<string> defs;
+    vector <string> strs;
     string k;
     int i = 1;
     do
     {
         //searching
         cout << "Enter a word (0 to quit): ";
-        cin.ignore();
         cin.clear();
+        cin.ignore();
         getline(cin, k);
         bNode* temp = tree.search(k);
         if(!temp)
@@ -140,16 +141,17 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
             continue;
         }
         //cout definition (done)
-        defs = search_for_def(temp, dir);
+        strs = search_for_def(temp,dir);
         cout << k << ':' << endl;
-        for (int j=0 ; j<defs.size() - 1 ; j++)
+        for (int j = 0 ; j<strs.size() - 1 ; j++)
         {
-            cout << setw (10) << j+1 << ". " << defs[j] << endl;
+            cout << setw(tap) << j+1 << ". " << strs[j] << endl;
         }
+        //def
 
         //options
-        cout << "-----------------------------------------------------------------------------" << endl;
-        cout << "Your options:" << endl;
+        cout << "----------------------------------------------------" << endl;
+        cout << "your options: " << endl;
         do
         {
             cout << setw(tap) << "[0]" << " Back to searching" << endl;
@@ -157,9 +159,9 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
             if(temp->f) cout << " Like" << endl;
             else cout << " Unlike" << endl;
             cout << setw(tap) << "[2]" << " Modify" << endl;
-            cout << "Enter your choice: ";
+            cout << "Enter your choice";
             cin >> i;
-            cout << "-----------------------------------------------------------------------------" << endl;
+            cout << "----------------------------------------------------" << endl;
             switch (i)
             {
             case 0:
