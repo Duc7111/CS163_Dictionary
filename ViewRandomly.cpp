@@ -4,7 +4,7 @@ int FindRandom(AVL tree,bNode*root)
 {
 	srand(time(NULL));
 	int total;;
-	tree.total_word1(root, total);
+	tree.num_of_words(root, total);
 	int number = rand()%total+1;
 	return number;
 }
