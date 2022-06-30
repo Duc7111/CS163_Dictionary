@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    int i = 1;
+    int i = 1, size;
     AVL tree;
     FL fl(0);
     do
@@ -17,7 +17,7 @@ int main()
         //choose language
         if(i == 1) 
         {
-            switch(Init_screen(tree, fl))
+            switch(Init_screen(tree, fl, size))
             {
             case 'E':
                 return 0;
@@ -69,7 +69,7 @@ int main()
     return 0;
 }
 
-char Init_screen(AVL& tree, FL& fl)
+char Init_screen(AVL& tree, FL& fl, int& size)
 {
     int i;
     do
@@ -80,6 +80,8 @@ char Init_screen(AVL& tree, FL& fl)
         cout << setw(tap) << "[1]" << " ENG - VI" << endl; 
         cout << setw(tap) << "[2]" << " VI - ENG" << endl; 
         cout << setw(tap) << "[3]" << " ENG - ENG" << endl;
+        cout << setw(tap) << "[3]" << " slang" << endl;
+        cout << setw(tap) << "[3]" << " emotional" << endl;
         cout << "Enter your choise: ";
         cin >> i;
         switch (i)
@@ -89,12 +91,24 @@ char Init_screen(AVL& tree, FL& fl)
             break;
 
         case 1://init e-v
+
             break;
 
-        case 2:
+        case 2://int v-e
+
             break;
 
-        case 3:
+        case 3://init e-e
+            tree.maketree("database\\eng-eng\\1English definition", "database\\");
+
+            break;
+
+        case 4://init slang
+
+            break;
+
+        case 5://init emotional
+
             break;
 
         default:

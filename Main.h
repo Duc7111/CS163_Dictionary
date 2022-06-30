@@ -3,7 +3,7 @@
 
 bool load(AVL tree); // load data from file
 
-void Init_screen();
+char Init_screen(AVL& tree, FL& fl, int& size);
 
 void S_screen(AVL&, FL&);
 

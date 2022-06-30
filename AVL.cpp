@@ -78,18 +78,19 @@ AVL::~AVL()
     root->clear();
 }
 
-bool AVL::maketree(string dir, string def_dir)
+int AVL::maketree(string dir, string def_dir)
 {
     ifstream fin(dir);
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
-    if(!fin.is_open()) return false;
+    if(!fin.is_open()) return 0;
     string temp, cur = "";
-    int i = 0, d = 0;
+    int i = 0, d = 0, c = 0;
     while(!fin.eof())
     {
         getline(fin, temp, ':');
         if(temp != cur)//new node
         {
+            ++c;
             fout.seekp(d);
             fout.write((char*)&i, sizeof(int));
             fout.seekp(0, ios_base::end);
@@ -106,7 +107,7 @@ bool AVL::maketree(string dir, string def_dir)
         fout.write(temp.c_str(), l);
         ++i;
     }
-    return true;
+    return c;
 }
 
 bool AVL::insert(string k, int d)
