@@ -37,4 +37,5 @@ public:
     }
     int height (bNode*);
     void num_of_words (bNode*, int&);
+    void total_word1(bNode*, int&);
 };

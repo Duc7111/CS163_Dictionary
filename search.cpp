@@ -154,3 +154,42 @@ bool random_game (vector<vector<string>> lists)
     else
         return false;
 }
+
+void random_keywords (vector<vector<string>> lists)
+{
+    for (int i = 0 ; i<4 ; i++)
+    {
+        cout << lists[i][0] << ". " << lists[i][1] << endl;
+    }
+}
+
+bool random_def_game (vector<vector<string>> lists)
+{
+    srand(time(NULL));
+    vector<bool> is_visited;
+    fill (is_visited.begin(),is_visited.end(),false);
+    int random = rand() % 4 , tmp , ctmp, choice;
+    cout << "Can you guess the meaning of "<< char(34) << lists[random][1] << char (34) << " ?" << endl;
+    for (int i = 0 ; i<4 ; i++)
+    {
+        do
+        {
+            ctmp = rand()%4;
+        }while (is_visited[ctmp] == true);
+        is_visited[ctmp] = true;
+        if (ctmp == random)
+        {
+            tmp = i+1;
+        }
+        cout << setw(10) << i+1 << ". " << lists[i][0] << endl;
+    }
+    do
+    {
+        cout << "your choice: ";
+        cin >> choice;
+    }while (choice <= 0 || choice > 4);
+    if (choice == random + 1)
+        return true;
+    else
+        return false;
+}

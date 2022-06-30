@@ -1,17 +1,17 @@
 #include "AVL.h"
 #include "Const.h"
 
-bNode::bNode() : left(nullptr), right(nullptr){}
-bNode::bNode(string s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr){}
+bNode::bNode() : left(nullptr), right(nullptr) {}
+bNode::bNode(string s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr) {}
 
 bool bNode::add(bNode*& root)
 {
-    if(key == root->key) return false;
-    if(key > root->key)
-        if(left) return left->add(root);
+    if (key == root->key) return false;
+    if (key > root->key)
+        if (left) return left->add(root);
         else left = root;
     else
-        if(right) return right->add(root);
+        if (right) return right->add(root);
         else right = root;
     return true;
 }
@@ -25,14 +25,14 @@ void bNode::clear()
 
 int bNode::height()
 {
-    if(this == nullptr) return 0;
+    if (this == nullptr) return 0;
     return h;
 }
 
 void bNode::updateH()
 {
     h = left->height();
-    if(right->height() > h) h = right->h;
+    if (right->height() > h) h = right->h;
     ++h;
 }
 
@@ -59,20 +59,20 @@ void bNode::load(ifstream& fin)
 
 bool AVL::subadd(bNode*& root, string k, int x)
 {
-    if(!root) root = new bNode(k, x);
-    if(root->key == k) return false;
+    if (!root) root = new bNode(k, x);
+    if (root->key == k) return false;
     bool b;
-    if(root->key > k) b = subadd(root->left, k, x);
+    if (root->key > k) b = subadd(root->left, k, x);
     else b = subadd(root->right, k, x);
-    if(!b) return false;
+    if (!b) return false;
     int d = root->left->height() - root->right->height();
-    if(d == 2) rrotate(root);
-    else if(d == -2) lrotate(root);
+    if (d == 2) rrotate(root);
+    else if (d == -2) lrotate(root);
     else root->updateH();
     return true;
 }
 
-AVL::AVL() : root(nullptr){}
+AVL::AVL() : root(nullptr) {}
 AVL::~AVL()
 {
     if(root) root->clear();
@@ -82,13 +82,13 @@ int AVL::maketree(string dir, string def_dir)
 {
     ifstream fin(dir);
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
-    if(!fin.is_open()) return 0;
+    if (!fin.is_open()) return 0;
     string temp, cur = "";
     int i = 0, d = 0, c = 0;
-    while(!fin.eof())
+    while (!fin.eof())
     {
         getline(fin, temp, ':');
-        if(temp != cur)//new node
+        if (temp != cur)//new node
         {
             ++c;
             fout.seekp(d);
@@ -123,10 +123,10 @@ bool AVL::remove(string k)
 bNode* AVL::search(string x)
 {
     bNode* temp = root;
-    while(temp)
+    while (temp)
     {
-        if(temp->key > x) temp = temp->left;
-        else if(temp->key < x) temp = temp->right;
+        if (temp->key > x) temp = temp->left;
+        else if (temp->key < x) temp = temp->right;
         else break;
     }
     return temp;
@@ -138,7 +138,7 @@ int AVL::load(ifstream& fin, FL& fl)
     fl = FL(fl_size);
     root = new bNode;
     root->load(fin);
-    while(!fin.eof())
+    while (!fin.eof())
     {
         bNode* temp = new bNode; temp->load(fin);
         if(!root->add(temp)) return false;
@@ -149,14 +149,14 @@ int AVL::load(ifstream& fin, FL& fl)
 
 bool AVL::save(ofstream& fout)
 {
-    if(root == nullptr) return true;
-    if(!fout.is_open()) return false;
+    if (root == nullptr) return true;
+    if (!fout.is_open()) return false;
     queue<bNode*> q; q.push(root);
-    while(!q.empty())
+    while (!q.empty())
     {
         bNode* temp = q.front();
-        if(temp->left) q.push(temp->left);
-        if(temp->right) q.push(temp->right);
+        if (temp->left) q.push(temp->left);
+        if (temp->right) q.push(temp->right);
         temp->save(fout);
         q.pop();
     }
@@ -165,11 +165,11 @@ bool AVL::save(ofstream& fout)
 
 void AVL::lrotate(bNode*& root)
 {
-    if(!root->right) return;
+    if (!root->right) return;
     bNode* temp = root->right;
-    if(root->right->left && root->right->left->height() > root->right->right->height())
+    if (root->right->left && root->right->left->height() > root->right->right->height())
     {
-        root ->right = temp->left;
+        root->right = temp->left;
         temp->left = temp->left->right;
         root->right->right = temp;
         temp = root->right;
@@ -184,11 +184,11 @@ void AVL::lrotate(bNode*& root)
 
 void AVL::rrotate(bNode*& root)
 {
-    if(!root->left) return;
+    if (!root->left) return;
     bNode* temp = root->left;
-    if(root->left->right && root->left->right->height() > root->left->left->height())
+    if (root->left->right && root->left->right->height() > root->left->left->height())
     {
-        root ->left = temp->right;
+        root->left = temp->right;
         temp->right = temp->right->left;
         root->left->left = temp;
         temp = root->left;
@@ -201,12 +201,12 @@ void AVL::rrotate(bNode*& root)
     root->updateH();
 }
 
-int AVL::height (bNode* tree)
+int AVL::height(bNode* tree)
 {
     if (tree == nullptr)
         return 0;
-    int sleft,sright;
-    sleft = height(tree ->left);
+    int sleft, sright;
+    sleft = height(tree->left);
     sright = height(tree->right);
     if (sleft > sright)
         return sleft + 1;
@@ -214,11 +214,20 @@ int AVL::height (bNode* tree)
         return sright + 1;
 }
 
-void AVL::num_of_words (bNode* root,int &a)
+void AVL::num_of_words(bNode* root, int& a)
 {
     if (root == nullptr)
         return;
-    num_of_words(root -> left, a);
-    num_of_words(root -> right, a);
+    num_of_words(root->left, a);
+    num_of_words(root->right, a);
     a += 1;
+}
+void AVL::total_word1(bNode* root, int& count)
+{
+    if (root)
+    {
+        count++;
+        if (root->left) total_word1(root->left, count);
+        if (root->right) total_word1(root->right, count);
+    }
 }

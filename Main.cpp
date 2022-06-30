@@ -1,14 +1,15 @@
 #include<iostream>
 #include<iomanip>
-
 #include"Main.h"
 #include"AVL.h"
 #include"Const.h"
+#include"search.h"
 
 using namespace std;
 
 int main()
 {
+    string dir; //  base on mode of dictionary
     int i = 1, size;
     AVL tree;
     FL fl(0);
@@ -19,7 +20,7 @@ int main()
         //choose language
         if(i == 1) 
         {
-            switch(Init_screen(tree, fl, dir))
+            switch(size = Init_screen(tree, fl, dir))
             {
             case -1:
                 return 0;
@@ -57,7 +58,7 @@ int main()
         case 1://setting
 
         case 2://change
-            S_screen(tree, fl);
+            S_screen(tree, fl, dir);
             break;
 
         case 3://favorite word
@@ -129,30 +130,36 @@ int Init_screen(AVL& tree, FL& fl, string& dir)
     return '0';
 }
 
-void S_screen(AVL& tree, FL& fl) //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
 {
+    vector<string> defs;
     string k;
     int i = 1;
     do
     {
         //searching
-        system("clear");
         cout << "Enter a word (0 to quit): ";
-        cin.ignore(1000);
+        cin.ignore();
+        cin.clear();
         getline(cin, k);
         bNode* temp = tree.search(k);
-        if(temp)
+        if(!temp)
         {
             cout << "No result" << endl;
             system("pause");
             continue;
         }
-        //cout definition (undone)
-        system("clear");
+        //cout definition (done)
+        defs = search_for_def(temp, dir);
         cout << k << ':' << endl;
-        //def
+        for (int j=0 ; j<defs.size() - 1 ; j++)
+        {
+            cout << setw (10) << j+1 << ". " << defs[j] << endl;
+        }
 
         //options
+        cout << "-----------------------------------------------------------------------------" << endl;
+        cout << "Your options:" << endl;
         do
         {
             cout << setw(tap) << "[0]" << " Back to searching" << endl;
@@ -160,8 +167,9 @@ void S_screen(AVL& tree, FL& fl) //sreen drawing add searching
             if(temp->f) cout << " Like" << endl;
             else cout << " Unlike" << endl;
             cout << setw(tap) << "[2]" << " Modify" << endl;
-            cout << "Enter your choise";
+            cout << "Enter your choice: ";
             cin >> i;
+            cout << "-----------------------------------------------------------------------------" << endl;
             switch (i)
             {
             case 0:
