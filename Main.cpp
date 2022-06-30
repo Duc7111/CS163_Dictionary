@@ -2,12 +2,15 @@
 #include<iomanip>
 
 #include"Main.h"
+#include"AVL.h"
 #include"Const.h"
+#include"search.h"
 
 using namespace std;
 
 int main()
 {
+    string dir; // bin file that save the tree (based on mode of dictionary)
     int i = 1, size;
     AVL tree;
     FL fl(0);
@@ -17,19 +20,19 @@ int main()
         //choose language
         if(i == 1) 
         {
-            switch(Init_screen(tree, fl, size))
+            switch(size = Init_screen(tree, fl, dir))
             {
-            case 'E':
+            case -1:
                 return 0;
 
-            case '0':
-                cout << "File load succesfully" << endl;
-                system("pause");
-                break;
-            default:
+            case 0:
                 cout << "Error! the program will auto quit, please try again" << endl;
                 system("pause");
                 return -1;
+            default:
+                cout << "File load succesfully" << endl;
+                system("pause");
+                break;
             }
         }
 
@@ -55,7 +58,7 @@ int main()
         case 1://setting
 
         case 2://change
-            S_screen(tree, fl);
+            S_screen(tree, fl, dir);
             break;
 
         case 3://favorite word
@@ -66,10 +69,12 @@ int main()
         }
     } while (i != 0);
 
+
+
     return 0;
 }
 
-char Init_screen(AVL& tree, FL& fl, int& size)
+int Init_screen(AVL& tree, FL& fl, string& dir)
 {
     int i;
     do
@@ -80,14 +85,14 @@ char Init_screen(AVL& tree, FL& fl, int& size)
         cout << setw(tap) << "[1]" << " ENG - VI" << endl; 
         cout << setw(tap) << "[2]" << " VI - ENG" << endl; 
         cout << setw(tap) << "[3]" << " ENG - ENG" << endl;
-        cout << setw(tap) << "[3]" << " slang" << endl;
-        cout << setw(tap) << "[3]" << " emotional" << endl;
+        cout << setw(tap) << "[4]" << " slang" << endl;
+        cout << setw(tap) << "[5]" << " emotional" << endl;
         cout << "Enter your choise: ";
         cin >> i;
-        switch (i)
+        switch(i)
         {
         case 0:
-            return 'E';
+            return -1;
             break;
 
         case 1://init e-v
@@ -99,8 +104,13 @@ char Init_screen(AVL& tree, FL& fl, int& size)
             break;
 
         case 3://init e-e
-            tree.maketree("database\\eng-eng\\1English definition", "database\\");
-
+        {
+            dir = "database\\eng-eng\\def.bin";
+            ifstream fin(dir);
+            if(fin.good()) 
+                return tree.load(fin, fl);
+            return tree.maketree("database\\eng-eng\\1English definition.txt", dir);
+        }
             break;
 
         case 4://init slang
@@ -120,30 +130,37 @@ char Init_screen(AVL& tree, FL& fl, int& size)
     return '0';
 }
 
-void S_screen(AVL& tree, FL& fl) //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl,string dir) //sreen drawing add searching
 {
+    vector <string> strs;
     string k;
     int i = 1;
     do
     {
         //searching
-        system("clear");
         cout << "Enter a word (0 to quit): ";
-        cin.ignore(1000);
+        cin.clear();
+        cin.ignore();
         getline(cin, k);
         bNode* temp = tree.search(k);
-        if(temp)
+        if(!temp)
         {
             cout << "No result" << endl;
             system("pause");
             continue;
         }
-        //cout definition (undone)
-        system("clear");
+        //cout definition (done)
+        strs = search_for_def(temp,dir);
         cout << k << ':' << endl;
+        for (int j = 0 ; j<strs.size() - 1 ; j++)
+        {
+            cout << setw(tap) << j+1 << ". " << strs[j] << endl;
+        }
         //def
 
         //options
+        cout << "----------------------------------------------------" << endl;
+        cout << "your options: " << endl;
         do
         {
             cout << setw(tap) << "[0]" << " Back to searching" << endl;
@@ -151,8 +168,9 @@ void S_screen(AVL& tree, FL& fl) //sreen drawing add searching
             if(temp->f) cout << " Like" << endl;
             else cout << " Unlike" << endl;
             cout << setw(tap) << "[2]" << " Modify" << endl;
-            cout << "Enter your choise";
+            cout << "Enter your choice";
             cin >> i;
+            cout << "----------------------------------------------------" << endl;
             switch (i)
             {
             case 0:

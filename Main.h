@@ -1,10 +1,11 @@
 #pragma once
 #include "FL.h"
+#include "AVL.h"
 
 bool load(AVL tree); // load data from file
 
-char Init_screen(AVL& tree, FL& fl, int& size);
+int Init_screen(AVL&, FL&, string&);
 
-void S_screen(AVL&, FL&);
+void S_screen(AVL&, FL&,string);
 
 void F_screen(FL&);
