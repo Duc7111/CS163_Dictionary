@@ -4,7 +4,7 @@
 
 bool load(AVL tree); // load data from file
 
-int Init_screen(AVL&, FL&, string&);
+int Init_screen(AVL&, FL&, string&, string&);
 
 void S_screen(AVL&, FL&,string);
 

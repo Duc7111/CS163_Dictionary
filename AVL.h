@@ -22,7 +22,7 @@ public:
     AVL();
     ~AVL();
 
-    int maketree(string, string);
+    int maketree(string, string, string);
     bool insert(string, int);
     bool remove(string);//unnessessary
 

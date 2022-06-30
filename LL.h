@@ -7,15 +7,12 @@ struct Node
     Node* next;
 
     Node() : next(nullptr){}
-    Node(T a, Node<T>* n) {
-        this->data = a;
-        next = n;
-    }
+    Node(T a, Node<T>* n) : data(a), next(n) {}
+
     void clear()
     {
         if(this == nullptr) return;
         next->clear();
-        //next->clear();
         delete this;
     }
 };

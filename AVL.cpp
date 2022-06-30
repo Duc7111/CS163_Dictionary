@@ -1,3 +1,5 @@
+#include<iostream>
+
 #include "AVL.h"
 #include "Const.h"
 
@@ -51,10 +53,11 @@ void bNode::load(ifstream& fin)
     fin.read((char*)&h, sizeof(int));
     char* temp = new char[h + 1];
     fin.read(temp, h + 1);
-    key = temp; delete[] temp;
-    fin.read((char*)h, sizeof(int));
-    fin.read((char*)d, sizeof(int));
-    fin.read((char*)f, sizeof(bool));
+    key = temp;
+    cout << key << endl;
+    fin.read((char*)&h, sizeof(int));
+    fin.read((char*)&d, sizeof(int));
+    fin.read((char*)&f, sizeof(bool));
 }
 
 bool AVL::subadd(bNode*& root, string k, int x)
@@ -78,7 +81,7 @@ AVL::~AVL()
     if(root) root->clear();
 }
 
-int AVL::maketree(string dir, string def_dir)
+int AVL::maketree(string dir, string def_dir, string struct_dir)
 {
     ifstream fin(dir);
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
@@ -106,6 +109,10 @@ int AVL::maketree(string dir, string def_dir)
         fout.write(temp.c_str(), l);
         ++i;
     }
+    fout.close();
+    fout.open(struct_dir);
+    save(fout);
+    fout.close();
     return c;
 }
 

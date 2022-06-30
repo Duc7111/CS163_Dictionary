@@ -10,7 +10,8 @@ using namespace std;
 
 int main()
 {
-    string dir; // bin file that save the tree (based on mode of dictionary)
+    string def_dir; // bin file that save the tree (based on mode of dictionary)
+    string struct_dir; // bin file that save the tree (based on mode of dictionary)
     int i = 1, size;
     AVL tree;
     FL fl(0);
@@ -20,7 +21,7 @@ int main()
         //choose language
         if(i == 1) 
         {
-            switch(size = Init_screen(tree, fl, dir))
+            switch(size = Init_screen(tree, fl, def_dir, struct_dir))
             {
             case -1:
                 return 0;
@@ -58,7 +59,7 @@ int main()
         case 1://setting
 
         case 2://change
-            S_screen(tree, fl, dir);
+            S_screen(tree, fl, def_dir);
             break;
 
         case 3://favorite word
@@ -74,7 +75,7 @@ int main()
     return 0;
 }
 
-int Init_screen(AVL& tree, FL& fl, string& dir)
+int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
 {
     int i;
     do
@@ -105,11 +106,17 @@ int Init_screen(AVL& tree, FL& fl, string& dir)
 
         case 3://init e-e
         {
-            dir = "database\\eng-eng\\def.bin";
-            ifstream fin(dir);
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            ifstream fin(def_dir);
             if(fin.good()) 
+            {
+                fin.close();
+                fin.open(struct_dir);
                 return tree.load(fin, fl);
-            return tree.maketree("database\\eng-eng\\1English definition.txt", dir);
+            }
+            fin.close();
+            return tree.maketree("database\\eng-eng\\1English definition.txt", def_dir, struct_dir);
         }
             break;
 
@@ -142,7 +149,9 @@ void S_screen(AVL& tree, FL& fl,string dir) //sreen drawing add searching
         cin.clear();
         cin.ignore();
         getline(cin, k);
+        if(k == "0") return;
         bNode* temp = tree.search(k);
+        cout << k << endl;
         if(!temp)
         {
             cout << "No result" << endl;
