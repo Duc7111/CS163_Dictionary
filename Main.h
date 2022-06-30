@@ -1,5 +1,6 @@
 #pragma once
 #include "FL.h"
+#include "AVL.h"
 
 bool load(AVL tree); // load data from file
 

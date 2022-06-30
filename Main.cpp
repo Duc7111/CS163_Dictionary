@@ -14,7 +14,6 @@ int main()
     int i = 1, size;
     AVL tree;
     FL fl(0);
-    string dir;
     do
     {
         system("clear");
@@ -107,7 +106,7 @@ int Init_screen(AVL& tree, FL& fl, string& dir)
         case 3://init e-e
         {
             dir = "database\\eng-eng\\def.bin";
-            ifstream fin("dir");
+            ifstream fin(dir);
             if(fin.good()) 
                 return tree.load(fin, fl);
             return tree.maketree("database\\eng-eng\\1English definition.txt", dir);
