@@ -1,4 +1,8 @@
 #include "search.h"
+#include <iomanip>
+#include <algorithm>
+
+using namespace std;
 
 
 vector<string> search_for_def (bNode* root,string dir)

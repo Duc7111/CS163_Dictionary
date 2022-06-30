@@ -20,7 +20,7 @@ void bNode::clear()
 {
     if(left) left->clear();
     if(right) right->clear();
-    //delete this;
+    delete this;
 }
 
 int bNode::height()
@@ -75,7 +75,7 @@ bool AVL::subadd(bNode*& root, string k, int x)
 AVL::AVL() : root(nullptr){}
 AVL::~AVL()
 {
-    root->clear();
+    if(root) root->clear();
 }
 
 int AVL::maketree(string dir, string def_dir)
@@ -132,15 +132,17 @@ bNode* AVL::search(string x)
     return temp;
 }
 
-bool AVL::load(ifstream& fin)
+int AVL::load(ifstream& fin, FL& fl)
 {
-    if(!fin.is_open()) return false;
+    int fl_size; fin.read((char*)&fl_size, sizeof(int));
+    fl = FL(fl_size);
     root = new bNode;
     root->load(fin);
     while(!fin.eof())
     {
         bNode* temp = new bNode; temp->load(fin);
         if(!root->add(temp)) return false;
+        if(temp->f) fl.AoR(temp);
     }
     return true;
 }

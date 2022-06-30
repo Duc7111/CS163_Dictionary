@@ -1,6 +1,7 @@
 #include "FL.h"
+#include "AVL.h"
 
-FL::FL(int size) : arr(new bNode*[size]), m_size(size), c_size(size)
+FL::FL(int size) : arr(new bNode*[size]), m_size(size), c_size(0)
 {
     t_arr = new Node<bNode*>(new bNode("errMSG", -1), nullptr);
 }

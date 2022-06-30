@@ -2,32 +2,13 @@
 
 #include<string>
 #include<fstream>
-#include <vector>
+#include<vector>
+
 #include "LL.h"
+#include "FL.h"
+#include "bNode.h"
 
 using namespace std;
-
-struct bNode
-{
-    string key;
-    int h, d;
-    bool f;
-    bNode *left, *right;
-
-    bNode();
-    bNode(string, int);
-
-    bool add(bNode*&);
-
-    void clear();
-
-    int height();
-    void updateH();
-    
-    void Add(string word, string dir);
-    void save(ofstream&);
-    void load(ifstream&);
-};
 
 class AVL
 {
@@ -47,7 +28,7 @@ public:
 
     bNode* search(string);
 
-    bool load(ifstream&);
+    int load(ifstream&, FL&);
     bool save(ofstream&);
     int Add(AVL& ,string ,string ,string);
     bNode* get_root ()

@@ -2,6 +2,7 @@
 #include<iomanip>
 
 #include"Main.h"
+#include"AVL.h"
 #include"Const.h"
 
 using namespace std;
@@ -11,25 +12,26 @@ int main()
     int i = 1, size;
     AVL tree;
     FL fl(0);
+    string dir;
     do
     {
         system("clear");
         //choose language
         if(i == 1) 
         {
-            switch(Init_screen(tree, fl, size))
+            switch(Init_screen(tree, fl, dir))
             {
-            case 'E':
+            case -1:
                 return 0;
 
-            case '0':
-                cout << "File load succesfully" << endl;
-                system("pause");
-                break;
-            default:
+            case 0:
                 cout << "Error! the program will auto quit, please try again" << endl;
                 system("pause");
                 return -1;
+            default:
+                cout << "File load succesfully" << endl;
+                system("pause");
+                break;
             }
         }
 
@@ -66,10 +68,12 @@ int main()
         }
     } while (i != 0);
 
+
+
     return 0;
 }
 
-char Init_screen(AVL& tree, FL& fl, int& size)
+int Init_screen(AVL& tree, FL& fl, string& dir)
 {
     int i;
     do
@@ -80,14 +84,14 @@ char Init_screen(AVL& tree, FL& fl, int& size)
         cout << setw(tap) << "[1]" << " ENG - VI" << endl; 
         cout << setw(tap) << "[2]" << " VI - ENG" << endl; 
         cout << setw(tap) << "[3]" << " ENG - ENG" << endl;
-        cout << setw(tap) << "[3]" << " slang" << endl;
-        cout << setw(tap) << "[3]" << " emotional" << endl;
+        cout << setw(tap) << "[4]" << " slang" << endl;
+        cout << setw(tap) << "[5]" << " emotional" << endl;
         cout << "Enter your choise: ";
         cin >> i;
-        switch (i)
+        switch(i)
         {
         case 0:
-            return 'E';
+            return -1;
             break;
 
         case 1://init e-v
@@ -99,8 +103,13 @@ char Init_screen(AVL& tree, FL& fl, int& size)
             break;
 
         case 3://init e-e
-            tree.maketree("database\\eng-eng\\1English definition", "database\\");
-
+        {
+            dir = "database\\eng-eng\\def.bin";
+            ifstream fin("dir");
+            if(fin.good()) 
+                return tree.load(fin, fl);
+            return tree.maketree("database\\eng-eng\\1English definition.txt", dir);
+        }
             break;
 
         case 4://init slang
