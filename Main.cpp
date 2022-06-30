@@ -116,7 +116,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
                 return tree.load(fin, fl);
             }
             fin.close();
-            return tree.maketree("database\\eng-eng\\1English definition.txt", def_dir, struct_dir);
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
         }
             break;
 
