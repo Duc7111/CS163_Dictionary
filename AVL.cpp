@@ -221,12 +221,3 @@ void AVL::num_of_words(bNode* root, int& a)
     num_of_words(root->right, a);
     a += 1;
 }
-void AVL::total_word1(bNode* root, int& count)
-{
-    if (root)
-    {
-        count++;
-        if (root->left) total_word1(root->left, count);
-        if (root->right) total_word1(root->right, count);
-    }
-}
