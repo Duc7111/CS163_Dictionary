@@ -84,13 +84,15 @@ struct queue
         {
             tail -> next = new Node<T> (a, nullptr);
             tail = tail->next;
+            if (head->next == nullptr)
+                head -> next = tail;
         }
         Node<T>* dequeue ()
         {
 
             Node<T>* tmp;
             tmp = head -> next;
-            head = head -> next;
+            head -> next = tmp -> next;
             return tmp;
         }
 
