@@ -112,6 +112,7 @@ bool random_game (vector<vector<string>> lists)
     else
     {
         cout << "you've lost" << endl;
+        cout << "correct answer: " << lists[random][1] << endl;
         return false;
     }
 }
@@ -150,7 +151,7 @@ bool random_def_game (vector<vector<string>> lists)
         cout << "your choice: ";
         cin >> choice;
     }while (choice <= 0 || choice > 4);
-    if (choice == random + 1)
+    if (choice == tmp)
     {
         cout <<"you win" << endl;
         return true;
@@ -158,6 +159,7 @@ bool random_def_game (vector<vector<string>> lists)
     else
     {
         cout << "you've lost" << endl;
+        cout << "correct answer: " << lists[random][0] << endl;
         return false;
     }
 }

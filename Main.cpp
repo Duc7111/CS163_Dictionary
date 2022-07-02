@@ -294,6 +294,20 @@ void Quizz (AVL& tree, string dir)
                 }while (option == 1);
                 break;
             case 2:
+                do
+                {
+                    random_words.clear();
+                    random_words = random_word(tree, dir, num);
+                    random_def_game(random_words);
+                    cout << "Try again?" << endl;
+                    cout << setw(tap) << "[1]" << " Yes." << endl;
+                    cout << setw(tap) << "[2]" << " Back to game's menu." << endl;
+                    do
+                    {
+                        cout << "your choice: ";
+                        cin >> option;
+                    }while (option != 1 && option != 2);
+                }while (option == 1);
                 break;
             default:
                 cout << "Invalid input, please try again" << endl;
