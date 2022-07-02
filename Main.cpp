@@ -111,12 +111,11 @@ int Init_screen(AVL& tree, FL& fl, string& dir)
 
         case 3://init e-e
         {
-            //dir = "database\\eng-eng\\def.bin";
-            dir = "test.bin";
+            dir = "database\\eng-eng\\def.bin";
             ifstream fin(dir);
             if(fin.good()) 
                 return tree.load(fin, fl);
-            return tree.maketree(/*"database\\eng-eng\\1English definition.txt"*/"/Users/kelsmac/Documents/3rd semester/CS163/project on my mac/DerivedData/project on my mac/Index/Build/Products/Debug/database/eng-eng/1English definitions.txt", dir);
+            return tree.maketree("database\\eng-eng\\1English definition.txt", dir);
         }
             break;
 
