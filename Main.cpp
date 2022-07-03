@@ -46,6 +46,7 @@ int main()
         cout << setw(tap) << "[1]" << " Change language" << endl;
         cout << setw(tap) << "[2]" << " Search" << endl;
         cout << setw(tap) << "[3]" << " View favorites" << endl;
+        cout << setw(tap) << "[4]" << " Quizzes" << endl;
         //input
         cout << "Enter your choice: ";
         cin >> i;
@@ -64,9 +65,14 @@ int main()
 
         case 3://favorite word
             F_screen(fl);
-
+            break;
+        
+        case 4:
+            Quizz(tree, dir);
+            break;
         default://invalid input
             cout << "Unknow command, please try again";
+            break;
         }
     } while (i != 0);
 
@@ -88,7 +94,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
         cout << setw(tap) << "[3]" << " ENG - ENG" << endl;
         cout << setw(tap) << "[4]" << " slang" << endl;
         cout << setw(tap) << "[5]" << " emotional" << endl;
-        cout << "Enter your choise: ";
+        cout << "Enter your choice: ";
         cin >> i;
         switch(i)
         {
@@ -256,4 +262,65 @@ void F_screen(FL& fl)
             }
         } while (i != 0);
     } while (t != 0);   
+}
+
+void Quizz (AVL& tree, string dir)
+{
+    vector<vector<string>> random_words;
+    int num = 0;
+    tree.num_of_words(tree.get_root(), num);
+    int option;
+    cout << "Game options: " << endl;
+    do
+    {
+        cout << setw(tap) << "[0]" << " Exit quizz mode." << endl;
+        cout << setw(tap) << "[1]" << " Guess the definition of a given keyword." << endl;
+        cout << setw(tap) << "[2]" << " Guess the keyword of a given definition." << endl;
+        do
+        {
+            cout << "your choice: ";
+            cin >> option;
+        }while (option != 2 && option != 1 && option != 0);
+        if (option == 0)
+            return;
+        switch (option)
+        {
+            case 1:
+                do
+                {
+                    random_words.clear();
+                    random_words = random_word(tree, dir, num);
+                    random_game(random_words);
+                    cout << "Try again?" << endl;
+                    cout << setw(tap) << "[1]" << " Yes." << endl;
+                    cout << setw(tap) << "[2]" << " Back to game's menu." << endl;
+                    do
+                    {
+                        cout << "your choice: ";
+                        cin >> option;
+                    }while (option != 1 && option != 2);
+                }while (option == 1);
+                break;
+            case 2:
+                do
+                {
+                    random_words.clear();
+                    random_words = random_word(tree, dir, num);
+                    random_def_game(random_words);
+                    cout << "Try again?" << endl;
+                    cout << setw(tap) << "[1]" << " Yes." << endl;
+                    cout << setw(tap) << "[2]" << " Back to game's menu." << endl;
+                    do
+                    {
+                        cout << "your choice: ";
+                        cin >> option;
+                    }while (option != 1 && option != 2);
+                }while (option == 1);
+                break;
+            default:
+                cout << "Invalid input, please try again" << endl;
+                system("pause");
+                break;
+        }
+    }while (1);
 }

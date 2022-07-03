@@ -13,7 +13,7 @@ using namespace std;
 
 vector<string> search_for_def (bNode* root,string dir);
 vector<bNode*> random_take (bNode* root, vector<int> lists);
-vector<vector<string>> random_word (AVL tree, string dir, int n);
+vector<vector<string>> random_word (AVL& tree, string dir, int n);
 bool random_game (vector<vector<string>> lists);
 bool random_def_game (vector<vector<string>> lists);
 void random_keywords (vector<vector<string>> lists);

@@ -9,3 +9,5 @@ int Init_screen(AVL&, FL&, string&, string&);
 void S_screen(AVL&, FL&,string);
 
 void F_screen(FL&);
+
+void Quizz (AVL& , string);
