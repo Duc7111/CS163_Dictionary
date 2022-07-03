@@ -68,7 +68,7 @@ int main()
             break;
         
         case 4:
-            Quizz(tree, dir);
+            Quizz(tree, def_dir);
             break;
         default://invalid input
             cout << "Unknow command, please try again";
