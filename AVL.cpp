@@ -28,15 +28,14 @@ void clear(bNode*& root)
 
 int bNode::height()
 {
-    if (this == nullptr) return 0;
-    return h;
+    if(this) return h;
+    return 0;
 }
 
 void bNode::updateH()
 {
-    h = left->height();
-    if (right->height() > h) h = right->h;
-    ++h;
+    h = left->height() + 1;
+    if (right->height() >= h) h = right->h + 1;
 }
 
 void bNode::save(ofstream& fout)
@@ -63,7 +62,11 @@ void bNode::load(ifstream& fin)
 
 bool AVL::subadd(bNode*& root, string k, int x)
 {
-    if (!root) root = new bNode(k, x);
+    if (!root) 
+    {
+        root = new bNode(k, x);
+        return true;
+    }
     if (root->key == k) return false;
     bool b;
     if (root->key > k) b = subadd(root->left, k, x);

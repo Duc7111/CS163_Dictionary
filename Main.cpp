@@ -177,10 +177,10 @@ void S_screen(AVL& tree, FL& fl,string dir) //sreen drawing add searching
         {
             cout << setw(tap) << "[0]" << " Back to searching" << endl;
             cout << setw(tap) << "[1]";
-            if(temp->f) cout << " Like" << endl;
-            else cout << " Unlike" << endl;
+            if(temp->f) cout << " Unlike" << endl;
+            else cout << " Like" << endl;
             cout << setw(tap) << "[2]" << " Modify" << endl;
-            cout << "Enter your choice";
+            cout << "Enter your choice: ";
             cin >> i;
             cout << "----------------------------------------------------" << endl;
             switch (i)
