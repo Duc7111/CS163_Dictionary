@@ -18,11 +18,12 @@ bool bNode::add(bNode*& root)
     return true;
 }
 
-void bNode::clear()
+void clear(bNode*& root)
 {
-    if(left) left->clear();
-    if(right) right->clear();
-    delete this;
+    if(root->left) clear(root->left);
+    if(root->right) clear(root->right);
+    delete root;
+    root = nullptr;
 }
 
 int bNode::height()
@@ -54,10 +55,10 @@ void bNode::load(ifstream& fin)
     char* temp = new char[h + 1];
     fin.read(temp, h + 1);
     key = temp;
-    cout << key << endl;
     fin.read((char*)&h, sizeof(int));
     fin.read((char*)&d, sizeof(int));
     fin.read((char*)&f, sizeof(bool));
+    delete[] temp;
 }
 
 bool AVL::subadd(bNode*& root, string k, int x)
@@ -78,7 +79,7 @@ bool AVL::subadd(bNode*& root, string k, int x)
 AVL::AVL() : root(nullptr) {}
 AVL::~AVL()
 {
-    if(root) root->clear();
+    if(root) clear(root);
 }
 
 int AVL::maketree(string dir, string def_dir, string struct_dir)
@@ -94,8 +95,11 @@ int AVL::maketree(string dir, string def_dir, string struct_dir)
         if (temp != cur)//new node
         {
             ++c;
-            fout.seekp(d);
-            fout.write((char*)&i, sizeof(int));
+            if(c != 1)
+            {
+                fout.seekp(d);
+                fout.write((char*)&i, sizeof(int));
+            }
             fout.seekp(0, ios_base::end);
             cur = temp;
             d = fout.tellp();
@@ -110,7 +114,9 @@ int AVL::maketree(string dir, string def_dir, string struct_dir)
         ++i;
     }
     fout.close();
-    fout.open(struct_dir);
+    fout.open(struct_dir, ios_base::binary);
+    int t = 0;
+    fout.write((char*)&t, sizeof(int));
     save(fout);
     fout.close();
     return c;
@@ -144,13 +150,15 @@ int AVL::load(ifstream& fin, FL& fl)
     fl = FL(fl_size);
     root = new bNode;
     root->load(fin);
+    int c = 1;
     while (!fin.eof())
     {
         bNode* temp = new bNode; temp->load(fin);
-        if(!root->add(temp)) return false;
+        root->add(temp);
         if(temp->f) fl.AoR(temp);
+        ++c;
     }
-    return true;
+    return c;
 }
 
 bool AVL::save(ofstream& fout)

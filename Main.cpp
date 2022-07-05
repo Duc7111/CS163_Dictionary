@@ -17,7 +17,7 @@ int main()
     FL fl(0);
     do
     {
-        system("clear");
+        system("cls");
         //choose language
         if(i == 1) 
         {
@@ -38,7 +38,7 @@ int main()
         }
 
         //starting screen
-        system("clear");
+        system("cls");
 
         //options
         cout << "OPTIONS:" << endl;
@@ -75,9 +75,6 @@ int main()
             break;
         }
     } while (i != 0);
-
-
-
     return 0;
 }
 
@@ -86,7 +83,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
     int i;
     do
     {
-        system("clear");
+        system("cls");
         cout << "Choose language:" << endl;
         cout << setw(tap) << "[0]" << " Exist" << endl; 
         cout << setw(tap) << "[1]" << " ENG - VI" << endl; 
@@ -118,7 +115,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
             if(fin.good()) 
             {
                 fin.close();
-                fin.open(struct_dir);
+                fin.open(struct_dir, ios_base::binary);
                 return tree.load(fin, fl);
             }
             fin.close();
@@ -215,7 +212,7 @@ void F_screen(FL& fl)
     int t;
     do
     {
-        system("clear");
+        system("cls");
         cout << "Favorite words: " << endl;
         int size = fl.size();
         if(size == 0)
@@ -235,7 +232,7 @@ void F_screen(FL& fl)
         }
         //show def and modifying stuff
         //def
-        system("clear");
+        system("cls");
         cout << fl[t] << ':' << endl;
 
         //modifying

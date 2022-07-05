@@ -17,8 +17,6 @@ struct bNode
 
     bool add(bNode*&);
 
-    void clear();
-
     int height();
     void updateH();
     
@@ -26,3 +24,5 @@ struct bNode
     void save(ofstream&);
     void load(ifstream&);
 };
+
+void clear(bNode*&);
