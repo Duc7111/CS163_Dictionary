@@ -23,4 +23,5 @@ string ViewRandom(bNode *root,int number,int count,AVL tree,string dir)
 		if (root->left) return ViewRandom(root, number, count + 1, tree, dir);
 		if (root->right) return ViewRandom(root, number, count + 1, tree, dir);
 	}
+	return "";
 }

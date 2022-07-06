@@ -15,7 +15,7 @@ class AVL
 private:
     bNode* root;
 
-    bool subadd(bNode*&, string, int);
+    bool subadd(bNode*&, wstring, int);
     void lrotate(bNode*&);
     void rrotate(bNode*&);
 public:
@@ -23,14 +23,14 @@ public:
     ~AVL();
 
     int maketree(string, string, string);
-    bool insert(string, int);
-    bool remove(string);//unnessessary
+    bool insert(wstring, int);
+    bool remove(wstring);//unnessessary
 
-    bNode* search(string);
+    bNode* search(wstring);
 
     int load(ifstream&, FL&);
     bool save(ofstream&);
-    int Add(AVL& ,string ,string ,string);
+    int Add(AVL& ,wstring ,wstring ,wstring); 
     bNode* get_root ()
     {
         return root;

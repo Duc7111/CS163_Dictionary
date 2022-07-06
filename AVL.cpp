@@ -1,10 +1,13 @@
 #include<iostream>
+#include<codecvt>
+#include<io.h>
+#include<fcntl.h> 
 
 #include "AVL.h"
 #include "Const.h"
 
 bNode::bNode() : left(nullptr), right(nullptr) {}
-bNode::bNode(string s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr) {}
+bNode::bNode(wstring s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr) {}
 
 bool bNode::add(bNode*& root)
 {
@@ -42,7 +45,7 @@ void bNode::save(ofstream& fout)
 {
     int s = key.length();
     fout.write((char*)&s, sizeof(int));
-    fout.write(key.c_str(), s + 1);
+    fout.write((char*)&key[0], (s + 1)*sizeof(wchar_t));
     fout.write((char*)&h, sizeof(int));
     fout.write((char*)&d, sizeof(int));
     fout.write((char*)&f, sizeof(bool));
@@ -51,8 +54,8 @@ void bNode::save(ofstream& fout)
 void bNode::load(ifstream& fin)
 {
     fin.read((char*)&h, sizeof(int));
-    char* temp = new char[h + 1];
-    fin.read(temp, h + 1);
+    wchar_t* temp = new wchar_t[h + 1];
+    fin.read((char*)&temp, h + 1);
     key = temp;
     fin.read((char*)&h, sizeof(int));
     fin.read((char*)&d, sizeof(int));
@@ -60,7 +63,7 @@ void bNode::load(ifstream& fin)
     delete[] temp;
 }
 
-bool AVL::subadd(bNode*& root, string k, int x)
+bool AVL::subadd(bNode*& root, wstring k, int x)
 {
     if (!root) 
     {
@@ -87,14 +90,17 @@ AVL::~AVL()
 
 int AVL::maketree(string dir, string def_dir, string struct_dir)
 {
-    ifstream fin(dir);
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wifstream wfin(dir);
+    wfin.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
-    if (!fin.is_open()) return 0;
-    string temp, cur = "";
+    if (!wfin.is_open()) return 0;
+    wstring temp, cur = L"";
     int i = 0, d = 0, c = 0;
-    while (!fin.eof())
+    while (!wfin.eof())
     {
-        getline(fin, temp, '\t');
+        getline(wfin, temp, L'\t');
         if (temp != cur)//new node
         {
             ++c;
@@ -110,10 +116,10 @@ int AVL::maketree(string dir, string def_dir, string struct_dir)
             fout.write((char*)&i, sizeof(int));//just make a spot for later writing
             i = 0;
         }
-        getline(fin, temp);
+        getline(wfin, temp);
         int l = temp.length() + 1;
         fout.write((char*)&l, sizeof(int));
-        fout.write(temp.c_str(), l);
+        fout.write((char*)&temp[0], l*sizeof(wchar_t));
         ++i;
     }
     fout.close();
@@ -125,17 +131,17 @@ int AVL::maketree(string dir, string def_dir, string struct_dir)
     return c;
 }
 
-bool AVL::insert(string k, int d)
+bool AVL::insert(wstring k, int d)
 {
     return subadd(root, k, d);
 }
 
-bool AVL::remove(string k)
+bool AVL::remove(wstring k)
 {
     return true;
 }
 
-bNode* AVL::search(string x)
+bNode* AVL::search(wstring x)
 {
     bNode* temp = root;
     while (temp)

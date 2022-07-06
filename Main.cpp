@@ -1,5 +1,9 @@
 #include<iostream>
 #include<iomanip>
+#include<io.h>
+#include<fcntl.h>
+#include<string>
+#include<codecvt>
 
 #include"Main.h"
 #include"AVL.h"
@@ -10,6 +14,8 @@ using namespace std;
 
 int main()
 {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
     string def_dir; // bin file that save the tree (based on mode of dictionary)
     string struct_dir; // bin file that save the tree (based on mode of dictionary)
     int i = 1, size;
@@ -27,11 +33,11 @@ int main()
                 return 0;
 
             case 0:
-                cout << "Error! the program will auto quit, please try again" << endl;
+                wcout << L"Error! the program will auto quit, please try again" << endl;
                 system("pause");
                 return -1;
             default:
-                cout << "File load succesfully" << endl;
+                wcout << L"File load succesfully" << endl;
                 system("pause");
                 break;
             }
@@ -41,15 +47,15 @@ int main()
         system("cls");
 
         //options
-        cout << "OPTIONS:" << endl;
-        cout << setw(tap) << "[0]" << " Exist" << endl;
-        cout << setw(tap) << "[1]" << " Change language" << endl;
-        cout << setw(tap) << "[2]" << " Search" << endl;
-        cout << setw(tap) << "[3]" << " View favorites" << endl;
-        cout << setw(tap) << "[4]" << " Quizzes" << endl;
+        wcout << L"OPTIONS:" << endl;
+        wcout << setw(tap) << L"[0]" << L" Exist" << endl;
+        wcout << setw(tap) << L"[1]" << L" Change language" << endl;
+        wcout << setw(tap) << L"[2]" << L" Search" << endl;
+        wcout << setw(tap) << L"[3]" << L" View favorites" << endl;
+        wcout << setw(tap) << L"[4]" << L" Quizzes" << endl;
         //input
-        cout << "Enter your choice: ";
-        cin >> i;
+        wcout << L"Enter your choice: ";
+        wcin >> i;
 
         //processing
         switch(i)
@@ -71,7 +77,7 @@ int main()
             Quizz(tree, def_dir);
             break;
         default://invalid input
-            cout << "Unknow command, please try again";
+            wcout << L"Unknow command, please try again";
             break;
         }
     } while (i != 0);
@@ -80,19 +86,21 @@ int main()
 
 int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
 {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
     int i;
     do
     {
         system("cls");
-        cout << "Choose language:" << endl;
-        cout << setw(tap) << "[0]" << " Exist" << endl; 
-        cout << setw(tap) << "[1]" << " ENG - VI" << endl; 
-        cout << setw(tap) << "[2]" << " VI - ENG" << endl; 
-        cout << setw(tap) << "[3]" << " ENG - ENG" << endl;
-        cout << setw(tap) << "[4]" << " slang" << endl;
-        cout << setw(tap) << "[5]" << " emotional" << endl;
-        cout << "Enter your choice: ";
-        cin >> i;
+        wcout << L"Choose language:" << endl;
+        wcout << setw(tap) << L"[0]" << L" Exist" << endl; 
+        wcout << setw(tap) << L"[1]" << L" ENG - VI" << endl; 
+        wcout << setw(tap) << L"[2]" << L" VI - ENG" << endl; 
+        wcout << setw(tap) << L"[3]" << L" ENG - ENG" << endl;
+        wcout << setw(tap) << L"[4]" << L" slang" << endl;
+        wcout << setw(tap) << L"[5]" << L" emotional" << endl;
+        wcout << L"Enter your choice: ";
+        wcin >> i;
         switch(i)
         {
         case 0:
@@ -132,57 +140,58 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
             break;
 
         default:
-            cout << "Invaid input, please try again" << endl;
+            wcout << L"Invaid input, please try again" << endl;
             system("pause");
             break;
         }
-    } while (i > 3 || i < 0);
-    return '0';
+    } while (i > 5 || i < 0);
+    return 0;
 }
 
-void S_screen(AVL& tree, FL& fl,string dir) //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
 {
-    vector <string> strs;
-    string k;
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    vector <wstring> strs;
+    wstring k;
     int i = 1;
     do
     {
         //searching
-        cout << "Enter a word (0 to quit): ";
-        cin.clear();
-        cin.ignore();
-        getline(cin, k);
-        if(k == "0") return;
+        wcout << L"Enter a word (0 to quit): ";
+        wcin.clear();
+        wcin.ignore();
+        getline(wcin, k);
+        if(k == L"0") return;
         bNode* temp = tree.search(k);
-        cout << k << endl;
         if(!temp)
         {
-            cout << "No result" << endl;
+            wcout << L"No result" << endl;
             system("pause");
             continue;
         }
         //cout definition (done)
-        strs = search_for_def(temp,dir);
-        cout << k << ':' << endl;
+        strs = search_for_def(temp, dir);
+        wcout << k << ':' << endl;
         for (int j = 0 ; j<strs.size() - 1 ; j++)
         {
-            cout << setw(tap) << j+1 << ". " << strs[j] << endl;
+            wcout << setw(tap) << j+1 << L". " << strs[j] << endl;
         }
         //def
 
         //options
-        cout << "----------------------------------------------------" << endl;
-        cout << "your options: " << endl;
+        wcout << L"----------------------------------------------------" << endl;
+        wcout << L"your options: " << endl;
         do
         {
-            cout << setw(tap) << "[0]" << " Back to searching" << endl;
-            cout << setw(tap) << "[1]";
-            if(temp->f) cout << " Unlike" << endl;
-            else cout << " Like" << endl;
-            cout << setw(tap) << "[2]" << " Modify" << endl;
-            cout << "Enter your choice: ";
-            cin >> i;
-            cout << "----------------------------------------------------" << endl;
+            wcout << setw(tap) << L"[0]" << L" Back to searching" << endl;
+            wcout << setw(tap) << L"[1]";
+            if(temp->f) wcout << L" Unlike" << endl;
+            else wcout << L" Like" << endl;
+            wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+            wcout << L"Enter your choice: ";
+            wcin >> i;
+            wcout << L"----------------------------------------------------" << endl;
             switch (i)
             {
             case 0:
@@ -198,51 +207,53 @@ void S_screen(AVL& tree, FL& fl,string dir) //sreen drawing add searching
                 break;
                 
             default:
-                cout << "Invalid input, please try again" << endl;
+                wcout << L"Invalid input, please try again" << endl;
                 system("pause");
                 break;
             }
         } while (i != 0);
-    }while(k != "0");
+    }while(k != L"0");
 }
 
 
 void F_screen(FL& fl)
 {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
     int t;
     do
     {
         system("cls");
-        cout << "Favorite words: " << endl;
+        wcout << L"Favorite words: " << endl;
         int size = fl.size();
         if(size == 0)
         {
-            cout << "No word added to this list" << endl;
+            wcout << L"No word added to this list" << endl;
             system("pause");
             return;
         }
         for(int i = 0; i < size; ++i)
-            cout << setw(tap - 2) << '[' << i + 1 << ']' << fl[i]->key << endl;
-        cout << "Enter an index (0 to quit): ";
-        cin >> t;
+            wcout << setw(tap - 2) << L'[' << i + 1 << L']' << fl[i]->key << endl;
+        wcout << L"Enter an index (0 to quit): ";
+        wcin >> t;
         if(t < 0 || t > size)
         {
-            cout << "Invalid input, please try again!" << endl;
+            wcout << L"Invalid input, please try again!" << endl;
             system("pause");
         }
         //show def and modifying stuff
         //def
         system("cls");
-        cout << fl[t] << ':' << endl;
+        wcout << fl[t]->key << L':' << endl;
 
         //modifying
         int i;
         do
         {
-            cout << setw(tap) << "[0]" << " Back to favorite list" << endl;
-            cout << setw(tap) << "[1]" << " Remove this from favorite list" << endl;
-            cout << "Enter your choise: ";
-            cin >> i;
+            wcout << setw(tap) << L"[0]" << L" Back to favorite list" << endl;
+            wcout << setw(tap) << L"[1]" << L" Remove this from favorite list" << endl;
+            wcout << L"Enter your choise: ";
+            wcin >> i;
             switch (i)
             {
             case 0:
@@ -253,7 +264,7 @@ void F_screen(FL& fl)
                 break;
             
             default:
-                cout << "Invalid input, please try again" << endl;
+                wcout << L"Invalid input, please try again" << endl;
                 system("pause");
                 break;
             }
@@ -263,20 +274,22 @@ void F_screen(FL& fl)
 
 void Quizz (AVL& tree, string dir)
 {
-    vector<vector<string>> random_words;
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    vector<vector<wstring>> random_words;
     int num = 0;
     tree.num_of_words(tree.get_root(), num);
     int option;
-    cout << "Game options: " << endl;
+    wcout << L"Game options: " << endl;
     do
     {
-        cout << setw(tap) << "[0]" << " Exit quizz mode." << endl;
-        cout << setw(tap) << "[1]" << " Guess the definition of a given keyword." << endl;
-        cout << setw(tap) << "[2]" << " Guess the keyword of a given definition." << endl;
+        wcout << setw(tap) << L"[0]" << L" Exit quizz mode." << endl;
+        wcout << setw(tap) << L"[1]" << L" Guess the definition of a given keyword." << endl;
+        wcout << setw(tap) << L"[2]" << L" Guess the keyword of a given definition." << endl;
         do
         {
-            cout << "your choice: ";
-            cin >> option;
+            wcout << L"your choice: ";
+            wcin >> option;
         }while (option != 2 && option != 1 && option != 0);
         if (option == 0)
             return;
@@ -288,13 +301,13 @@ void Quizz (AVL& tree, string dir)
                     random_words.clear();
                     random_words = random_word(tree, dir, num);
                     random_game(random_words);
-                    cout << "Try again?" << endl;
-                    cout << setw(tap) << "[1]" << " Yes." << endl;
-                    cout << setw(tap) << "[2]" << " Back to game's menu." << endl;
+                    wcout << L"Try again?" << endl;
+                    wcout << setw(tap) << L"[1]" << L" Yes." << endl;
+                    wcout << setw(tap) << L"[2]" << L" Back to game's menu." << endl;
                     do
                     {
-                        cout << "your choice: ";
-                        cin >> option;
+                        wcout << "your choice: ";
+                        wcin >> option;
                     }while (option != 1 && option != 2);
                 }while (option == 1);
                 break;
@@ -304,18 +317,18 @@ void Quizz (AVL& tree, string dir)
                     random_words.clear();
                     random_words = random_word(tree, dir, num);
                     random_def_game(random_words);
-                    cout << "Try again?" << endl;
-                    cout << setw(tap) << "[1]" << " Yes." << endl;
-                    cout << setw(tap) << "[2]" << " Back to game's menu." << endl;
+                    wcout << L"Try again?" << endl;
+                    wcout << setw(tap) << L"[1]" << L" Yes." << endl;
+                    wcout << setw(tap) << L"[2]" << L" Back to game's menu." << endl;
                     do
                     {
-                        cout << "your choice: ";
-                        cin >> option;
+                        wcout << L"your choice: ";
+                        wcin >> option;
                     }while (option != 1 && option != 2);
                 }while (option == 1);
                 break;
             default:
-                cout << "Invalid input, please try again" << endl;
+                wcout << L"Invalid input, please try again" << endl;
                 system("pause");
                 break;
         }
