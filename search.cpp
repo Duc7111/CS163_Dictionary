@@ -22,8 +22,8 @@ vector<wstring> search_for_def (bNode* root, string dir)
     for (int i = 0 ; i < num ; i++)
     {
         fin.read((char*) &size_def,sizeof(int));
-        tmp = new wchar_t [size_def + 1];
-        fin.read((char*)&tmp, size_def*sizeof(wchar_t));
+        tmp = new wchar_t [size_def];
+        fin.read((char*)tmp, size_def*sizeof(wchar_t));
         tmps = tmp;
         str.push_back(tmps);
         delete [] tmp;

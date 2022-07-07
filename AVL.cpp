@@ -43,9 +43,9 @@ void bNode::updateH()
 
 void bNode::save(ofstream& fout)
 {
-    int s = key.length();
+    int s = key.length() + 1;
     fout.write((char*)&s, sizeof(int));
-    fout.write((char*)&key[0], (s + 1)*sizeof(wchar_t));
+    fout.write((char*)(key.c_str() + 1), s*sizeof(wchar_t));
     fout.write((char*)&h, sizeof(int));
     fout.write((char*)&d, sizeof(int));
     fout.write((char*)&f, sizeof(bool));
@@ -53,9 +53,10 @@ void bNode::save(ofstream& fout)
 
 void bNode::load(ifstream& fin)
 {
-    fin.read((char*)&h, sizeof(int));
-    wchar_t* temp = new wchar_t[h + 1];
-    fin.read((char*)&temp, h + 1);
+    int t;
+    fin.read((char*)&t, sizeof(int));
+    wchar_t* temp = new wchar_t[t];
+    fin.read((char*)&temp, t*sizeof(wchar_t));
     key = temp;
     fin.read((char*)&h, sizeof(int));
     fin.read((char*)&d, sizeof(int));
@@ -90,8 +91,6 @@ AVL::~AVL()
 
 int AVL::maketree(string dir, string def_dir, string struct_dir)
 {
-    _setmode(_fileno(stdout), _O_U16TEXT);
-    _setmode(_fileno(stdin), _O_U16TEXT);
     wifstream wfin(dir);
     wfin.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
@@ -119,11 +118,11 @@ int AVL::maketree(string dir, string def_dir, string struct_dir)
         getline(wfin, temp);
         int l = temp.length() + 1;
         fout.write((char*)&l, sizeof(int));
-        fout.write((char*)&temp[0], l*sizeof(wchar_t));
+        fout.write((char*)(temp.c_str() + 1), l*sizeof(wchar_t));
         ++i;
     }
     fout.close();
-    fout.open(struct_dir, ios_base::binary);
+    fout.open(struct_dir, ios_base::binary | ios_base::trunc);
     int t = 0;
     fout.write((char*)&t, sizeof(int));
     save(fout);
