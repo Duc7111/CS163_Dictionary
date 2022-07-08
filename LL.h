@@ -11,8 +11,7 @@ struct Node
 
     void clear()
     {
-        if(this == nullptr) return;
-        next->clear();
+        if(next) next->clear();
         delete this;
     }
 };
@@ -26,7 +25,7 @@ struct stacks
         stacks() : head(nullptr){}
         ~stacks()
         {
-            head->clear();
+            if(head) head->clear();
         }
 
         void push(T a)

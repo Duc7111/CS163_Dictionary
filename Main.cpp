@@ -56,6 +56,7 @@ int main()
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
+        wcin.ignore(1000, L'\n');
 
         //processing
         switch(i)
@@ -101,6 +102,7 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
         wcout << setw(tap) << L"[5]" << L" emotional" << endl;
         wcout << L"Enter your choice: ";
         wcin >> i;
+        wcin.ignore(1000, L'\n');
         switch(i)
         {
         case 0:
@@ -157,10 +159,9 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
     int i = 1;
     do
     {
+        system("cls");
         //searching
         wcout << L"Enter a word (0 to quit): ";
-        wcin.clear();
-        wcin.ignore();
         getline(wcin, k);
         if(k == L"0") return;
         bNode* temp = tree.search(k);
@@ -170,20 +171,20 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
             system("pause");
             continue;
         }
-        //cout definition (done)
+        //search definition (done)
         strs = search_for_def(temp, dir);
-        wcout << k << ':' << endl;
-        for (int j = 0 ; j<strs.size() - 1 ; j++)
-        {
-            wcout << setw(tap) << j+1 << L". " << strs[j] << endl;
-        }
-        //def
 
         //options
-        wcout << L"----------------------------------------------------" << endl;
-        wcout << L"your options: " << endl;
         do
         {
+            system("cls");
+            wcout << k << ':' << endl;
+            for (int j = 0 ; j<strs.size() - 1 ; j++)
+            {
+                wcout << setw(tap) << j+1 << L". " << strs[j] << endl;
+            }
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << L"your options: " << endl;
             wcout << setw(tap) << L"[0]" << L" Back to searching" << endl;
             wcout << setw(tap) << L"[1]";
             if(temp->f) wcout << L" Unlike" << endl;
@@ -191,6 +192,7 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
             wcout << setw(tap) << L"[2]" << L" Modify" << endl;
             wcout << L"Enter your choice: ";
             wcin >> i;
+            wcin.ignore(1000, '\n');
             wcout << L"----------------------------------------------------" << endl;
             switch (i)
             {
@@ -236,6 +238,7 @@ void F_screen(FL& fl)
             wcout << setw(tap - 2) << L'[' << i + 1 << L']' << fl[i]->key << endl;
         wcout << L"Enter an index (0 to quit): ";
         wcin >> t;
+        wcin.ignore(1000, L'\n');
         if(t < 0 || t > size)
         {
             wcout << L"Invalid input, please try again!" << endl;
@@ -254,6 +257,7 @@ void F_screen(FL& fl)
             wcout << setw(tap) << L"[1]" << L" Remove this from favorite list" << endl;
             wcout << L"Enter your choise: ";
             wcin >> i;
+            wcin.ignore(1000, L'\n');
             switch (i)
             {
             case 0:
@@ -290,6 +294,7 @@ void Quizz (AVL& tree, string dir)
         {
             wcout << L"your choice: ";
             wcin >> option;
+            wcin.ignore(1000, '\n');
         }while (option != 2 && option != 1 && option != 0);
         if (option == 0)
             return;
@@ -308,6 +313,7 @@ void Quizz (AVL& tree, string dir)
                     {
                         wcout << "your choice: ";
                         wcin >> option;
+                        wcin.ignore(1000, L'\n');
                     }while (option != 1 && option != 2);
                 }while (option == 1);
                 break;
@@ -324,6 +330,7 @@ void Quizz (AVL& tree, string dir)
                     {
                         wcout << L"your choice: ";
                         wcin >> option;
+                        wcin.ignore(1000, L'\n');
                     }while (option != 1 && option != 2);
                 }while (option == 1);
                 break;
