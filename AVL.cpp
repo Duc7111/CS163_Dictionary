@@ -45,18 +45,17 @@ void bNode::save(ofstream& fout)
 {
     int s = key.length() + 1;
     fout.write((char*)&s, sizeof(int));
-    fout.write((char*)(key.c_str() + 1), s*sizeof(wchar_t));
+    fout.write((char*)key.c_str(), s*sizeof(wchar_t));
     fout.write((char*)&h, sizeof(int));
     fout.write((char*)&d, sizeof(int));
     fout.write((char*)&f, sizeof(bool));
-}
+ }
 
 void bNode::load(ifstream& fin)
 {
-    int t;
-    fin.read((char*)&t, sizeof(int));
-    wchar_t* temp = new wchar_t[t];
-    fin.read((char*)&temp, t*sizeof(wchar_t));
+    fin.read((char*)&h, sizeof(int));
+    wchar_t* temp = new wchar_t[h];
+    fin.read((char*)temp, h*sizeof(wchar_t));
     key = temp;
     fin.read((char*)&h, sizeof(int));
     fin.read((char*)&d, sizeof(int));
