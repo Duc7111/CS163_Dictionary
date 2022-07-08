@@ -110,24 +110,33 @@ int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
             break;
 
         case 1://init e-v
-
+        {
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if(fin.good()) return tree.load(fin, fl);
+            fin.close();
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir);
+        }        
             break;
 
         case 2://int v-e
-
+        {
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if(fin.good()) return tree.load(fin, fl);
+            fin.close();
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir);
+        }        
             break;
 
         case 3://init e-e
         {
             def_dir = "database\\eng-eng\\def.bin";
             struct_dir = "database\\eng-eng\\struct.bin";
-            ifstream fin(def_dir);
-            if(fin.good()) 
-            {
-                fin.close();
-                fin.open(struct_dir, ios_base::binary);
-                return tree.load(fin, fl);
-            }
+            ifstream fin(struct_dir, ios_base::binary);
+            if(fin.good()) return tree.load(fin, fl);
             fin.close();
             return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
         }
