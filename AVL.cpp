@@ -128,9 +128,13 @@ bNode* AVL::subremove(bNode*& root, wstring k)
         bNode* temp;
         if(d > 0) temp = sub(root->left, true);
         else temp = sub(root->right, false);
+        wstring w = root->key;
+        bool b = root->f;
         root->key = temp->key;
+        temp->key = w;
         root->d = temp->d;
-        root->f = temp->h;
+        root->f = temp->f;
+        temp->f = b;
     }
     else if(root->key > k) subremove(root->left, k);
     else subremove(root->right, k);
