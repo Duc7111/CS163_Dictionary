@@ -227,7 +227,7 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
 }
 
 
-void F_screen(FL& fl)
+void F_screen(FL& fl, string def_dir)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -254,14 +254,16 @@ void F_screen(FL& fl)
             system("pause");
         }
         //show def and modifying stuff
-        //def
-        system("cls");
-        wcout << fl[t]->key << L':' << endl;
-
-        //modifying
         int i;
         do
         {
+            system("cls");
+            wcout << fl[t]->key << L':' << endl;
+            vector<wstring> temp = search_for_def(fl[t], def_dir);
+            for(int i = 0; i < temp.size(); ++i)
+            {
+                wcout << setw(tap) << i + 1 << L". " << temp[i] << endl;
+            }
             wcout << setw(tap) << L"[0]" << L" Back to favorite list" << endl;
             wcout << setw(tap) << L"[1]" << L" Remove this from favorite list" << endl;
             wcout << L"Enter your choise: ";
@@ -350,3 +352,4 @@ void Quizz (AVL& tree, string dir)
         }
     }while (1);
 }
+ 
