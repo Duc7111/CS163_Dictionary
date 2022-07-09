@@ -71,7 +71,7 @@ int main()
             break;
 
         case 3://favorite word
-            F_screen(fl);
+            F_screen(fl, def_dir);
             break;
         
         case 4:
