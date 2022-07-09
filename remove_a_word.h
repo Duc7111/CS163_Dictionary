@@ -1,3 +1,4 @@
 #pragma once
 #include "Main.h"
-bool remove_a_word(string word, AVL tree);
+
+bool remove_a_word(wstring word, AVL& tree);
