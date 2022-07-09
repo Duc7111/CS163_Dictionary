@@ -16,6 +16,8 @@ private:
     bNode* root;
 
     bool subadd(bNode*&, wstring, int);
+    bNode* sub(bNode*&, bool);
+    bNode* subremove(bNode*&, wstring);
     void lrotate(bNode*&);
     void rrotate(bNode*&);
 public:

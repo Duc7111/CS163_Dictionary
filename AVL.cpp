@@ -75,11 +75,70 @@ bool AVL::subadd(bNode*& root, wstring k, int x)
     if (root->key > k) b = subadd(root->left, k, x);
     else b = subadd(root->right, k, x);
     if (!b) return false;
+    root->updateH();
     int d = root->left->height() - root->right->height();
     if (d == 2) rrotate(root);
     else if (d == -2) lrotate(root);
-    else root->updateH();
     return true;
+}
+
+bNode* AVL::sub(bNode*& root, bool d)
+{
+    bNode* temp;
+    if(d)
+    {
+        if(root->right) temp = sub(root->right, d);
+        else 
+        {
+            temp = root;
+            root = root->left;
+            return temp;
+        }
+    }
+    else
+    {
+        if(root->left) temp = sub(root->left, d);
+        else
+        {
+            temp = root;
+            root = root->right;
+            return temp;
+        }
+    }
+    root->updateH();
+    int t = root->left->height() - root->right->height();
+    if (t == 2) rrotate(root);
+    else if (t == -2) lrotate(root);
+    return temp;
+}
+
+bNode* AVL::subremove(bNode*& root, wstring k)
+{
+    bNode* temp;
+    if(k == root->key)
+    {
+        if(!root->left || !root->right)
+        {
+            temp = root;
+            if(root->left) root = root->left;
+            else root = root->right;
+            return temp;
+        }
+        int d = root->left->height() - root->right->height();
+        bNode* temp;
+        if(d > 0) temp = sub(root->left, true);
+        else temp = sub(root->right, false);
+        root->key = temp->key;
+        root->d = temp->d;
+        root->f = temp->h;
+    }
+    else if(root->key > k) subremove(root->left, k);
+    else subremove(root->right, k);
+    root->updateH();
+    int d = root->left->height() - root->right->height();
+    if (d == 2) rrotate(root);
+    else if (d == -2) lrotate(root);
+    return temp;
 }
 
 AVL::AVL() : root(nullptr) {}
@@ -136,7 +195,7 @@ bool AVL::insert(wstring k, int d)
 
 bool AVL::remove(wstring k)
 {
-    return true;
+    return subremove(root, k);
 }
 
 bNode* AVL::search(wstring x)
