@@ -13,6 +13,6 @@ int AVL::Add(AVL& tree, wstring key, wstring def, string def_dir)
 	//fout.write((char*)&l, sizeof(int));
 	//fout.write((char*)&def[0], l * sizeof(wchar_t));
 	//fout.close();
-	//tree.insert(key, d);
+	tree.insert(key, d);
 	return d;
 }
