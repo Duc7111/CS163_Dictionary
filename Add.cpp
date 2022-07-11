@@ -8,7 +8,7 @@ int AVL::Add(AVL& tree, wstring key, wstring def, string def_dir)
 	ofstream fout(def_dir, ios_base::binary | ios_base::app | ios_base::ate);
 	if (!fout.is_open()) return -2;
 	int d = fout.tellp(), l = def.length() + 1;
-	//int numb = 0;
+	int numb = 0;
 	fout.write((char*)&numb, sizeof(int));
 	fout.write((char*)&l, sizeof(int));
 	fout.write((char*)&def[0], l * sizeof(wchar_t));
