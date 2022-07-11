@@ -352,6 +352,7 @@ void Quizz (AVL& tree, string dir)
         }
     }while (1);
 }
+
 void Add(AVL& tree, string& def_dir)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
@@ -384,6 +385,7 @@ void Add(AVL& tree, string& def_dir)
         wcout << L"[0] : No" << endl;
         wcout << L"[1] : Yes" << endl;
         int choice;
+        wcout << L"Please input your choice = ";
         wcin >> choice;
         if (choice == 0)
         {
