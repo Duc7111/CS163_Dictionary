@@ -10,15 +10,4 @@ int AVL::Add(AVL& tree, wstring key ,wstring def, wstring dir)
 	fout.close();
 	tree.insert(key, d);
 	return d;
-
-	/* if (tree.insert(str, k))
-	{
-		bNode* root = tree.search(str);
-		ofstream FileOut;
-		FileOut.open(dir, ios_base::binary | ios_base::app);
-		FileOut.write((char*)&k, sizeof(int));
-		FileOut.write((char*)&def, sizeof(char)*(def.length() + 1));
-		FileOut.close();
-		return root;
-	} */
 }
