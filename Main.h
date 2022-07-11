@@ -8,6 +8,6 @@ int Init_screen(AVL&, FL&, string&, string&);
 
 void S_screen(AVL&, FL&, string);
 
-void F_screen(FL&);
+void F_screen(FL&, string def_dir);
 
-void Quizz (AVL& , string);
+void Quizz(AVL&, string);
