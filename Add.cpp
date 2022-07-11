@@ -10,7 +10,7 @@ int AVL::Add(AVL& tree, wstring key, wstring def, string def_dir)
 	int d = fout.tellp(), l = def.length() + 1;
 	//int numb = 0;
 	fout.write((char*)&numb, sizeof(int));
-	//fout.write((char*)&l, sizeof(int));
+	fout.write((char*)&l, sizeof(int));
 	fout.write((char*)&def[0], l * sizeof(wchar_t));
 	fout.close();
 	tree.insert(key, d);
