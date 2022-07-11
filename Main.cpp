@@ -352,4 +352,26 @@ void Quizz (AVL& tree, string dir)
         }
     }while (1);
 }
- 
+void Add(AVL& tree, wstring dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wstring key, def;
+    wcout << L"Please input word  that you want to add to dictionary = ";
+    getline(wcin, key);
+    wcout << L"Please input definition of word that you want to add to dictionary = ";
+    getline(wcin, def);
+    int i = tree.Add(tree, key, def, dir);
+    switch (i)
+    {
+    case -1:
+        wcout << L"The word has already existed" << endl;
+        break;
+    case -2:
+        wcout << L"Can not open the distionary that you want to add to" << endl;
+        break;
+    default:
+        wcout << L"Add succesfully" << endl;
+        break;
+    }
+}
