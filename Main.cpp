@@ -9,7 +9,7 @@
 #include"AVL.h"
 #include"Const.h"
 #include"search.h"
-
+#include"ViewRandomly.h"
 using namespace std;
 
 int main()
@@ -397,5 +397,21 @@ void Add(AVL& tree, string& def_dir)
         {
             again = false;
         }
+    }
+}
+void ViewRandomWord(AVL& tree, string def_dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    bNode* root = tree.get_root();
+    int serial = FindRandom(tree, root);
+    bNode* random = ViewRandom(root, serial, 0, tree, def_dir);
+    vector <wstring> strs;
+    strs = search_for_def(random, def_dir);
+    system("cls");
+    wcout << random->key << ':' << endl;
+    for (int j = 0; j < strs.size() - 1; j++)
+    {
+        wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
     }
 }
