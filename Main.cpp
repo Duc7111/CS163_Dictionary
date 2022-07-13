@@ -405,7 +405,9 @@ void ViewRandomWord(AVL& tree, string def_dir)
     _setmode(_fileno(stdin), _O_U16TEXT);
     bNode* root = tree.get_root();
     int serial = FindRandom(tree, root);
-    bNode* random = ViewRandom(root, serial, 0, tree, def_dir);
+    int count = 0;
+    bNode* random = nullptr;
+    ViewRandom(root, serial, count, tree, def_dir, random);
     vector <wstring> strs;
     strs = search_for_def(random, def_dir);
     system("cls");
@@ -414,4 +416,5 @@ void ViewRandomWord(AVL& tree, string def_dir)
     {
         wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
     }
+    system("pause");
 }

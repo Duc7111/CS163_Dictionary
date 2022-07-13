@@ -8,15 +8,21 @@ int FindRandom(AVL& tree, bNode*& root)
 	int number = rand() % total + 1;
 	return number;
 }
-bNode* ViewRandom(bNode*& root, int number, int count, AVL& tree, string dir)
+void ViewRandom(bNode*& root, int number, int& count, AVL& tree, string dir, bNode*& random)
 {
 	if (root)
 	{
+		count++;
+		if (count > number)
+		{
+			return;
+		}
 		if (number == count)
 		{
-			return root;
+			random = root;
+			return;
 		}
-		if (root->left) ViewRandom(root->left, number, count + 1, tree, dir);
-		if (root->right) ViewRandom(root->right, number, count + 1, tree, dir);
+		if (root->left && !random) ViewRandom(root->left, number, count, tree, dir, random);
+		if (root->right && !random) ViewRandom(root->right, number, count, tree, dir, random);
 	}
 }
