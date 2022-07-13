@@ -12,3 +12,4 @@ using namespace std;
 
 void convert_txt(string dir);
 void ignore_blank(string dir);
+void lower_key ();
