@@ -13,3 +13,6 @@ void F_screen(FL&, string def_dir);
 void Quizz(AVL&, string);
 
 void ViewRandomWord(AVL& tree, string def_dir);
+
+
+void Switch_data_set(string& struct_dir, string& def_dir);

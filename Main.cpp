@@ -53,6 +53,9 @@ int main()
         wcout << setw(tap) << L"[2]" << L" Search" << endl;
         wcout << setw(tap) << L"[3]" << L" View favorites" << endl;
         wcout << setw(tap) << L"[4]" << L" Quizzes" << endl;
+        wcout << setw(tap) << L"[5]" << L" Add a new word" << endl;
+        wcout << setw(tap) << L"[6]" << L" View random word and its definition" << endl;
+        wcout << setw(tap) << L"[7]" << L" Switch data set" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
@@ -417,4 +420,174 @@ void ViewRandomWord(AVL& tree, string def_dir)
         wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
     }
     system("pause");
+}
+void Switch_data_set(string& struct_dir, string& def_dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wcout << L"CHANGE DATA SET" << endl;
+    if (def_dir == "database\\eng-vie\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-eng mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 3:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\vie-eng\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to eng-vie mode" << endl;
+        wcout << L"[2].Change to eng-eng mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\eng-eng\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 3:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\slang\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 3:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to slang mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 3:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
 }
