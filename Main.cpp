@@ -77,6 +77,12 @@ int main()
         case 4:
             Quizz(tree, def_dir);
             break;
+        case 5:
+            Add(tree, def_dir);
+            break;
+        case 6:
+            ViewRandomWord(tree, def_dir);
+            break;
         default://invalid input
             wcout << L"Unknow command, please try again";
             break;
