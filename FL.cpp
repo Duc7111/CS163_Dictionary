@@ -121,10 +121,7 @@ int FL::size()
     return c_size;
 }
 
-bool FL::save(string dir)
+void FL::save(ofstream& fout)
 {
-    ofstream fout(dir, ios_base::binary);
-    if(!fout.is_open()) return false;
     fout.write((char*)&c_size, sizeof(int));
-    return true;
 }

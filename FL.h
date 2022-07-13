@@ -19,5 +19,5 @@ class FL
         bool remove(int);
 
         int size();
-        bool save(string);
+        void save(ofstream&);
 };

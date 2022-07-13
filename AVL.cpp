@@ -114,7 +114,7 @@ bNode* AVL::sub(bNode*& root, bool d)
 
 bNode* AVL::subremove(bNode*& root, wstring k)
 {
-    bNode* temp;
+    bNode* temp = nullptr;
     if(k == root->key)
     {
         if(!root->left || !root->right)
@@ -136,8 +136,8 @@ bNode* AVL::subremove(bNode*& root, wstring k)
         root->f = temp->f;
         temp->f = b;
     }
-    else if(root->key > k) subremove(root->left, k);
-    else subremove(root->right, k);
+    else if(root->key > k) temp = subremove(root->left, k);
+    else temp = subremove(root->right, k);
     root->updateH();
     int d = root->left->height() - root->right->height();
     if (d == 2) rrotate(root);
