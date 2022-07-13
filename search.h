@@ -17,3 +17,4 @@ vector<vector<wstring>> random_word (AVL& tree, string dir, int n);
 bool random_game (vector<vector<wstring>> lists);
 bool random_def_game (vector<vector<wstring>> lists);
 void random_keywords (vector<vector<wstring>> lists);
+string normalization (string &str);
