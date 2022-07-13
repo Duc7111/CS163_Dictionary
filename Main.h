@@ -11,3 +11,5 @@ void S_screen(AVL&, FL&, string);
 void F_screen(FL&, string def_dir);
 
 void Quizz(AVL&, string);
+
+void ViewRandomWord(AVL& tree, string def_dir);
