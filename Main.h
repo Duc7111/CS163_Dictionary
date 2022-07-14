@@ -1,4 +1,5 @@
 #pragma once
+#include"RemoveFile.h"
 #include "FL.h"
 #include "AVL.h"
 
@@ -16,3 +17,5 @@ void ViewRandomWord(AVL& tree, string def_dir);
 
 
 void Switch_data_set(string& struct_dir, string& def_dir);
+
+void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir);
