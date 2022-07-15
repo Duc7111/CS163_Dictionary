@@ -1,7 +1,19 @@
 #pragma once
-#include"RemoveFile.h"
+
+#include<iostream>
+#include<iomanip>
+#include<io.h>
+#include<fcntl.h>
+#include<string>
+#include<codecvt>
+
+#include"AVL.h"
 #include "FL.h"
-#include "AVL.h"
+#include"Const.h"
+#include"search.h"
+#include"ViewRandomly.h"
+#include "RemoveFile.h"
+#include "remove_a_word.h"
 
 bool load(AVL tree); // load data from file
 
@@ -13,8 +25,9 @@ void F_screen(FL&, string def_dir);
 
 void Quizz(AVL&, string);
 
-void ViewRandomWord(AVL& tree, string def_dir);
+void Add(AVL& tree, string& def_dir);
 
+void ViewRandomWord(AVL& tree, string def_dir);
 
 void Switch_data_set(string& struct_dir, string& def_dir);
 
