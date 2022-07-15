@@ -1,38 +1,40 @@
 #include "search_history.h"
 
-void load_search_history(Node<string>*& search_history, string dir) 
+Node<wstring>* search_history::Load(string hist_dir)
 {
-	ifstream fin;
-	fin.open(dir);
-	string word;
+	wifstream fin;
+	fin.open(hist_dir);
+	wstring word;
 	fin >> word;
 	while (!fin.eof()) {
-		search_history = new Node<string>(word, search_history);
+		hist_head = new Node<wstring>(word, hist_head);
 		fin >> word;
 	}
 	fin.close();
+	return hist_head;
 }
 
-Node<string>* add_search_history(Node<string>*& search_history, string word, string dir)
+Node<wstring>* search_history::Add(wstring word, string hist_dir)
 {
-	search_history = new Node<string>(word, search_history);
-	ofstream fout;
-	fout.open(dir, ios::app);
+	hist_head = new Node<wstring>(word, hist_head);
+	wofstream fout;
+	fout.open(hist_dir, ios::app);
 	fout << word << endl;
 	fout.close();
-	return search_history;
+	return hist_head;
 }
 
-void view_search_history(Node<string>* search_history) 
+void search_history::View()
 {
-	while (search_history) {
-		cout << search_history->data << endl;
-		search_history = search_history->next;
+	Node<wstring>* temp = hist_head;
+	while (temp) {
+		wcout << temp->data << endl;
+		temp = temp->next;
 	}
 }
 
-Node<string>* delete_search_history(Node<string>* search_history) {
-	search_history->clear();
-	search_history = nullptr;
-	return search_history;
+Node<wstring>* search_history::Delete() {
+	hist_head->clear();
+	hist_head = nullptr;
+	return hist_head;
 }

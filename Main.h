@@ -11,6 +11,7 @@
 #include "FL.h"
 #include"Const.h"
 #include"search.h"
+#include "search_history.h"
 #include"ViewRandomly.h"
 #include "RemoveFile.h"
 #include "remove_a_word.h"
