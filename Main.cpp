@@ -190,7 +190,7 @@ void S_screen(AVL& tree, FL& fl, string dir) //sreen drawing add searching
             wcout << k << ':' << endl;
             for (int j = 0 ; j<strs.size() - 1 ; j++)
             {
-                wcout << setw(tap) << j+1 << L". " << strs[j] << endl;
+                wcout << setw(tap - 3) << j+1 << L". " << strs[j] << endl;
             }
             wcout << L"----------------------------------------------------" << endl;
             wcout << L"your options: " << endl;
