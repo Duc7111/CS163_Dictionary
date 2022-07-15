@@ -1,14 +1,5 @@
-#include<iostream>
-#include<iomanip>
-#include<io.h>
-#include<fcntl.h>
-#include<string>
-#include<codecvt>
 
 #include"Main.h"
-#include"AVL.h"
-#include"Const.h"
-#include"search.h"
 
 using namespace std;
 
@@ -53,6 +44,9 @@ int main()
         wcout << setw(tap) << L"[2]" << L" Search" << endl;
         wcout << setw(tap) << L"[3]" << L" View favorites" << endl;
         wcout << setw(tap) << L"[4]" << L" Quizzes" << endl;
+        wcout << setw(tap) << L"[5]" << L" Add a new word" << endl;
+        wcout << setw(tap) << L"[6]" << L" View random word and its definition" << endl;
+        wcout << setw(tap) << L"[7]" << L" Switch data set" << endl;
         //input
         wcout << L"Enter your choice: ";
         wcin >> i;
@@ -76,6 +70,18 @@ int main()
         
         case 4:
             Quizz(tree, def_dir);
+            break;
+        case 5:
+            Add(tree, def_dir);
+            break;
+        case 6:
+            ViewRandomWord(tree, def_dir);
+            break;
+        case 7:
+            Switch_data_set(struct_dir, def_dir);
+            break;
+        case 8:
+            ResetToOriginal(tree, struct_dir, def_dir);
             break;
         default://invalid input
             wcout << L"Unknow command, please try again";
@@ -393,3 +399,206 @@ void Add(AVL& tree, string& def_dir)
         }
     }
 }
+void ViewRandomWord(AVL& tree, string def_dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    bNode* root = tree.get_root();
+    int serial = FindRandom(tree, root);
+    int count = 0;
+    bNode* random = nullptr;
+    ViewRandom(root, serial, count, tree, def_dir, random);
+    vector <wstring> strs;
+    strs = search_for_def(random, def_dir);
+    system("cls");
+    wcout << random->key << ':' << endl;
+    for (int j = 0; j < strs.size() - 1; j++)
+    {
+        wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
+    }
+    system("pause");
+}
+void Switch_data_set(string& struct_dir, string& def_dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wcout << L"CHANGE DATA SET" << endl;
+    if (def_dir == "database\\eng-vie\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-eng mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 3:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\vie-eng\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to eng-vie mode" << endl;
+        wcout << L"[2].Change to eng-eng mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\eng-eng\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 3:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\slang\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 3:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+    else
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to slang mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice;
+        switch (choice)
+        {
+        case 1:
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 2:
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+        case 3:
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            wcout << L"Change succesfully" << endl;
+            break;
+            //case 4:
+            //    def_dir = "";
+            //    struct_dir = "";
+            //    break;
+        default:
+            wcout << L"Goodbye" << endl;
+            break;
+        }
+        system("pause");
+    }
+}
+void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir)
+{
+    bool Check = DeleteFile(struct_dir);
+    bool Check1 = DeleteFile(def_dir);
+    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
+    if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
+    else wcout << L"Not successfully" << endl;
+    system("pause");
+
+    //if (Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
+    //else wcout << L"Delete not successfully" << endl;
+    //system("pause");
+}
+

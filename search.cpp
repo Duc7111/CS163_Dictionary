@@ -173,3 +173,31 @@ bool random_def_game (vector<vector<wstring>> lists)
         return false;
     }
 }
+string normalization (string &str)
+{
+    bool fspace = true;
+    string ans;
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    for (int i = 0; i<str.size() ; i++)
+    {
+        if (fspace == true)
+        {
+            if (str[i] == ' ')
+                continue;
+            if (str[i] != ' ')
+            {
+                ans.push_back(str[i]);
+                fspace = false;
+            }
+        }
+        else
+        {
+            if (str[i] == ' ' && str[i+1] == ' ')
+                continue;
+            if (i == str.size() -  1 && str[i] == ' ')
+                break;
+            ans.push_back(str[i]);
+        }
+    }
+    return ans;
+}
