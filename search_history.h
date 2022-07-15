@@ -1,6 +1,15 @@
 #pragma once
 
-#include "Main.h"
+#include<iostream>
+#include<fstream>
+#include<iomanip>
+#include<io.h>
+#include<fcntl.h>
+#include<string>
+#include<codecvt>
+
+#include "LL.h"
+using namespace std;
 
 class search_history {
 private:

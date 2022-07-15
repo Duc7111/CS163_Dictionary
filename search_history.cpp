@@ -13,10 +13,9 @@ Node<wstring>* search_history::Load()
 	fin.open("search_history.txt");
 	if (!check_empty_file(fin, "search_history.txt")) {
 		wstring word;
-		fin >> word;
 		while (!fin.eof()) {
-			hist_head = new Node<wstring>(word, hist_head);
 			fin >> word;
+			hist_head = new Node<wstring>(word, hist_head);
 		}
 	}
 	fin.close();
@@ -34,7 +33,8 @@ Node<wstring>* search_history::Add(wstring word)
 }
 
 void search_history::View()
-{
+{ 
+	if (!hist_head) wcout << L"No history.";
 	Node<wstring>* temp = hist_head;
 	while (temp) {
 		wcout << temp->data << endl;
