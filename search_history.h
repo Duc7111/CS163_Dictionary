@@ -4,10 +4,11 @@
 
 class search_history {
 private:
-	Node<wstring>*& hist_head;
+	Node<wstring>* hist_head;
 public:
-	Node<wstring>* Load(string hist_dir);
-	Node<wstring>* Add(wstring word, string hist_dir);
+	search_history();
+	Node<wstring>* Load();
+	Node<wstring>* Add(wstring word);
 	Node<wstring>* Delete();
 	void View();
 };
