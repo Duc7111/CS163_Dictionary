@@ -28,7 +28,7 @@ int main()
                 system("pause");
                 return -1;
             default:
-                wcout << L"File load succesfully" << endl;
+                wcout << L"File load succesfully" << size << endl;
                 system("pause");
                 break;
             }

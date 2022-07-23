@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <limits.h>
+#include <algorithm>
 using namespace std;
 
 void convert_txt (string dir);

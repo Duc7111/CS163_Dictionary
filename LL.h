@@ -1,5 +1,8 @@
 #pragma once
 
+#include"Const.h"
+#include"Keyword.h"
+
 template<class T>
 struct Node
 {
