@@ -11,10 +11,10 @@ using namespace std;
 struct keyword
 {
     wstring key;
-    Node<bNode*>* link;
+    Node<wstring>* word;
 
     keyword();
-    keyword(const wstring&, bNode*);
+    keyword(const wstring&,const wstring&);
     ~keyword();
 };
 
@@ -28,7 +28,9 @@ struct c_hash
     c_hash();
     
     Node<keyword>*& get(const wstring&);
-    void add(const wstring&, bNode*);
+    void add(const wstring&, const wstring&);
+    void save(ofstream&);
+    void load(ifstream&);
 };
 
 

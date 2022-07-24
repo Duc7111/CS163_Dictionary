@@ -3,16 +3,16 @@
 #include"Keyword.h"
 #include"Const.h"
 
-keyword::keyword() : key(), link(nullptr){}
+keyword::keyword() : key(), word(nullptr){}
 
-keyword::keyword(const wstring& k, bNode* l) : key(key)
+keyword::keyword(const wstring& k,const wstring& l) : key(key)
 {
-    link = new Node<bNode*>(l, nullptr);
+    word = new Node<wstring>(l, nullptr);
 }
 
 keyword::~keyword()
 {
-    if(link) link->clear();
+    if(word) word->clear();
 }
 
 int c_hash::hf(const wstring& key)
@@ -31,15 +31,59 @@ Node<keyword>*& c_hash::get(const wstring& key)
     return temp; 
 }
 
-void c_hash::add(const wstring& key, bNode* link)
+void c_hash::add(const wstring& key, const wstring& word)
 {
     Node<keyword>*& temp = get(key);
-    if(!temp || temp->data.key != key) temp = new Node(keyword(key, link), temp);
+    if(!temp || temp->data.key != key) temp = new Node(keyword(key, word), temp);
     else
     {
-        Node<bNode*>*& t = temp->data.link;
-        while(t->data->key < link->key) t = t->next;
-        if(t->data->key != link->key) t = new Node(link, t);
+        Node<wstring>*& t = temp->data.word;
+        while(t && t->data < word) t = t->next;
+        if(!t || t->data != word) t = new Node(word, t);
+    }
+}
+
+void c_hash::save(ofstream& fout)
+{
+    for(int i = 0; i < hash_len; ++i)
+    {
+        int l;
+        Node<keyword>* temp = arr[i];
+        while(temp)
+        {
+            l = arr[i]->data.key.length() + 1;
+            fout.write((char*)&l, sizeof(int));
+            fout.write((char*)arr[i]->data.key.c_str(), l);
+            Node<wstring>* temp = arr[i]->data.word;
+            while(temp)
+            {
+                l = temp->data.length() + 1;
+                fout.write((char*)&l, sizeof(int));
+                fout.write((char*)temp->data.c_str(), l);
+                temp = temp->next;
+            }
+            l = 0;
+            fout.write((char*)&l, sizeof(int));
+        }
+        l = 0;
+        fout.write((char*)&l, sizeof(int));
+    }
+}
+
+void c_hash::load(ifstream& fin)
+{
+    for(int i = 0; i < hash_len; ++i)
+    {
+        int l;
+        do
+        {
+            fin.read((char*)&l, sizeof(int));
+            if(l == 0) break;
+            arr[i] = new Node<keyword>;
+            wchar_t* temp = new wchar_t[l];
+            fin.read((char*)temp, l);
+        } while (l > 0);
+        
     }
 }
 

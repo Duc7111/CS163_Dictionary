@@ -9,7 +9,7 @@ struct Node
     T data;
     Node* next;
 
-    Node() : next(nullptr){}
+    Node() : data(), next(nullptr){}
     Node(T a, Node<T>* n) : data(a), next(n) {}
 
     void clear()

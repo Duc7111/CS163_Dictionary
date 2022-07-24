@@ -18,9 +18,9 @@
 
 bool load(AVL tree); // load data from file
 
-int Init_screen(AVL&, FL&, string&, string&);
+int Init_screen(AVL&, FL&, c_hash&, string&, string&, string&);
 
-void S_screen(AVL&, FL&, search_history&, string);
+void S_screen(AVL&, FL&, c_hash&, search_history&, string);
 
 void F_screen(FL&, string def_dir);
 
@@ -32,7 +32,7 @@ void ViewRandomWord(AVL& tree, string def_dir);
 
 void Switch_data_set(string& struct_dir, string& def_dir);
 
-void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir);
+void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& hash_dir, c_hash& key_hash);
 
 void ViewSearchHistory(search_history&);
 
