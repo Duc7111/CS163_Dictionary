@@ -1,38 +1,63 @@
 #include "search_history.h"
 
-void load_search_history(Node<string>*& search_history, string dir) 
-{
+search_history::search_history() : hist_head(nullptr) {}
+
+bool check_empty_file(string dir) {
+	bool check = false;
 	ifstream fin;
 	fin.open(dir);
-	string word;
-	fin >> word;
-	while (!fin.eof()) {
-		search_history = new Node<string>(word, search_history);
-		fin >> word;
-	}
+	if (fin.peek() == EOF) check = true;
 	fin.close();
+	return check;
 }
 
-Node<string>* add_search_history(Node<string>*& search_history, string word, string dir)
+
+Node<wstring>* search_history::Load()
 {
-	search_history = new Node<string>(word, search_history);
-	ofstream fout;
-	fout.open(dir, ios::app);
+	if (!check_empty_file("search_history.txt")) {
+		wifstream fin;
+		fin.open("search_history.txt");
+
+		wstring word;
+		while (!fin.eof()) {
+			fin >> word;
+			hist_head = new Node<wstring>(word, hist_head);
+		}
+		fin.close();
+		Node<wstring>* temp = hist_head;
+		hist_head = hist_head->next;
+		delete temp;
+	}
+	return hist_head;
+}
+
+Node<wstring>* search_history::Add(wstring word)
+{
+	hist_head = new Node<wstring>(word, hist_head);
+	wofstream fout;
+	fout.open("search_history.txt", ios::app);
 	fout << word << endl;
 	fout.close();
-	return search_history;
+	return hist_head;
 }
 
-void view_search_history(Node<string>* search_history) 
+void search_history::View()
 {
-	while (search_history) {
-		cout << search_history->data << endl;
-		search_history = search_history->next;
+	if (!hist_head) {
+		wcout << L"No history." << endl;
+		return;
+	}
+	Node<wstring>* temp = hist_head;
+	while (temp) {
+		wcout << temp->data << endl;
+		temp = temp->next;
 	}
 }
 
-Node<string>* delete_search_history(Node<string>* search_history) {
-	search_history->clear();
-	search_history = nullptr;
-	return search_history;
+Node<wstring>* search_history::Delete() {
+	ofstream fout("search_history.txt", ios::trunc);
+	fout.close();
+	if (hist_head) hist_head->clear();
+	hist_head = nullptr;
+	return hist_head;
 }

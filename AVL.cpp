@@ -151,7 +151,7 @@ AVL::~AVL()
     if(root) clear(root);
 }
 
-int AVL::maketree(string dir, string def_dir, string struct_dir)
+int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir, c_hash key_hash)
 {
     wifstream wfin(dir);
     wfin.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
@@ -182,12 +182,19 @@ int AVL::maketree(string dir, string def_dir, string struct_dir)
         fout.write((char*)&l, sizeof(int));
         fout.write((char*)(temp.c_str() + 1), l*sizeof(wchar_t));
         ++i;
+        vector<wstring> kw = getKeyWord(temp);
+        for(wstring s : kw) key_hash.add(s, cur);
     }
     fout.close();
+
     fout.open(struct_dir, ios_base::binary | ios_base::trunc);
     int t = 0;
     fout.write((char*)&t, sizeof(int));
     save(fout);
+    fout.close();
+
+    fout.open(hash_dir, ios_base::binary | ios_base::trunc);
+    key_hash.save(fout);
     fout.close();
     return c;
 }

@@ -24,7 +24,7 @@ public:
     AVL();
     ~AVL();
 
-    int maketree(string, string, string);
+    int maketree(string, string, string, string, c_hash);
     bool insert(wstring, int);
     bool remove(wstring);//unnessessary
 
