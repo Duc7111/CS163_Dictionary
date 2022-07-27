@@ -9,10 +9,8 @@ int main()
     _setmode(_fileno(stdin), _O_U16TEXT);
     string def_dir; // bin file that save the tree (based on mode of dictionary)
     string struct_dir; // bin file that save the tree (based on mode of dictionary)
-    string hash_dir;
     int i = 1, size;
     AVL tree;
-    c_hash key_hash;
     FL fl(0);
     do
     {
@@ -20,7 +18,7 @@ int main()
         //choose language
         if (i == 1)
         {
-            switch (size = Init_screen(tree, fl, key_hash, def_dir, struct_dir, hash_dir))
+            switch (size = Init_screen(tree, fl, def_dir, struct_dir))
             {
             case -1:
                 return 0;
@@ -30,7 +28,7 @@ int main()
                 system("pause");
                 return -1;
             default:
-                wcout << L"File load succesfully" << size << endl;
+                wcout << L"File load succesfully" << endl;
                 system("pause");
                 break;
             }
@@ -71,10 +69,9 @@ int main()
             return 0;
 
         case 1://setting
-            break;
 
         case 2://change
-            S_screen(tree, fl, key_hash, Search_History, def_dir);
+            S_screen(tree, fl, Search_History, def_dir);
             break;
 
         case 3: //view search history
@@ -109,7 +106,7 @@ int main()
             break;
 
         case 12:
-            ResetToOriginal(tree, struct_dir, def_dir, hash_dir, key_hash);
+            ResetToOriginal(tree, struct_dir, def_dir);
             break;
 
         default://invalid input
@@ -124,7 +121,9 @@ void DeleteSearchHistory(search_history& Search_History) {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Delete();
-    wcout << setw(tap) << "History deleted!";
+    wcout << setw(tap) << L"--------------------------------" << endl;
+    wcout << setw(tap) << "History deleted!" << endl;
+    wcout << setw(tap) << L"--------------------------------" << endl;
     system("pause");
 }
 
@@ -139,7 +138,7 @@ void ViewSearchHistory(search_history& Search_History) {
 }
 
 
-int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& struct_dir, string& hash_dir)
+int Init_screen(AVL& tree, FL& fl, string& def_dir, string& struct_dir)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -167,11 +166,10 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\eng-vie\\def.bin";
             struct_dir = "database\\eng-vie\\struct.bin";
-            hash_dir = "database\\eng-vie\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.good()) return tree.load(fin, fl);
             fin.close();
-            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir);
         }
         break;
 
@@ -179,11 +177,10 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\vie-eng\\def.bin";
             struct_dir = "database\\vie-eng\\struct.bin";
-            hash_dir = "database\\vie-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.is_open()) return tree.load(fin, fl);
             fin.close();
-            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir);
         }
         break;
 
@@ -191,11 +188,10 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\eng-eng\\def.bin";
             struct_dir = "database\\eng-eng\\struct.bin";
-            hash_dir = "database\\eng-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.good()) return tree.load(fin, fl);
             fin.close();
-            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
         }
         break;
 
@@ -216,7 +212,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
     return 0;
 }
 
-void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir) //sreen drawing add searching
+void S_screen(AVL& tree, FL& fl, search_history& search_history, string dir) //sreen drawing add searching
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -640,11 +636,11 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         system("pause");
     }
 }
-void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& hash_dir, c_hash& key_hash)
+void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir)
 {
     bool Check = DeleteFile(struct_dir);
     bool Check1 = DeleteFile(def_dir);
-    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir);
     if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
     else wcout << L"Not successfully" << endl;
     system("pause");

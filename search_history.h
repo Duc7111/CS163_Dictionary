@@ -22,3 +22,4 @@ public:
 	void View();
 };
 
+bool check_empty_file(wifstream& fin);
