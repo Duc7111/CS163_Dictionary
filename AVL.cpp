@@ -1,10 +1,11 @@
 #include<iostream>
 #include<codecvt>
-#include<io.h>
+#include <io.h>
 #include<fcntl.h> 
-
 #include "AVL.h"
 #include "Const.h"
+
+static locale empty();
 
 bNode::bNode() : left(nullptr), right(nullptr) {}
 bNode::bNode(wstring s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr) {}
@@ -154,7 +155,8 @@ AVL::~AVL()
 int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir, c_hash key_hash)
 {
     wifstream wfin(dir);
-    wfin.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
+    wfin.imbue(locale(empty(), new codecvt_utf8<wchar_t>));
+    //wfin.imbue(locale(locale(), new codecvt_utf8<wchar_t>));
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
     if (!wfin.is_open()) return 0;
     wstring temp, cur = L"";
