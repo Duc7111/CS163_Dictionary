@@ -169,7 +169,14 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             struct_dir = "database\\eng-vie\\struct.bin";
             hash_dir = "database\\eng-vie\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.good()) return tree.load(fin, fl);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
             fin.close();
             return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -181,7 +188,14 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             struct_dir = "database\\vie-eng\\struct.bin";
             hash_dir = "database\\vie-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.is_open()) return tree.load(fin, fl);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
             fin.close();
             return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -193,18 +207,55 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             struct_dir = "database\\eng-eng\\struct.bin";
             hash_dir = "database\\eng-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
-            if (fin.good()) return tree.load(fin, fl);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
             fin.close();
             return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
         break;
 
         case 4://init slang
-
+        {
+            def_dir = "database\\slang\\def.bin";
+            struct_dir = "database\\slang\\struct.bin";
+            hash_dir = "database\\slang\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
             break;
 
         case 5://init emotional
-
+        {
+            def_dir = "database\\emotional\\def.bin";
+            struct_dir = "database\\emotional\\struct.bin";
+            hash_dir = "database\\emotional\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
             break;
 
         default:

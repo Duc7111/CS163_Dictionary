@@ -34,12 +34,12 @@ Node<keyword>*& c_hash::get(const wstring& key)
 void c_hash::add(const wstring& key, const wstring& word)
 {
     Node<keyword>*& temp = get(key);
-    if(!temp || temp->data.key != key) temp = new Node(keyword(key, word), temp);
+    if(!temp || temp->data.key != key) temp = new Node<keyword>(keyword(key, word), temp);
     else
     {
         Node<wstring>*& t = temp->data.word;
         while(t && t->data < word) t = t->next;
-        if(!t || t->data != word) t = new Node(word, t);
+        if(!t || t->data != word) t = new Node<wstring>(word, t);
     }
 }
 
@@ -75,14 +75,27 @@ void c_hash::load(ifstream& fin)
     for(int i = 0; i < hash_len; ++i)
     {
         int l;
-        do
+        fin.read((char*)&l, sizeof(int));
+        while (l > 0)
         {
-            fin.read((char*)&l, sizeof(int));
-            if(l == 0) break;
             arr[i] = new Node<keyword>;
             wchar_t* temp = new wchar_t[l];
             fin.read((char*)temp, l);
-        } while (l > 0);
+            arr[i]->data.key = temp;
+            delete[] temp;
+            fin.read((char*)&l, sizeof(int));
+            Node<wstring>*& t = arr[i]->data.word;
+            while(l > 0)
+            {
+                temp = new wchar_t[l];
+                fin.read((char*)temp, l);
+                t = new Node<wstring>((wstring)temp, nullptr);
+                t = t->next;
+                delete[] temp;
+                fin.read((char*)&l, sizeof(int));
+            }
+            fin.read((char*)&l, sizeof(int));
+        }
         
     }
 }
