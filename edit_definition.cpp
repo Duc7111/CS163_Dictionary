@@ -4,7 +4,6 @@ void edit_definition(bNode* word, int def_order, wstring edited_def, vector<wstr
 {
 	definitions[def_order] = edited_def;
 	remove_def_from_file(word->d, def_dir);
-
 	ofstream fout;
 	fout.open(def_dir, ios::binary | ios::out | ios::app | ios::ate);
 	word->d = fout.tellp();

@@ -320,7 +320,13 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
                 break;
 
             case 2://modifying functions
-
+                int order;
+                wstring t;
+                wcout << L"order of def: " << endl;
+                cin >> order;
+                wcout << L"edited def: " << endl;
+                getline(wcin, t);
+                edit_definition(temp, order, t, strs, dir);
                 break;
 
             default:
