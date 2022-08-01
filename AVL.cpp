@@ -5,7 +5,7 @@
 #include "AVL.h"
 #include "Const.h"
 
-static locale empty();
+//static locale empty();
 
 bNode::bNode() : left(nullptr), right(nullptr) {}
 bNode::bNode(wstring s, int D) : key(s), h(1), d(D), f(false), left(nullptr), right(nullptr) {}
@@ -155,7 +155,7 @@ AVL::~AVL()
 int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir, c_hash key_hash)
 {
     wifstream wfin(dir);
-    wfin.imbue(locale(empty(), new codecvt_utf8<wchar_t>));
+    wfin.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
     //wfin.imbue(locale(locale(), new codecvt_utf8<wchar_t>));
     ofstream fout(def_dir, ios_base::binary | ios_base::trunc);
     if (!wfin.is_open()) return 0;
@@ -182,10 +182,11 @@ int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir
         getline(wfin, temp);
         int l = temp.length() + 1;
         fout.write((char*)&l, sizeof(int));
-        fout.write((char*)(temp.c_str() + 1), l*sizeof(wchar_t));
+        fout.write((char*)(temp.c_str()), l*sizeof(wchar_t));
         ++i;
         vector<wstring> kw = getKeyWord(temp);
-        for(wstring s : kw) key_hash.add(s, cur);
+        for(wstring s : kw)
+            key_hash.add(s, cur);
     }
     fout.close();
 

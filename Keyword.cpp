@@ -5,7 +5,7 @@
 
 keyword::keyword() : key(), word(nullptr){}
 
-keyword::keyword(const wstring& k,const wstring& l) : key(key)
+keyword::keyword(const wstring& k,const wstring& l) : key(k)
 {
     word = new Node<wstring>(l, nullptr);
 }
@@ -34,7 +34,12 @@ Node<keyword>*& c_hash::get(const wstring& key)
 void c_hash::add(const wstring& key, const wstring& word)
 {
     Node<keyword>*& temp = get(key);
-    if(!temp || temp->data.key != key) temp = new Node<keyword>(keyword(key, word), temp);
+    if(!temp || temp->data.key != key) 
+    {
+        temp = new Node<keyword>;
+        temp->data.key = key;
+        temp->data.word = new Node<wstring>(word, nullptr);
+    }
     else
     {
         Node<wstring>*& t = temp->data.word;
@@ -54,16 +59,17 @@ void c_hash::save(ofstream& fout)
             l = arr[i]->data.key.length() + 1;
             fout.write((char*)&l, sizeof(int));
             fout.write((char*)arr[i]->data.key.c_str(), l);
-            Node<wstring>* temp = arr[i]->data.word;
-            while(temp)
+            Node<wstring>* t = arr[i]->data.word;
+            while(t)
             {
-                l = temp->data.length() + 1;
+                l = t->data.length() + 1;
                 fout.write((char*)&l, sizeof(int));
-                fout.write((char*)temp->data.c_str(), l);
-                temp = temp->next;
+                fout.write((char*)t->data.c_str(), l);
+                t = t->next;
             }
             l = 0;
             fout.write((char*)&l, sizeof(int));
+            temp = temp->next;
         }
         l = 0;
         fout.write((char*)&l, sizeof(int));
