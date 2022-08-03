@@ -412,7 +412,6 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
     do 
     {
         system("cls");
-<<<<<<< HEAD
         //searching
         wcout << L"Enter a word (0 to quit): ";
         getline(wcin, k);
@@ -423,7 +422,6 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
         search_history.Add(k);
         bNode* temp = tree.search(k);
         if (!temp)
-=======
         //choose mode
         wcout << L"Choose searching mode: " << endl;
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
@@ -432,7 +430,6 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
         wcin >> i;
         wcin.ignore(1000, L'\n');
         switch (i)
->>>>>>> 0b3c4afca51a024acf51d8bc18b4d68d84a793aa
         {
         case 0:
             break;
