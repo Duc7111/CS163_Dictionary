@@ -168,6 +168,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\eng-vie\\def.bin";
             struct_dir = "database\\eng-vie\\struct.bin";
+            struct_dir = "database\\eng-vie\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.good())
             {
@@ -186,6 +187,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\vie-eng\\def.bin";
             struct_dir = "database\\vie-eng\\struct.bin";
+            hash_dir = "database\\vie-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.good())
             {
@@ -204,6 +206,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\eng-eng\\def.bin";
             struct_dir = "database\\eng-eng\\struct.bin";
+            hash_dir = "database\\eng-eng\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.good())
             {
@@ -265,77 +268,189 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
     return 0;
 }
 
+void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir, wstring k)
+{
+    bNode* temp = tree.search(k);
+    if (!temp)
+    {
+        wcout << L"No result" << endl;
+        system("pause");
+        return;
+    }
+    search_history.Add(k);
+    //search definition (done)
+    vector<wstring> strs = search_for_def(temp, dir);
+    //options
+    int i;
+    do
+    {
+        system("cls");
+        wcout << k << ':' << endl;
+        for (int j = 0; j < strs.size() - 1; j++)
+        {
+            wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
+        }
+        wcout << L"----------------------------------------------------" << endl;
+        wcout << L"your options: " << endl;
+        wcout << setw(tap) << L"[0]" << L" Quit" << endl;
+        wcout << setw(tap) << L"[1]";
+        if (temp->f) wcout << L" Unlike" << endl;
+        else wcout << L" Like" << endl;
+        wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+        wcout << L"Enter your choice: ";
+        wcin >> i;
+        wcin.ignore(1000, '\n');
+        wcout << L"----------------------------------------------------" << endl;
+        switch (i)
+        {
+        case 0:
+            break;
+
+        case 1:
+            temp->f = !temp->f;
+            fl.AoR(temp);
+            break;
+
+        case 2://modifying functions
+        {
+            int order;
+            wstring t;
+            wcout << L"order of def: " << endl;
+            cin >> order;
+            wcout << L"edited def: " << endl;
+            getline(wcin, t);
+            edit_definition(temp, order, t, strs, dir);
+        }
+            break;
+
+        default:
+            wcout << L"Invalid input, please try again" << endl;
+            system("pause");
+            break;
+        }
+    } while (i != 0);
+}
+
+void S4D(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wstring k;
+    //searching
+    do
+    {
+        system("cls");
+        wcout << L"Enter a word (0 to quit): ";
+        getline(wcin, k);
+        if (k == L"0") return;
+        S(tree, fl, key_hash, search_history, dir, k);
+    } while (k != L"0");
+}
+
+
+void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wstring k;
+    do
+    {
+        system("cls");
+        wcout << L"Enter a few keywords (0 to quit): ";
+        getline(wcin, k);
+        if (k == L"0") return;
+        vector<wstring> in = getKeyWord(k), out;
+        for(wstring i : in)
+        {
+            Node<keyword>* temp = key_hash.get(i);
+            if(!temp || temp->data.key != i) continue;
+            Node<wstring>* t = temp->data.word; 
+            while(t)
+            {
+                bool b = true;
+                for(wstring s : out)
+                    if(s == t->data) 
+                    {
+                        b = false;
+                        break;
+                    }
+                if(b) out.push_back(t->data);
+                t = t->next;
+            }
+        }
+        if(out.size() == 0)
+        {
+            wcout << "No result" << endl;
+            system("pause");
+            continue;
+        }
+        wcout << "Relevant words:" << endl;
+        for(int i = 0; i < out.size(); ++i)
+            wcout << setw(tap) << L'[' << i + 1 << L"] " << out[i] << endl;
+        int i;
+        do
+        {
+            wcout << "Choose a word to see its definition or 0 to back to searching: ";
+            wcin >> i;
+            wcin.ignore(1000, L'\n');
+            if(i < 0 || i > out.size())
+            {
+                wcout << "Invalid input, please try again" << endl;
+                system("pause");   
+            }
+            if(i == 0) break;
+            S(tree, fl, key_hash, search_history, dir, out[i]);
+        } while (i);
+    } while(k != L"0");
+} 
+
 void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir) //sreen drawing add searching
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
-    vector <wstring> strs;
-    wstring k;
-    int i = 1;
-    do
+    int i;
+    do 
     {
         system("cls");
+<<<<<<< HEAD
         //searching
         wcout << L"Enter a word (0 to quit): ";
         getline(wcin, k);
         if (k == L"0") return;
+        locale::global(locale(""));
+        wcout.imbue(locale());
+        k = modify_input(k);
         search_history.Add(k);
         bNode* temp = tree.search(k);
         if (!temp)
+=======
+        //choose mode
+        wcout << L"Choose searching mode: " << endl;
+        wcout << setw(tap) << L"[0]" << L" Quit" << endl;
+        wcout << setw(tap) << L"[1]" << L" Search for definition" << endl;
+        wcout << setw(tap) << L"[2]" << L" Search for word" << endl;
+        wcin >> i;
+        wcin.ignore(1000, L'\n');
+        switch (i)
+>>>>>>> 0b3c4afca51a024acf51d8bc18b4d68d84a793aa
         {
-            wcout << L"No result" << endl;
+        case 0:
+            break;
+
+        case 1:
+            S4D(tree, fl, key_hash, search_history, dir);
+            break;
+
+        case 2:
+            S4W(tree, fl, key_hash, search_history, dir);
+            break;
+
+        default:
+            wcout << L"Invalid input, please try again" << endl;
             system("pause");
-            continue;
+            break;
         }
-        //search definition (done)
-        strs = search_for_def(temp, dir);
-        //options
-        do
-        {
-            system("cls");
-            wcout << k << ':' << endl;
-            for (int j = 0; j < strs.size() - 1; j++)
-            {
-                wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
-            }
-            wcout << L"----------------------------------------------------" << endl;
-            wcout << L"your options: " << endl;
-            wcout << setw(tap) << L"[0]" << L" Back to searching" << endl;
-            wcout << setw(tap) << L"[1]";
-            if (temp->f) wcout << L" Unlike" << endl;
-            else wcout << L" Like" << endl;
-            wcout << setw(tap) << L"[2]" << L" Modify" << endl;
-            wcout << L"Enter your choice: ";
-            wcin >> i;
-            wcin.ignore(1000, '\n');
-            wcout << L"----------------------------------------------------" << endl;
-            switch (i)
-            {
-            case 0:
-                break;
-
-            case 1:
-                temp->f = !temp->f;
-                fl.AoR(temp);
-                break;
-
-            case 2://modifying functions
-                int order;
-                wstring t;
-                wcout << L"order of def: " << endl;
-                cin >> order;
-                wcout << L"edited def: " << endl;
-                getline(wcin, t);
-                edit_definition(temp, order, t, strs, dir);
-                break;
-
-            default:
-                wcout << L"Invalid input, please try again" << endl;
-                system("pause");
-                break;
-            }
-        } while (i != 0);
-    } while (k != L"0");
+    }while(i);
 }
 
 

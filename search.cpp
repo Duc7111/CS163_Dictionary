@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <io.h>
 #include <fcntl.h>
-
 #include "search.h"
 #include "Const.h"
 
@@ -173,31 +172,15 @@ bool random_def_game (vector<vector<wstring>> lists)
         return false;
     }
 }
-string normalization (string &str)
+
+wstring modify_input (wstring& str)
 {
-    bool fspace = true;
-    string ans;
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
-    for (int i = 0; i<str.size() ; i++)
-    {
-        if (fspace == true)
-        {
-            if (str[i] == ' ')
-                continue;
-            if (str[i] != ' ')
-            {
-                ans.push_back(str[i]);
-                fspace = false;
-            }
-        }
-        else
-        {
-            if (str[i] == ' ' && str[i+1] == ' ')
-                continue;
-            if (i == str.size() -  1 && str[i] == ' ')
-                break;
-            ans.push_back(str[i]);
-        }
-    }
+    locale::global(locale(""));
+    wcout.imbue(locale());
+    bool is_leading = false,fspace = true;
+    auto& env = std::use_facet< std::ctype<wchar_t> > (locale());
+    wstring ans;
+    env.tolower(&str[0], &str[0] + str.size());
+    ans = str;
     return ans;
 }

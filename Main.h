@@ -6,7 +6,6 @@
 #include<fcntl.h>
 #include<string>
 #include<codecvt>
-
 #include"AVL.h"
 #include"FL.h"
 #include"Const.h"
@@ -16,7 +15,8 @@
 #include"RemoveFile.h"
 #include"remove_a_word.h"
 #include"Keyword.h"
-#include "edit_definition.h"
+#include"edit_definition.h"
+#include"Keyword.h"
 
 bool load(AVL tree); // load data from file
 
