@@ -152,7 +152,7 @@ AVL::~AVL()
     if(root) clear(root);
 }
 
-int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir, c_hash key_hash)
+int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir, c_hash& key_hash)
 {
     wifstream wfin(dir);
     wfin.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));

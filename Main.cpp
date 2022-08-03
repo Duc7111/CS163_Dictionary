@@ -378,9 +378,15 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
                 t = t->next;
             }
         }
+        if(out.size() == 0)
+        {
+            wcout << "No result" << endl;
+            system("pause");
+            continue;
+        }
         wcout << "Relevant words:" << endl;
         for(int i = 0; i < out.size(); ++i)
-            wcout << setw(tap) << L'[' << i + 1 << L']' << out[i] << endl;
+            wcout << setw(tap) << L'[' << i + 1 << L"] " << out[i] << endl;
         int i;
         do
         {

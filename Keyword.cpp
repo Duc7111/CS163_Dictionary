@@ -36,15 +36,17 @@ void c_hash::add(const wstring& key, const wstring& word)
     Node<keyword>*& temp = get(key);
     if(!temp || temp->data.key != key) 
     {
+        Node<keyword>* t = temp;
         temp = new Node<keyword>;
         temp->data.key = key;
         temp->data.word = new Node<wstring>(word, nullptr);
+        temp->next = t;
     }
     else
     {
-        Node<wstring>*& t = temp->data.word;
-        while(t && t->data < word) t = t->next;
-        if(!t || t->data != word) t = new Node<wstring>(word, t);
+        Node<wstring>** t = &temp->data.word;
+        while(*t && (*t)->data < word) t = &(*t)->next;
+        if(!*t || (*t)->data != word) *t = new Node<wstring>(word, *t);
     }
 }
 
