@@ -68,7 +68,7 @@ int main()
         switch (i)
         {
         case 0://exist
-            return 0;
+            break;
 
         case 1://setting
 
@@ -124,7 +124,7 @@ void DeleteSearchHistory(search_history& Search_History) {
     _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Delete();
     wcout << setw(tap) << L"--------------------------------" << endl;
-    wcout << setw(tap) << "History deleted!" << endl;
+    wcout << setw(tap) << L"History deleted!" << endl;
     wcout << setw(tap) << L"--------------------------------" << endl;
     system("pause");
 }
@@ -168,7 +168,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
         {
             def_dir = "database\\eng-vie\\def.bin";
             struct_dir = "database\\eng-vie\\struct.bin";
-            struct_dir = "database\\eng-vie\\hash.bin";
+            hash_dir = "database\\eng-vie\\hash.bin";
             ifstream fin(struct_dir, ios_base::binary);
             if (fin.good())
             {
@@ -211,8 +211,9 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
-                key_hash.load(fin);
+                if(fin.good()) key_hash.load(fin);
                 fin.close();
                 return size;
             }
@@ -299,7 +300,7 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
         wcout << setw(tap) << L"[2]" << L" Modify" << endl;
         wcout << L"Enter your choice: ";
         wcin >> i;
-        wcin.ignore(1000, '\n');
+        wcin.ignore(1000, L'\n');
         wcout << L"----------------------------------------------------" << endl;
         switch (i)
         {
@@ -360,22 +361,33 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
         getline(wcin, k);
         if (k == L"0") return;
         vector<wstring> in = getKeyWord(k), out;
-        for(wstring i : in)
+        int is = in.size();
+        while(out.size() == 0 && --is >= 0)
         {
-            Node<keyword>* temp = key_hash.get(i);
-            if(!temp || temp->data.key != i) continue;
+            Node<keyword>* temp = key_hash.get(in[is]);
+            if(!temp || temp->data.key != in[is]) continue;
             Node<wstring>* t = temp->data.word; 
             while(t)
             {
-                bool b = true;
-                for(wstring s : out)
-                    if(s == t->data) 
-                    {
-                        b = false;
-                        break;
-                    }
-                if(b) out.push_back(t->data);
+                out.push_back(t->data);
                 t = t->next;
+            }
+        }
+        while(--is >= 0 && out.size() > 0)
+        {
+            int j = 0, s = out.size();
+            Node<keyword>* temp = key_hash.get(in[is]);
+            if(!temp || temp->data.key != in[is]) continue;
+            Node<wstring>* t = temp->data.word;
+            while(j < s)
+            {
+                while(t && t->data < out[j]) t = t->next;
+                if(!t || t->data != out[j])  
+                {
+                    out.erase(out.begin() + j);
+                    --s;
+                }
+                else ++j;
             }
         }
         if(out.size() == 0)
@@ -384,12 +396,13 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
             system("pause");
             continue;
         }
-        wcout << "Relevant words:" << endl;
-        for(int i = 0; i < out.size(); ++i)
-            wcout << setw(tap) << L'[' << i + 1 << L"] " << out[i] << endl;
         int i;
         do
         {
+            system("cls");
+            wcout << "Relevant words to " << L'\"' << k << L"\": " << endl;
+            for(int j = 0; j < out.size(); ++j)
+                wcout << setw(tap) << L'[' << j + 1 << L"] " << out[j] << endl;
             wcout << "Choose a word to see its definition or 0 to back to searching: ";
             wcin >> i;
             wcin.ignore(1000, L'\n');
@@ -399,7 +412,7 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
                 system("pause");   
             }
             if(i == 0) break;
-            S(tree, fl, key_hash, search_history, dir, out[i]);
+            S(tree, fl, key_hash, search_history, dir, out[i - 1]);
         } while (i);
     } while(k != L"0");
 } 
@@ -519,7 +532,7 @@ void Quizz(AVL& tree, string dir)
         {
             wcout << L"your choice: ";
             wcin >> option;
-            wcin.ignore(1000, '\n');
+            wcin.ignore(1000, L'\n');
         } while (option != 2 && option != 1 && option != 0);
         if (option == 0)
             return;
@@ -601,6 +614,7 @@ void Add(AVL& tree, string& def_dir)
         int choice;
         wcout << L"Please input your choice = ";
         wcin >> choice;
+        wcin.ignore(1000, L'\n');
         if (choice == 0)
         {
             again = false;
@@ -639,7 +653,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-eng mode" << endl;
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -673,7 +687,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-eng mode" << endl;
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -699,7 +713,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-vie mode" << endl;
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -733,7 +747,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-vie mode" << endl;
         wcout << L"[3].Change to eng-eng mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:
@@ -768,7 +782,7 @@ void Switch_data_set(string& struct_dir, string& def_dir)
         wcout << L"[2].Change to eng-vie mode" << endl;
         wcout << L"[3].Change to eng-eng mode" << endl;
         wcout << L"[4].Change to slang mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
         switch (choice)
         {
         case 1:

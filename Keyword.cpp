@@ -60,13 +60,13 @@ void c_hash::save(ofstream& fout)
         {
             l = arr[i]->data.key.length() + 1;
             fout.write((char*)&l, sizeof(int));
-            fout.write((char*)arr[i]->data.key.c_str(), l);
+            fout.write((char*)arr[i]->data.key.c_str(), l*sizeof(wchar_t));
             Node<wstring>* t = arr[i]->data.word;
             while(t)
             {
                 l = t->data.length() + 1;
                 fout.write((char*)&l, sizeof(int));
-                fout.write((char*)t->data.c_str(), l);
+                fout.write((char*)t->data.c_str(), l*sizeof(wchar_t));
                 t = t->next;
             }
             l = 0;
@@ -88,23 +88,23 @@ void c_hash::load(ifstream& fin)
         {
             arr[i] = new Node<keyword>;
             wchar_t* temp = new wchar_t[l];
-            fin.read((char*)temp, l);
+            fin.read((char*)temp, l*sizeof(wchar_t));
             arr[i]->data.key = temp;
             delete[] temp;
             fin.read((char*)&l, sizeof(int));
-            Node<wstring>*& t = arr[i]->data.word;
+            Node<wstring>** t = &arr[i]->data.word;
             while(l > 0)
             {
                 temp = new wchar_t[l];
-                fin.read((char*)temp, l);
-                t = new Node<wstring>((wstring)temp, nullptr);
-                t = t->next;
+                fin.read((char*)temp, l*sizeof(wchar_t));
+                *t = new Node<wstring>;
+                (*t)->data = temp;
+                t = &(*t)->next;
                 delete[] temp;
                 fin.read((char*)&l, sizeof(int));
             }
             fin.read((char*)&l, sizeof(int));
         }
-        
     }
 }
 
