@@ -24,15 +24,15 @@ bool bNode::add(bNode*& root)
 
 void clear(bNode*& root)
 {
-    if(root->left) clear(root->left);
-    if(root->right) clear(root->right);
+    if (root->left) clear(root->left);
+    if (root->right) clear(root->right);
     delete root;
     root = nullptr;
 }
 
 int bNode::height()
 {
-    if(this) return h;
+    if (this) return h;
     return 0;
 }
 
@@ -46,17 +46,17 @@ void bNode::save(ofstream& fout)
 {
     int s = key.length() + 1;
     fout.write((char*)&s, sizeof(int));
-    fout.write((char*)key.c_str(), s*sizeof(wchar_t));
+    fout.write((char*)key.c_str(), s * sizeof(wchar_t));
     fout.write((char*)&h, sizeof(int));
     fout.write((char*)&d, sizeof(int));
     fout.write((char*)&f, sizeof(bool));
- }
+}
 
 void bNode::load(ifstream& fin)
 {
     fin.read((char*)&h, sizeof(int));
     wchar_t* temp = new wchar_t[h];
-    fin.read((char*)temp, h*sizeof(wchar_t));
+    fin.read((char*)temp, h * sizeof(wchar_t));
     key = temp;
     fin.read((char*)&h, sizeof(int));
     fin.read((char*)&d, sizeof(int));
@@ -66,7 +66,7 @@ void bNode::load(ifstream& fin)
 
 bool AVL::subadd(bNode*& root, wstring k, int x)
 {
-    if (!root) 
+    if (!root)
     {
         root = new bNode(k, x);
         return true;
@@ -86,10 +86,10 @@ bool AVL::subadd(bNode*& root, wstring k, int x)
 bNode* AVL::sub(bNode*& root, bool d)
 {
     bNode* temp;
-    if(d)
+    if (d)
     {
-        if(root->right) temp = sub(root->right, d);
-        else 
+        if (root->right) temp = sub(root->right, d);
+        else
         {
             temp = root;
             root = root->left;
@@ -98,7 +98,7 @@ bNode* AVL::sub(bNode*& root, bool d)
     }
     else
     {
-        if(root->left) temp = sub(root->left, d);
+        if (root->left) temp = sub(root->left, d);
         else
         {
             temp = root;
@@ -116,18 +116,18 @@ bNode* AVL::sub(bNode*& root, bool d)
 bNode* AVL::subremove(bNode*& root, wstring k)
 {
     bNode* temp = nullptr;
-    if(k == root->key)
+    if (k == root->key)
     {
-        if(!root->left || !root->right)
+        if (!root->left || !root->right)
         {
             temp = root;
-            if(root->left) root = root->left;
+            if (root->left) root = root->left;
             else root = root->right;
             return temp;
         }
         int d = root->left->height() - root->right->height();
         bNode* temp;
-        if(d > 0) temp = sub(root->left, true);
+        if (d > 0) temp = sub(root->left, true);
         else temp = sub(root->right, false);
         wstring w = root->key;
         bool b = root->f;
@@ -137,7 +137,7 @@ bNode* AVL::subremove(bNode*& root, wstring k)
         root->f = temp->f;
         temp->f = b;
     }
-    else if(root->key > k) temp = subremove(root->left, k);
+    else if (root->key > k) temp = subremove(root->left, k);
     else temp = subremove(root->right, k);
     root->updateH();
     int d = root->left->height() - root->right->height();
@@ -149,7 +149,7 @@ bNode* AVL::subremove(bNode*& root, wstring k)
 AVL::AVL() : root(nullptr) {}
 AVL::~AVL()
 {
-    if(root) clear(root);
+    if (root) clear(root);
 }
 
 int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir, c_hash& key_hash)
@@ -167,7 +167,7 @@ int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir
         if (temp != cur)//new node
         {
             ++c;
-            if(c != 1)
+            if (c != 1)
             {
                 fout.seekp(d);
                 fout.write((char*)&i, sizeof(int));
@@ -182,10 +182,10 @@ int AVL::maketree(string dir, string def_dir, string struct_dir, string hash_dir
         getline(wfin, temp);
         int l = temp.length() + 1;
         fout.write((char*)&l, sizeof(int));
-        fout.write((char*)(temp.c_str()), l*sizeof(wchar_t));
+        fout.write((char*)(temp.c_str()), l * sizeof(wchar_t));
         ++i;
         vector<wstring> kw = getKeyWord(temp);
-        for(wstring s : kw)
+        for (wstring s : kw)
             key_hash.add(s, cur);
     }
     fout.close();
@@ -235,7 +235,7 @@ int AVL::load(ifstream& fin, FL& fl)
     {
         bNode* temp = new bNode; temp->load(fin);
         root->add(temp);
-        if(temp->f) fl.AoR(temp);
+        if (temp->f) fl.AoR(temp);
         ++c;
     }
     return c;

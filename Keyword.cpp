@@ -124,12 +124,12 @@ vector<wstring> getKeyWord(const wstring &def)
     {
         wstring temp = getWord(def, i, l);
         int len = temp.length();
-        while(len > 2 && temp[len - 1] < 48 || (temp[len - 1] > 57 && temp[len - 1] < 65) || (temp[len - 1] > 122 && temp[len - 1] < 192))
+        while(len > 2 && (temp[len - 1] < 48 || (temp[len - 1] > 57 && temp[len - 1] < 65) || (temp[len - 1] > 122 && temp[len - 1] < 192)))
         {
             len--;
             temp.pop_back();
         }
-        while(len > 2 &&temp[0] < 48 || (temp[0] > 57 && temp[0] < 65) || (temp[0] > 122 && temp[0] < 192))
+        while(len > 2 && (temp[0] < 48 || (temp[0] > 57 && temp[0] < 65) || (temp[0] > 122 && temp[0] < 192)))
         {
             len--;
             temp.erase(temp.begin());

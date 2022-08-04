@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include<string>
 #include<fstream>
@@ -33,12 +33,12 @@ public:
 
     int load(ifstream&, FL&);
     bool save(ofstream&);
-    int Add(AVL& ,wstring ,wstring ,string); 
-    bNode* get_root ()
+    int Add(AVL&, wstring, wstring, string);
+    bNode* get_root()
     {
         return root;
     }
-    int height (bNode*);
-    void num_of_words (bNode*, int&);
+    int height(bNode*);
+    void num_of_words(bNode*, int&);
     void total_word1(bNode*, int&);
 };
