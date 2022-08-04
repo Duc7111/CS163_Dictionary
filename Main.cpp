@@ -425,6 +425,16 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
     do 
     {
         system("cls");
+        //searching
+        wcout << L"Enter a word (0 to quit): ";
+        getline(wcin, k);
+        if (k == L"0") return;
+        locale::global(locale(""));
+        wcout.imbue(locale());
+        k = modify_input(k);
+        search_history.Add(k);
+        bNode* temp = tree.search(k);
+        if (!temp)
         //choose mode
         wcout << L"Choose searching mode: " << endl;
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
