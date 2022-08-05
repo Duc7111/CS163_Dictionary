@@ -60,13 +60,13 @@ void c_hash::save(ofstream& fout)
         {
             l = arr[i]->data.key.length() + 1;
             fout.write((char*)&l, sizeof(int));
-            fout.write((char*)arr[i]->data.key.c_str(), l);
+            fout.write((char*)arr[i]->data.key.c_str(), l*sizeof(wchar_t));
             Node<wstring>* t = arr[i]->data.word;
             while(t)
             {
                 l = t->data.length() + 1;
                 fout.write((char*)&l, sizeof(int));
-                fout.write((char*)t->data.c_str(), l);
+                fout.write((char*)t->data.c_str(), l*sizeof(wchar_t));
                 t = t->next;
             }
             l = 0;
@@ -88,23 +88,23 @@ void c_hash::load(ifstream& fin)
         {
             arr[i] = new Node<keyword>;
             wchar_t* temp = new wchar_t[l];
-            fin.read((char*)temp, l);
+            fin.read((char*)temp, l*sizeof(wchar_t));
             arr[i]->data.key = temp;
             delete[] temp;
             fin.read((char*)&l, sizeof(int));
-            Node<wstring>*& t = arr[i]->data.word;
+            Node<wstring>** t = &arr[i]->data.word;
             while(l > 0)
             {
                 temp = new wchar_t[l];
-                fin.read((char*)temp, l);
-                t = new Node<wstring>((wstring)temp, nullptr);
-                t = t->next;
+                fin.read((char*)temp, l*sizeof(wchar_t));
+                *t = new Node<wstring>;
+                (*t)->data = temp;
+                t = &(*t)->next;
                 delete[] temp;
                 fin.read((char*)&l, sizeof(int));
             }
             fin.read((char*)&l, sizeof(int));
         }
-        
     }
 }
 
@@ -124,12 +124,12 @@ vector<wstring> getKeyWord(const wstring &def)
     {
         wstring temp = getWord(def, i, l);
         int len = temp.length();
-        while(len > 2 && temp[len - 1] < 48 || (temp[len - 1] > 57 && temp[len - 1] < 65) || (temp[len - 1] > 122 && temp[len - 1] < 192))
+        while(len > 2 && (temp[len - 1] < 48 || (temp[len - 1] > 57 && temp[len - 1] < 65) || (temp[len - 1] > 122 && temp[len - 1] < 192)))
         {
             len--;
             temp.pop_back();
         }
-        while(len > 2 &&temp[0] < 48 || (temp[0] > 57 && temp[0] < 65) || (temp[0] > 122 && temp[0] < 192))
+        while(len > 2 && (temp[0] < 48 || (temp[0] > 57 && temp[0] < 65) || (temp[0] > 122 && temp[0] < 192)))
         {
             len--;
             temp.erase(temp.begin());
