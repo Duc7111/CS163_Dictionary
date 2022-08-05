@@ -348,7 +348,311 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
     } while (i > 5 || i < 0);
     return 0;
 }
+int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, string& hash_dir, AVL& tree, FL& fl)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    wcout << L"CHANGE DATA SET" << endl;
+    if (def_dir == "database\\eng-vie\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-eng mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        if (choice == 1)
+        {
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            hash_dir = "database\\vie-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 2)
+        {
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            hash_dir = "database\\eng-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
 
+        //case 3:
+        //    def_dir = "";
+        //    struct_dir = "";
+        //    break;
+        //case 4:
+        //    def_dir = "";
+        //    struct_dir = "";
+        //    break;
+        else
+        {
+            wcout << L"Goodbye" << endl;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\vie-eng\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to eng-vie mode" << endl;
+        wcout << L"[2].Change to eng-eng mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        if (choice == 1)
+        {
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            hash_dir = "database\\eng-vie\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 2)
+        {
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            hash_dir = "database\\eng-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else
+        {
+            wcout << L"Goodbye" << endl;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\eng-eng\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to slang mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        if (choice == 1)
+        {
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            hash_dir = "database\\vie-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 2)
+        {
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            hash_dir = "database\\eng-vie\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        //case 3:
+        //    def_dir = "";
+        //    struct_dir = "";
+        //    break;
+        //case 4:
+        //    def_dir = "";
+        //    struct_dir = "";
+        //    break;
+        else
+        {
+            wcout << L"Goodbye" << endl;
+        }
+        system("pause");
+    }
+    else if (def_dir == "database\\slang\\def.bin")
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to emotional mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        if (choice == 1)
+        {
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            hash_dir = "database\\vie-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 2)
+        {
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            hash_dir = "database\\eng-vie\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 3)
+        {
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            hash_dir = "database\\eng-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        //case 4:
+        //    def_dir = "";
+        //    struct_dir = "";
+        //    break;
+        else
+        {
+            wcout << L"Goodbye" << endl;
+        }
+        system("pause");
+    }
+    else
+    {
+        int choice;
+        wcout << L"[1].Change to vie-eng mode" << endl;
+        wcout << L"[2].Change to eng-vie mode" << endl;
+        wcout << L"[3].Change to eng-eng mode" << endl;
+        wcout << L"[4].Change to slang mode" << endl;
+        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        if (choice == 1)
+        {
+            def_dir = "database\\vie-eng\\def.bin";
+            struct_dir = "database\\vie-eng\\struct.bin";
+            hash_dir = "database\\vie-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 2)
+        {
+            def_dir = "database\\eng-vie\\def.bin";
+            struct_dir = "database\\eng-vie\\struct.bin";
+            hash_dir = "database\\eng-vie\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        else if (choice == 3)
+        {
+            def_dir = "database\\eng-eng\\def.bin";
+            struct_dir = "database\\eng-eng\\struct.bin";
+            hash_dir = "database\\eng-eng\\hash.bin";
+            ifstream fin(struct_dir, ios_base::binary);
+            if (fin.good())
+            {
+                int size = tree.load(fin, fl);
+                fin.open(hash_dir, ios_base::binary);
+                key_hash.load(fin);
+                fin.close();
+                return size;
+            }
+            fin.close();
+            return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+        }
+        //case 4:
+        //    def_dir = "";
+        //    struct_dir = "";
+        //    break;
+        else
+        {
+            wcout << L"Goodbye" << endl;
+        }
+        system("pause");
+    }
+}
 void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir, wstring k)
 {
     bNode* temp = tree.search(k);
@@ -721,176 +1025,7 @@ void ViewRandomWord(AVL& tree, string def_dir)
     system("pause");
 }
 
-void Switch_data_set(string& struct_dir, string& def_dir)
-{
-    _setmode(_fileno(stdout), _O_U16TEXT);
-    _setmode(_fileno(stdin), _O_U16TEXT);
-    wcout << L"CHANGE DATA SET" << endl;
-    if (def_dir == "database\\eng-vie\\def.bin")
-    {
-        int choice;
-        wcout << L"[1].Change to vie-eng mode" << endl;
-        wcout << L"[2].Change to eng-eng mode" << endl;
-        wcout << L"[3].Change to slang mode" << endl;
-        wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
-        switch (choice)
-        {
-        case 1:
-            def_dir = "database\\vie-eng\\def.bin";
-            struct_dir = "database\\vie-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 2:
-            def_dir = "database\\eng-eng\\def.bin";
-            struct_dir = "database\\eng-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-            //case 3:
-            //    def_dir = "";
-            //    struct_dir = "";
-            //    break;
-            //case 4:
-            //    def_dir = "";
-            //    struct_dir = "";
-            //    break;
-        default:
-            wcout << L"Goodbye" << endl;
-            break;
-        }
-        system("pause");
-    }
-    else if (def_dir == "database\\vie-eng\\def.bin")
-    {
-        int choice;
-        wcout << L"[1].Change to eng-vie mode" << endl;
-        wcout << L"[2].Change to eng-eng mode" << endl;
-        wcout << L"[3].Change to slang mode" << endl;
-        wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
-        switch (choice)
-        {
-        case 1:
-            def_dir = "database\\eng-vie\\def.bin";
-            struct_dir = "database\\eng-vie\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 2:
-            def_dir = "database\\eng-eng\\def.bin";
-            struct_dir = "database\\eng-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        default:
-            wcout << L"Goodbye" << endl;
-            break;
-        }
-        system("pause");
-    }
-    else if (def_dir == "database\\eng-eng\\def.bin")
-    {
-        int choice;
-        wcout << L"[1].Change to vie-eng mode" << endl;
-        wcout << L"[2].Change to eng-vie mode" << endl;
-        wcout << L"[3].Change to slang mode" << endl;
-        wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
-        switch (choice)
-        {
-        case 1:
-            def_dir = "database\\vie-eng\\def.bin";
-            struct_dir = "database\\vie-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 2:
-            def_dir = "database\\eng-vie\\def.bin";
-            struct_dir = "database\\eng-vie\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-            //case 3:
-            //    def_dir = "";
-            //    struct_dir = "";
-            //    break;
-            //case 4:
-            //    def_dir = "";
-            //    struct_dir = "";
-            //    break;
-        default:
-            wcout << L"Goodbye" << endl;
-            break;
-        }
-        system("pause");
-    }
-    else if (def_dir == "database\\slang\\def.bin")
-    {
-        int choice;
-        wcout << L"[1].Change to vie-eng mode" << endl;
-        wcout << L"[2].Change to eng-vie mode" << endl;
-        wcout << L"[3].Change to eng-eng mode" << endl;
-        wcout << L"[4].Change to emotional mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
-        switch (choice)
-        {
-        case 1:
-            def_dir = "database\\vie-eng\\def.bin";
-            struct_dir = "database\\vie-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 2:
-            def_dir = "database\\eng-vie\\def.bin";
-            struct_dir = "database\\eng-vie\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 3:
-            def_dir = "database\\eng-eng\\def.bin";
-            struct_dir = "database\\eng-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-            //case 4:
-            //    def_dir = "";
-            //    struct_dir = "";
-            //    break;
-        default:
-            wcout << L"Goodbye" << endl;
-            break;
-        }
-        system("pause");
-    }
-    else
-    {
-        int choice;
-        wcout << L"[1].Change to vie-eng mode" << endl;
-        wcout << L"[2].Change to eng-vie mode" << endl;
-        wcout << L"[3].Change to eng-eng mode" << endl;
-        wcout << L"[4].Change to slang mode" << endl;
-        wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
-        switch (choice)
-        {
-        case 1:
-            def_dir = "database\\vie-eng\\def.bin";
-            struct_dir = "database\\vie-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 2:
-            def_dir = "database\\eng-vie\\def.bin";
-            struct_dir = "database\\eng-vie\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-        case 3:
-            def_dir = "database\\eng-eng\\def.bin";
-            struct_dir = "database\\eng-eng\\struct.bin";
-            wcout << L"Change succesfully" << endl;
-            break;
-            //case 4:
-            //    def_dir = "";
-            //    struct_dir = "";
-            //    break;
-        default:
-            wcout << L"Goodbye" << endl;
-            break;
-        }
-        system("pause");
-    }
-}
+
 void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& hash_dir, c_hash& key_hash)
 {
     bool Check = DeleteFile(struct_dir);
