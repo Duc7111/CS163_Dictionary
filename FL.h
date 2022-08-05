@@ -11,9 +11,11 @@ class FL
         Node<bNode*>* t_arr;
     public:
         FL(int);
+        FL(const FL&);
         ~FL();
 
         bNode*& operator[](int);
+        FL& operator=(const FL&);
         
         void AoR(bNode*);
         bool remove(int);

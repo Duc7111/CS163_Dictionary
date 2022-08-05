@@ -10,8 +10,8 @@ int main()
     string def_dir; // bin file that save the tree (based on mode of dictionary)
     string struct_dir; // bin file that save the tree (based on mode of dictionary)
     string hash_dir;
-    c_hash key_hash;
     int i = 1, size;
+    c_hash key_hash;
     AVL tree;
     FL fl(0);
     do
@@ -96,9 +96,12 @@ int main()
             break;
 
         case 8: //edit a word definition
+            EditDefinition(tree, def_dir);
+            break;
 
         case 9: //remove a word
 
+            break;
         case 10:
             ViewRandomWord(tree, def_dir);
             break;
@@ -120,10 +123,74 @@ int main()
     fl.save(fout);
     tree.save(fout);
     fout.close();
-    fout.open(hash_dir);
+    fout.open(hash_dir, ios_base::binary | ios_base::trunc);
     key_hash.save(fout);
     fout.close();
     return 0;
+}
+
+void EditDefinition(AVL& tree, string def_dir) {
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+    vector<wstring> definitions;
+    wstring word_x;
+    int i = 1;
+    do
+    {
+        system("cls");
+        //searching
+        wcout << L"Enter a word (0 to quit): ";
+        getline(wcin, word_x);
+        if (word_x == L"0") return;
+        bNode* word = tree.search(word_x);
+        if (!word)
+        {
+            wcout << L"No result" << endl;
+            system("pause");
+            continue;
+        }
+        //search definition (done)
+        definitions = search_for_def(word, def_dir);
+        //choose def to edit
+        system("cls");
+        wcout << word_x << ':' << endl;
+        for (int j = 0; j < definitions.size() - 1; j++)
+        {
+            wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
+        }
+        int ord;
+        wcout << L"----------------------------------------------------" << endl;
+        wcout << L"Choose the definition number you want to edit : "; wcin >> ord;
+        while (wcin.get() != L'\n');
+        wstring new_def;
+        wcout << L"Enter new defintion : ";
+        getline(wcin, new_def);
+        //ask the user to confirm
+        wcout << L"----------------------------------------------------" << endl;
+        wchar_t x;
+        do {
+            wcout << setw(tap) << L"Is this the right definition?" << endl;
+            wcout << word_x << ':' << endl;
+            for (int j = 0; j < definitions.size() - 1; j++)
+            {
+                if (j + 1 != ord) wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
+                else wcout << setw(tap) << j + 1 << L". " << new_def << endl;
+            }
+            wcout << setw(tap) << L"y or n : ";
+            while (wcin.get() != L'\n');
+            wcin >> x;
+        } while (x != 'y' && x != 'n');
+        if (x == 'y') {
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << setw(tap) << L"Your new definition : " << endl;
+            //edit_definition(word, ord - 1, new_def, definitions, def_dir);
+            wcout << word_x << ':' << endl;
+            for (int j = 0; j < definitions.size() - 1; j++)
+            {
+                wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
+            }
+        }
+    } while (word_x != L"0");
 }
 
 void DeleteSearchHistory(search_history& Search_History) {
@@ -220,7 +287,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
                 int size = tree.load(fin, fl);
                 fin.close();
                 fin.open(hash_dir, ios_base::binary);
-                if(fin.good()) key_hash.load(fin);
+                if (fin.good()) key_hash.load(fin);
                 fin.close();
                 return size;
             }
@@ -246,7 +313,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             fin.close();
             return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
-            break;
+        break;
 
         case 5://init emotional
         {
@@ -265,7 +332,7 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             fin.close();
             return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
-            break;
+        break;
 
         default:
             wcout << L"Invaid input, please try again" << endl;
@@ -315,7 +382,6 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             break;
 
         case 1:
-            temp->f = !temp->f;
             fl.AoR(temp);
             break;
 
@@ -329,7 +395,7 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             getline(wcin, t);
             edit_definition(temp, order, t, strs, dir);
         }
-            break;
+        break;
 
         default:
             wcout << L"Invalid input, please try again" << endl;
@@ -369,12 +435,12 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
         if (k == L"0") return;
         vector<wstring> in = getKeyWord(k), out;
         int is = in.size();
-        while(out.size() == 0 && --is >= 0)
+        while (out.size() == 0 && --is >= 0)
         {
             Node<keyword>* temp = key_hash.get(in[is]);
             if(!temp || temp->data.key != in[is]) continue;
             Node<wstring>** t = &temp->data.word; 
-            while(t)
+            while(*t)
             {
                 if(tree.search((*t)->data)) out.push_back((*t)->data);
                 else
@@ -386,16 +452,16 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
                 t = &(*t)->next;
             }
         }
-        while(--is >= 0 && out.size() > 0)
+        while (--is >= 0 && out.size() > 0)
         {
             int j = 0, s = out.size();
             Node<keyword>* temp = key_hash.get(in[is]);
-            if(!temp || temp->data.key != in[is]) continue;
+            if (!temp || temp->data.key != in[is]) continue;
             Node<wstring>* t = temp->data.word;
-            while(j < s)
+            while (j < s)
             {
-                while(t && t->data < out[j]) t = t->next;
-                if(!t || t->data != out[j])  
+                while (t && t->data < out[j]) t = t->next;
+                if (!t || t->data != out[j])
                 {
                     out.erase(out.begin() + j);
                     --s;
@@ -403,7 +469,7 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
                 else ++j;
             }
         }
-        if(out.size() == 0)
+        if (out.size() == 0)
         {
             wcout << "No result" << endl;
             system("pause");
@@ -414,28 +480,28 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
         {
             system("cls");
             wcout << "Relevant words to " << L'\"' << k << L"\": " << endl;
-            for(int j = 0; j < out.size(); ++j)
+            for (int j = 0; j < out.size(); ++j)
                 wcout << setw(tap) << L'[' << j + 1 << L"] " << out[j] << endl;
             wcout << "Choose a word to see its definition or 0 to back to searching: ";
             wcin >> i;
             wcin.ignore(1000, L'\n');
-            if(i < 0 || i > out.size())
+            if (i < 0 || i > out.size())
             {
                 wcout << "Invalid input, please try again" << endl;
-                system("pause");   
+                system("pause");
             }
-            if(i == 0) break;
+            if (i == 0) break;
             S(tree, fl, key_hash, search_history, dir, out[i - 1]);
         } while (i);
-    } while(k != L"0");
-} 
+    } while (k != L"0");
+}
 
 void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir) //sreen drawing add searching
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
     int i;
-    do 
+    do
     {
         system("cls");
         //choose mode
@@ -443,6 +509,7 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
         wcout << setw(tap) << L"[1]" << L" Search for definition" << endl;
         wcout << setw(tap) << L"[2]" << L" Search for word" << endl;
+        wcout << L"Enter your option: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
         switch (i)
@@ -463,7 +530,7 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
             system("pause");
             break;
         }
-    }while(i);
+    } while (i);
 }
 
 
@@ -484,7 +551,7 @@ void F_screen(FL& fl, string def_dir)
             return;
         }
         for (int i = 0; i < size; ++i)
-            wcout << setw(tap - 2) << L'[' << i + 1 << L']' << fl[i]->key << endl;
+            wcout << setw(tap - 2) << L'[' << i + 1 << L"] " << fl[i]->key << endl;
         wcout << L"Enter an index (0 to quit): ";
         wcin >> t;
         wcin.ignore(1000, L'\n');
@@ -493,16 +560,17 @@ void F_screen(FL& fl, string def_dir)
             wcout << L"Invalid input, please try again!" << endl;
             system("pause");
         }
+        if(t == 0) break;
         //show def and modifying stuff
         int i;
         do
         {
             system("cls");
-            wcout << fl[t]->key << L':' << endl;
-            vector<wstring> temp = search_for_def(fl[t], def_dir);
-            for (int i = 0; i < temp.size(); ++i)
+            wcout << fl[t - 1]->key << L':' << endl;
+            vector<wstring> temp = search_for_def(fl[t - 1], def_dir);
+            for (int j = 0; j < temp.size() - 1; ++j)
             {
-                wcout << setw(tap) << i + 1 << L". " << temp[i] << endl;
+                wcout << setw(tap) << j + 1 << L". " << temp[j] << endl;
             }
             wcout << setw(tap) << L"[0]" << L" Back to favorite list" << endl;
             wcout << setw(tap) << L"[1]" << L" Remove this from favorite list" << endl;
@@ -515,7 +583,10 @@ void F_screen(FL& fl, string def_dir)
                 break;
 
             case 1:
-                fl.remove(t);
+                fl.remove(t - 1);
+                wcout << L"Done" << endl;
+                system("pause");
+                i = 0;
                 break;
 
             default:

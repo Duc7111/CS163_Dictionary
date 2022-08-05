@@ -39,3 +39,5 @@ void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& has
 void ViewSearchHistory(search_history&);
 
 void DeleteSearchHistory(search_history&);
+
+void EditDefinition(AVL& tree, string def_dir);
