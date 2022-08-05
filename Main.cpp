@@ -10,8 +10,8 @@ int main()
     string def_dir; // bin file that save the tree (based on mode of dictionary)
     string struct_dir; // bin file that save the tree (based on mode of dictionary)
     string hash_dir;
-    int i = 1, size;
     c_hash key_hash;
+    int i = 1, size;
     AVL tree;
     FL fl(0);
     do
@@ -119,26 +119,20 @@ int main()
             break;
         }
     } while (i != 0);
-    ofstream fout(struct_dir, ios_base::binary | ios_base::trunc);
-    fl.save(fout);
-    tree.save(fout);
-    fout.close();
-    fout.open(hash_dir, ios_base::binary | ios_base::trunc);
-    key_hash.save(fout);
-    fout.close();
     return 0;
 }
 
 void EditDefinition(AVL& tree, string def_dir) {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
+
     vector<wstring> definitions;
     wstring word_x;
     int i = 1;
-    do
-    {
+    do {
         system("cls");
         //searching
+        //while (wcin.get() != L'\n');
         wcout << L"Enter a word (0 to quit): ";
         getline(wcin, word_x);
         if (word_x == L"0") return;
@@ -149,47 +143,59 @@ void EditDefinition(AVL& tree, string def_dir) {
             system("pause");
             continue;
         }
-        //search definition (done)
+        //search definition
         definitions = search_for_def(word, def_dir);
-        //choose def to edit
-        system("cls");
-        wcout << word_x << ':' << endl;
-        for (int j = 0; j < definitions.size() - 1; j++)
-        {
-            wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
-        }
-        int ord;
-        wcout << L"----------------------------------------------------" << endl;
-        wcout << L"Choose the definition number you want to edit : "; wcin >> ord;
-        while (wcin.get() != L'\n');
-        wstring new_def;
-        wcout << L"Enter new defintion : ";
-        getline(wcin, new_def);
-        //ask the user to confirm
-        wcout << L"----------------------------------------------------" << endl;
-        wchar_t x;
+
         do {
-            wcout << setw(tap) << L"Is this the right definition?" << endl;
-            wcout << word_x << ':' << endl;
-            for (int j = 0; j < definitions.size() - 1; j++)
-            {
-                if (j + 1 != ord) wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
-                else wcout << setw(tap) << j + 1 << L". " << new_def << endl;
-            }
-            wcout << setw(tap) << L"y or n : ";
-            while (wcin.get() != L'\n');
-            wcin >> x;
-        } while (x != 'y' && x != 'n');
-        if (x == 'y') {
+            //show all the definitions
+            system("cls");
             wcout << L"----------------------------------------------------" << endl;
-            wcout << setw(tap) << L"Your new definition : " << endl;
-            //edit_definition(word, ord - 1, new_def, definitions, def_dir);
             wcout << word_x << ':' << endl;
             for (int j = 0; j < definitions.size() - 1; j++)
             {
                 wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
             }
-        }
+            //choose def to edit
+            int ord;
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << L"Choose the definition number you want to edit (0 to quit) : "; wcin >> ord;
+            if (ord == 0) break;
+            wstring new_def = L" ";
+            wstring temp_def;
+            while (wcin.get() != L'\n');
+            wcout << L"Enter new defintion : ";
+            getline(wcin, temp_def);
+            new_def += temp_def;
+            wchar_t check;
+            do { //ask the user to confirm
+                system("cls");
+                wcout << setw(tap) << L"Is this the right definition?" << endl;
+                wcout << L"----------------------------------------------------" << endl;
+                wcout << word_x << ':' << endl;
+                for (int j = 0; j < definitions.size() - 1; j++)
+                {
+                    if (j + 1 != ord) wcout << setw(tap) << j + 1 << L". " << definitions[j] << endl;
+                    else wcout << setw(tap) << j + 1 << L". " << new_def << endl;
+                }
+                //while (wcin.get() != L'\n');
+                wcout << L"----------------------------------------------------" << endl;
+                wcout << setw(tap) << L"---> y or n : ";
+                wcin >> check;
+            } while (check != 'y' && check != 'n');
+
+            //change the definition
+            if (check == 'y') {
+                edit_definition(word, ord - 1, new_def, definitions, def_dir);
+                wcout << setw(tap) << L"Definition changed ! " << endl;
+            }
+            else {
+                wcout << setw(tap) << L"Nothing changed ! " << endl;
+            }
+            wcout << L"----------------------------------------------------" << endl;
+
+            system("pause");
+        } while (true);
+        while (wcin.get() != L'\n');
     } while (word_x != L"0");
 }
 
@@ -686,6 +692,7 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             break;
 
         case 1:
+            temp->f = !temp->f;
             fl.AoR(temp);
             break;
 
@@ -742,18 +749,12 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
         while (out.size() == 0 && --is >= 0)
         {
             Node<keyword>* temp = key_hash.get(in[is]);
-            if(!temp || temp->data.key != in[is]) continue;
-            Node<wstring>** t = &temp->data.word; 
-            while(*t)
+            if (!temp || temp->data.key != in[is]) continue;
+            Node<wstring>* t = temp->data.word;
+            while (t)
             {
-                if(tree.search((*t)->data)) out.push_back((*t)->data);
-                else
-                {
-                    Node<wstring>* d = *t;
-                    *t = (*t)->next;
-                    delete d;
-                }
-                t = &(*t)->next;
+                out.push_back(t->data);
+                t = t->next;
             }
         }
         while (--is >= 0 && out.size() > 0)
@@ -813,7 +814,6 @@ void S_screen(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_histor
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
         wcout << setw(tap) << L"[1]" << L" Search for definition" << endl;
         wcout << setw(tap) << L"[2]" << L" Search for word" << endl;
-        wcout << L"Enter your option: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
         switch (i)
@@ -855,7 +855,7 @@ void F_screen(FL& fl, string def_dir)
             return;
         }
         for (int i = 0; i < size; ++i)
-            wcout << setw(tap - 2) << L'[' << i + 1 << L"] " << fl[i]->key << endl;
+            wcout << setw(tap - 2) << L'[' << i + 1 << L']' << fl[i]->key << endl;
         wcout << L"Enter an index (0 to quit): ";
         wcin >> t;
         wcin.ignore(1000, L'\n');
@@ -864,17 +864,16 @@ void F_screen(FL& fl, string def_dir)
             wcout << L"Invalid input, please try again!" << endl;
             system("pause");
         }
-        if(t == 0) break;
         //show def and modifying stuff
         int i;
         do
         {
             system("cls");
-            wcout << fl[t - 1]->key << L':' << endl;
-            vector<wstring> temp = search_for_def(fl[t - 1], def_dir);
-            for (int j = 0; j < temp.size() - 1; ++j)
+            wcout << fl[t]->key << L':' << endl;
+            vector<wstring> temp = search_for_def(fl[t], def_dir);
+            for (int i = 0; i < temp.size(); ++i)
             {
-                wcout << setw(tap) << j + 1 << L". " << temp[j] << endl;
+                wcout << setw(tap) << i + 1 << L". " << temp[i] << endl;
             }
             wcout << setw(tap) << L"[0]" << L" Back to favorite list" << endl;
             wcout << setw(tap) << L"[1]" << L" Remove this from favorite list" << endl;
@@ -887,10 +886,7 @@ void F_screen(FL& fl, string def_dir)
                 break;
 
             case 1:
-                fl.remove(t - 1);
-                wcout << L"Done" << endl;
-                system("pause");
-                i = 0;
+                fl.remove(t);
                 break;
 
             default:
