@@ -116,6 +116,13 @@ int main()
             break;
         }
     } while (i != 0);
+    ofstream fout(struct_dir, ios_base::binary | ios_base::trunc);
+    fl.save(fout);
+    tree.save(fout);
+    fout.close();
+    fout.open(hash_dir);
+    key_hash.save(fout);
+    fout.close();
     return 0;
 }
 
@@ -366,11 +373,17 @@ void S4W(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
         {
             Node<keyword>* temp = key_hash.get(in[is]);
             if(!temp || temp->data.key != in[is]) continue;
-            Node<wstring>* t = temp->data.word; 
+            Node<wstring>** t = &temp->data.word; 
             while(t)
             {
-                out.push_back(t->data);
-                t = t->next;
+                if(tree.search((*t)->data)) out.push_back((*t)->data);
+                else
+                {
+                    Node<wstring>* d = *t;
+                    *t = (*t)->next;
+                    delete d;
+                }
+                t = &(*t)->next;
             }
         }
         while(--is >= 0 && out.size() > 0)
