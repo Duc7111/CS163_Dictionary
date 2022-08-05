@@ -32,7 +32,7 @@ void Add(AVL& tree, string& def_dir);
 
 void ViewRandomWord(AVL& tree, string def_dir);
 
-void Switch_data_set(string& struct_dir, string& def_dir);
+int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, string& hash_dir, AVL& tree, FL& fl);
 
 void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& hash_dir, c_hash& key_hash);
 
