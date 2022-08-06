@@ -104,6 +104,23 @@ int main()
             break;
         case 10:
             ViewRandomWord(tree, def_dir);
+            while (true)
+            {
+                system("cls");
+                int choice;
+                wcout << L"[1].View another word" << endl;
+                wcout << L"[2].Quit" << endl;
+                wcout << L"Input your choice : "; wcin >> choice;
+                if (choice == 1)
+                {
+                    ViewRandomWord(tree, def_dir);
+                }
+                else
+                {
+                    wcout << L"Goodbye" << endl;
+                    break;
+                }
+            }
             break;
 
         case 11:
