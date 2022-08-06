@@ -181,6 +181,29 @@ wstring modify_input (wstring& str)
     auto& env = std::use_facet< std::ctype<wchar_t> > (locale());
     wstring ans;
     env.tolower(&str[0], &str[0] + str.size());
+    for (int i=0; i<str.length(); i++)
+    {
+        if( is_leading == false)
+        {
+            if (str[i] == ' ')
+            {
+                str.erase(i,1);
+                i--;
+            }
+            else
+            {
+                is_leading = true;
+            }
+        }
+        else
+        {
+            if (str[i] == ' ' && str[i+1] ==' ')
+            {
+                str.erase(i,1);
+                i--;
+            }
+        }
+    }
     ans = str;
     return ans;
 }
