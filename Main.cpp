@@ -107,7 +107,7 @@ int main()
             break;
 
         case 11:
-            Switch_data_set(struct_dir, def_dir);
+            Switch_data_set(struct_dir, def_dir, key_hash, hash_dir, tree, fl);
             break;
 
         case 12:
@@ -652,6 +652,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         }
         system("pause");
     }
+    return 0;
 }
 void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, string dir, wstring k)
 {
