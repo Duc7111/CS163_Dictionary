@@ -104,29 +104,9 @@ int main()
             break;
         case 10:
             ViewRandomWord(tree, def_dir);
-            while (true)
-            {
-                system("cls");
-                int choice;
-                wcout << L"[1].View another word" << endl;
-                wcout << L"[2].Quit" << endl;
-                wcout << L"Input your choice : "; wcin >> choice;
-                if (choice == 1)
-                {
-                    ViewRandomWord(tree, def_dir);
-                }
-                else
-                {
-                    wcout << L"Goodbye" << endl;
-                    break;
-                }
-            }
             break;
 
         case 11:
-<<<<<<< Updated upstream
-            Switch_data_set(struct_dir, def_dir, key_hash, hash_dir, tree, fl);
-=======
             switch (size = Switch_data_set(struct_dir, def_dir, key_hash, hash_dir, tree, fl))
             {
             case -1:
@@ -140,7 +120,6 @@ int main()
                 system("pause");
                 break;
             }
->>>>>>> Stashed changes
             break;
 
         case 12:
@@ -246,11 +225,6 @@ void ViewSearchHistory(search_history& Search_History, AVL& root, string& def_di
     _setmode(_fileno(stdin), _O_U16TEXT);
 
     Search_History.Load();
-<<<<<<< Updated upstream
-    wcout << setw(tap) << L"-------Your search history------" << endl;
-    Search_History.View();
-    wcout << setw(tap) << L"--------------------------------" << endl;
-=======
     do {
         system("cls");
         wcout << setw(tap) << L"-------Your search history------" << endl;
@@ -300,7 +274,6 @@ void ViewSearchHistory(search_history& Search_History, AVL& root, string& def_di
             return;
         }
     } while (true);
->>>>>>> Stashed changes
 }
 
 
