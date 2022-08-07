@@ -77,7 +77,7 @@ int main()
             break;
 
         case 3: //view search history
-            ViewSearchHistory(Search_History);
+            ViewSearchHistory(Search_History, tree, def_dir);
             break;
 
         case 4: //delete search history
