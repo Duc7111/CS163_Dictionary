@@ -19,8 +19,6 @@ public:
 	Node<wstring>* Load();
 	Node<wstring>* Add(wstring word);
 	Node<wstring>* Delete();
-	int count();
-	Node<wstring>* Find(int);
 	void View();
 };
 

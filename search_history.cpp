@@ -30,29 +30,6 @@ Node<wstring>* search_history::Load()
 	}
 	return hist_head;
 }
-int search_history::count()
-{
-	if (!hist_head) return 0;
-	int count = 0;
-	Node<wstring>* temp = hist_head;
-	while (temp)
-	{
-		count++;
-		temp = temp->next;
-	}
-	return count;
-}
-Node<wstring>* search_history::Find(int num)
-{
-	int count = 1;
-	Node<wstring>* temp = hist_head;
-	while (count < num)
-	{
-		count++;
-		temp = temp->next;
-	}
-	return temp;
-}
 Node<wstring>* search_history::Add(wstring word)
 {
 	hist_head = new Node<wstring>(word, hist_head);
@@ -70,10 +47,9 @@ void search_history::View()
 		wcout << L"No history." << endl;
 		return;
 	}
-	int count = 1;
 	Node<wstring>* temp = hist_head;
 	while (temp) {
-		wcout << L"[" << count << "]." << temp->data << endl;
+		wcout << temp->data << endl;
 		count++;
 		temp = temp->next;
 	}

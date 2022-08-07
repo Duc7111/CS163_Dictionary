@@ -77,7 +77,7 @@ int main()
             break;
 
         case 3: //view search history
-            ViewSearchHistory(Search_History, tree, def_dir);
+            ViewSearchHistory(Search_History);
             break;
 
         case 4: //delete search history
@@ -233,45 +233,6 @@ void ViewSearchHistory(search_history& Search_History, AVL& root, string& def_di
     wcout << setw(tap) << L"-------Your search history------" << endl;
     Search_History.View();
     wcout << setw(tap) << L"--------------------------------" << endl;
-    wcout << L"Option" << endl;
-    wcout << L"[1].View word definitions" << endl;
-    wcout << L"[2].Back to the dictionary's menu" << endl;
-    int choice;
-    wcout << L"Please input your choice : "; wcin >> choice;
-    int total = 0;
-    switch (choice)
-    {
-    case 1:
-        total = Search_History.count();
-        while (true)
-        {
-            wcout << L"Please choose the serial of word : ";
-            int num;
-            wcin >> num;
-            if (num < 0 || num > total)
-            {
-                wcout << L"Invalid Input" << endl;
-            }
-            else
-            {
-                Node<wstring>* word = Search_History.Find(num);
-                system("cls");
-                wcout << word->data << L':' << endl;
-                bNode* temp = root.search(word->data);
-                vector<wstring> temp1 = search_for_def(temp, def_dir);
-                for (int i = 0; i < temp1.size(); ++i)
-                {
-                    wcout << setw(tap) << i + 1 << L". " << temp1[i] << endl;
-                }
-                break;
-            }
-        }
-        break;
-    default:
-        wcout << L"Goodbye" << endl;
-        break;
-    }
-    system("pause");
 }
 
 

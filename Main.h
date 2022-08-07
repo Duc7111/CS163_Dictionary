@@ -36,7 +36,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
 
 void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& hash_dir, c_hash& key_hash);
 
-void ViewSearchHistory(search_history&, AVL& root, string& def_dir);
+void ViewSearchHistory(search_history&);
 
 void DeleteSearchHistory(search_history&);
 
