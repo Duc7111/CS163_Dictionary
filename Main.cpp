@@ -226,13 +226,51 @@ void DeleteSearchHistory(search_history& Search_History) {
     system("pause");
 }
 
-void ViewSearchHistory(search_history& Search_History) {
+void ViewSearchHistory(search_history& Search_History, AVL& root, string& def_dir) {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
     Search_History.Load();
     wcout << setw(tap) << L"-------Your search history------" << endl;
     Search_History.View();
     wcout << setw(tap) << L"--------------------------------" << endl;
+    wcout << L"Option" << endl;
+    wcout << L"[1].View word definitions" << endl;
+    wcout << L"[2].Back to the dictionary's menu" << endl;
+    int choice;
+    wcout << L"Please input your choice : "; wcin >> choice;
+    int total = 0;
+    switch (choice)
+    {
+    case 1:
+        total = Search_History.count();
+        while (true)
+        {
+            wcout << L"Please choose the serial of word : ";
+            int num;
+            wcin >> num;
+            if (num < 0 || num > total)
+            {
+                wcout << L"Invalid Input" << endl;
+            }
+            else
+            {
+                Node<wstring>* word = Search_History.Find(num);
+                system("cls");
+                wcout << word->data << L':' << endl;
+                bNode* temp = root.search(word->data);
+                vector<wstring> temp1 = search_for_def(temp, def_dir);
+                for (int i = 0; i < temp1.size(); ++i)
+                {
+                    wcout << setw(tap) << i + 1 << L". " << temp1[i] << endl;
+                }
+                break;
+            }
+        }
+        break;
+    default:
+        wcout << L"Goodbye" << endl;
+        break;
+    }
     system("pause");
 }
 
@@ -365,7 +403,6 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
     } while (i > 5 || i < 0);
     return 0;
 }
-int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, string& hash_dir, AVL& tree, FL& fl)
 int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, string& hash_dir, AVL& tree, FL& fl)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
@@ -1163,8 +1200,4 @@ void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& has
     if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
     else wcout << L"Not successfully" << endl;
     system("pause");
-
-    //if (Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
-    //else wcout << L"Delete not successfully" << endl;
-    //system("pause");
 }
