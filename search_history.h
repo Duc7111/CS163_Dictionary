@@ -19,7 +19,9 @@ public:
 	Node<wstring>* Load();
 	Node<wstring>* Add(wstring word);
 	Node<wstring>* Delete();
+	int count();
+	Node<wstring>* Find(int);
 	void View();
 };
 
-bool check_empty_file(wifstream& fin); am& fin);
+bool check_empty_file(wifstream& fin);
