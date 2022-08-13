@@ -685,7 +685,7 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
         wcout << L"Enter your choice: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
-        wcout << L"----------------------------------------------------" << endl;
+        clear_screen();
         switch (i)
         {
         case 0:
@@ -705,9 +705,9 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             wcout << L"edited def: " << endl;
             getline(wcin, t);
             edit_definition(temp, order, t, strs, dir);
+            clear_screen();
+            break;
         }
-        break;
-
         default:
             wcout << L"Invalid input, please try again" << endl;
             system("pause");
@@ -918,6 +918,7 @@ void Quizz(AVL& tree, string dir)
             wcin >> option;
             wcin.ignore(1000, L'\n');
         } while (option != 2 && option != 1 && option != 0);
+        clear_screen();
         if (option == 0)
             return;
         switch (option)
@@ -937,6 +938,7 @@ void Quizz(AVL& tree, string dir)
                     wcin >> option;
                     wcin.ignore(1000, L'\n');
                 } while (option != 1 && option != 2);
+                clear_screen();
             } while (option == 1);
             break;
         case 2:
@@ -954,6 +956,7 @@ void Quizz(AVL& tree, string dir)
                     wcin >> option;
                     wcin.ignore(1000, L'\n');
                 } while (option != 1 && option != 2);
+                clear_screen();
             } while (option == 1);
             break;
         default:
