@@ -944,6 +944,7 @@ void S4D(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, st
         system("cls");
         wcout << L"Enter a word (0 to quit): ";
         getline(wcin, k);
+        toupper(k);
         if (k == L"0") return;
         S(tree, fl, key_hash, search_history, dir, k);
     } while (k != L"0");
