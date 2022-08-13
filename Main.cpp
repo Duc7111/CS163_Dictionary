@@ -1157,6 +1157,7 @@ void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& has
 {
     bool Check = DeleteFile(struct_dir);
     bool Check1 = DeleteFile(def_dir);
+    bool Check2 = DeleteFile(hash_dir);
     int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
     if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
     else wcout << L"Not successfully" << endl;
