@@ -1221,8 +1221,28 @@ void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& has
     bool Check = DeleteFile(struct_dir);
     bool Check1 = DeleteFile(def_dir);
     bool Check2 = DeleteFile(hash_dir);
-    int size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
-    if (size == 1 && Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
+    int size;
+    if (struct_dir == "database\\eng-eng\\struct.bin")
+    {
+        size = tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
+    }
+    else if (struct_dir == "database\\eng-vie\\struct.bin")
+    {
+        size = tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
+    }
+    else if (struct_dir == "database\\emotional\\struct.bin")
+    {
+        size = tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
+    }
+    else if (struct_dir == "database\\slang\\struct.bin")
+    {
+        size = tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
+    }
+    else if (struct_dir == "database\\vie-eng\\struct.bin")
+    {
+        size = tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
+    }
+    if (size != 0 && size != -1 && Check && Check1 && Check2) wcout << L"Reset the dictionary to its original state successfully" << endl;
     else wcout << L"Not successfully" << endl;
     system("pause");
 }
