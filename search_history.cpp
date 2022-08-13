@@ -30,7 +30,6 @@ Node<wstring>* search_history::Load()
 	}
 	return hist_head;
 }
-
 Node<wstring>* search_history::Add(wstring word)
 {
 	hist_head = new Node<wstring>(word, hist_head);
@@ -41,6 +40,7 @@ Node<wstring>* search_history::Add(wstring word)
 	return hist_head;
 }
 
+
 void search_history::View()
 {
 	if (!hist_head) {
@@ -50,6 +50,7 @@ void search_history::View()
 	Node<wstring>* temp = hist_head;
 	while (temp) {
 		wcout << temp->data << endl;
+		count++;
 		temp = temp->next;
 	}
 }
