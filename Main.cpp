@@ -1298,9 +1298,5 @@ void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& has
     if (size != 0 && size != -1 && Check && Check1 && Check2) wcout << L"Reset the dictionary to its original state successfully" << endl;
     else wcout << L"Not successfully" << endl;
     system("pause");
-
-    //if (Check && Check1) wcout << L"Reset the dictionary to its original state successfully" << endl;
-    //else wcout << L"Delete not successfully" << endl;
-    //system("pause");
 }
 
