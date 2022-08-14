@@ -7,15 +7,15 @@ int main()
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
-    string def_dir; // bin file that save the tree (based on mode of dictionary)
-    string struct_dir; // bin file that save the tree (based on mode of dictionary)
-    string hash_dir;
-    c_hash key_hash;
     int i = 1, size;
     AVL tree;
     FL fl(0);
     do
     {
+        string def_dir; // bin file that save the tree (based on mode of dictionary)
+        string struct_dir; // bin file that save the tree (based on mode of dictionary)
+        string hash_dir;
+        c_hash key_hash;
         system("cls");
         //choose language
         if (i == 1)
@@ -71,6 +71,7 @@ int main()
             break;
 
         case 1://setting
+            break;
 
         case 2://change
             S_screen(tree, fl, key_hash, Search_History, def_dir);
@@ -363,8 +364,9 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
-                key_hash.load(fin);
+                if (fin.good()) key_hash.load(fin);
                 fin.close();
                 return size;
             }
@@ -382,8 +384,9 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
-                key_hash.load(fin);
+                if (fin.good()) key_hash.load(fin);
                 fin.close();
                 return size;
             }
@@ -421,8 +424,9 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
-                key_hash.load(fin);
+                if (fin.good()) key_hash.load(fin);
                 fin.close();
                 return size;
             }
@@ -440,8 +444,9 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
-                key_hash.load(fin);
+                if (fin.good()) key_hash.load(fin);
                 fin.close();
                 return size;
             }
@@ -483,6 +488,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -502,6 +508,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -521,6 +528,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -540,6 +548,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -574,6 +583,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -593,6 +603,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -612,6 +623,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -631,6 +643,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -665,6 +678,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -684,6 +698,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -703,6 +718,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -722,6 +738,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -756,6 +773,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -775,6 +793,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -794,6 +813,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -813,6 +833,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -847,6 +868,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -866,6 +888,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -885,6 +908,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -904,6 +928,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
             if (fin.good())
             {
                 int size = tree.load(fin, fl);
+                fin.close();
                 fin.open(hash_dir, ios_base::binary);
                 key_hash.load(fin);
                 fin.close();
@@ -920,6 +945,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         }
         system("pause");
     }
+    return 0;
 }
 
 

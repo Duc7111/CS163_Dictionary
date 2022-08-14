@@ -26,6 +26,7 @@ struct c_hash
 
     public:
     c_hash();
+    ~c_hash();
     
     Node<keyword>*& get(const wstring&);
     void add(const wstring&, const wstring&);

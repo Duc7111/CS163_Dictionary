@@ -16960,7 +16960,7 @@ hải lưu	sea current
 hải lộ	sea route
 hải lục không quân	army, navy, and air force
 hải lực	sea forces
-hải l‎ý giờ	knot (unit of speed)
+hải lý giờ	knot (unit of speed)
 hải miên	sponge
 hải mã	sea horse, hippocampus
 hải mã ngư	hippocampus
@@ -17509,7 +17509,7 @@ hỏi vài câu	to ask a few questions
 hỏi vặn	cross-examine, cross-question
 hỏi về	to ask about
 hỏi ý kiến	to ask sb’s opinion
-hỏi ‎ kiến	to consult, ask someone’s opinion
+hỏi ý kiến	to consult, ask someone’s opinion
 hỏn hẻn	to give a shy smile
 hỏng	to break down, fail, miss
 hỏng bét	to fail completely
