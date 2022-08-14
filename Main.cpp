@@ -7,15 +7,15 @@ int main()
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
-    string def_dir; // bin file that save the tree (based on mode of dictionary)
-    string struct_dir; // bin file that save the tree (based on mode of dictionary)
-    string hash_dir;
-    c_hash key_hash;
     int i = 1, size;
     AVL tree;
     FL fl(0);
     do
     {
+        string def_dir; // bin file that save the tree (based on mode of dictionary)
+        string struct_dir; // bin file that save the tree (based on mode of dictionary)
+        string hash_dir;
+        c_hash key_hash;
         system("cls");
         //choose language
         if (i == 1)

@@ -31,6 +31,11 @@ Node<keyword>*& c_hash::get(const wstring& key)
     return temp; 
 }
 
+c_hash::~c_hash()
+{
+    for(int i = 0; i < hash_len; ++i) if(arr[i]) arr[i]->clear();
+}
+
 void c_hash::add(const wstring& key, const wstring& word)
 {
     Node<keyword>*& temp = get(key);
@@ -82,6 +87,11 @@ void c_hash::load(ifstream& fin)
 {
     for(int i = 0; i < hash_len; ++i)
     {
+        /* if(arr[i]) 
+        {
+            arr[i]->clear();
+            arr[i] = nullptr;
+        } */
         int l;
         fin.read((char*)&l, sizeof(int));
         while (l > 0)
