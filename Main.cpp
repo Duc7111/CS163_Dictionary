@@ -176,8 +176,8 @@ void RemoveAWord(AVL& tree, string def_dir) {
 
         //change the definition
         if (check == 'y') {
-            remove_a_word()
-                wcout << setw(tap) << L"Definition changed ! " << endl;
+            remove_a_word(word_x, def_dir);
+            wcout << setw(tap) << L"Word removed ! " << endl;
         }
         else {
             wcout << setw(tap) << L"Nothing changed ! " << endl;
