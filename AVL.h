@@ -33,11 +33,12 @@ public:
 
     int load(ifstream&, FL&);
     bool save(ofstream&);
-    int Add(AVL&, wstring, wstring, string);
+    int Add(AVL&, wstring, string, int);
     bNode* get_root()
     {
         return root;
     }
     int height(bNode*);
     void num_of_words(bNode*, int&);
+    void DeleteRoot();
 };

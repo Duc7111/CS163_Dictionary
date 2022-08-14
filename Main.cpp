@@ -1273,20 +1273,18 @@ void Add(AVL& tree, string& def_dir)
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
     bool again = true;
-    wstring key, def;
+    wstring key;
+    system("cls");
     while (again)
     {
-        wcout << L"Please input word  that you want to add to dictionary = ";
+        wcout << L"Please input word  that you want to add to dictionary : ";
         getline(wcin, key);
-        wcout << L"Please input definition of word that you want to add to dictionary = ";
-        getline(wcin, def);
-        int i = tree.Add(tree, key, def, def_dir);
+        int num;
+        wcout << L"Input number of definition : "; wcin >> num;
+        wcin.ignore();
+        int i = tree.Add(tree, key, def_dir, num);
         switch (i)
         {
-        case -1:
-            wcout << L"The word has already existed" << endl;
-            system("pause");
-            break;
         case -2:
             wcout << L"Can not open the distionary that you want to add to" << endl;
             system("pause");
@@ -1296,6 +1294,7 @@ void Add(AVL& tree, string& def_dir)
             system("pause");
             break;
         }
+        system("cls");
         wcout << L"Do you want to add new word once more time ? " << endl;
         wcout << L"[0] : No" << endl;
         wcout << L"[1] : Yes" << endl;
@@ -1356,6 +1355,8 @@ void ResetToOriginal(AVL& tree, string& struct_dir, string& def_dir, string& has
     bool Check = DeleteFile(struct_dir);
     bool Check1 = DeleteFile(def_dir);
     bool Check2 = DeleteFile(hash_dir);
+    bNode* root = tree.get_root();
+    clear(root);
     int size;
     if (struct_dir == "database\\eng-eng\\struct.bin")
     {
