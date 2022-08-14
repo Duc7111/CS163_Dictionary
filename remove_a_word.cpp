@@ -35,6 +35,6 @@
 
 bool remove_a_word(wstring word, AVL& tree, string def_dir) {
 	int d = tree.search(word)->d;
-	remove_def_from_file(d, def_dir);
+	//remove_def_from_file(d, def_dir);
 	return tree.remove(word);
 }
