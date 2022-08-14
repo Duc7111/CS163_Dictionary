@@ -290,11 +290,17 @@ void ViewSearchHistory(search_history& Search_History, AVL& root, string& def_di
         wcout << L"[2].Back to the dictionary's menu" << endl;
         int choice;
         wcout << L"Please input your choice : "; wcin >> choice;
-        int total = 0;
+        int total = Search_History.count();
         switch (choice)
         {
         case 1:
-            total = Search_History.count();
+            if (total == 0) {
+                wcout << L"--------------------------------" << endl;
+                wcout << setw(tap) << L"No word to view !" << endl;
+                wcout << L"--------------------------------" << endl;
+                system("pause");
+                break;
+            }
             while (true)
             {
                 wcout << L"Please choose the serial of word : ";
