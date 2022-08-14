@@ -40,5 +40,4 @@ public:
     }
     int height(bNode*);
     void num_of_words(bNode*, int&);
-    void DeleteRoot();
 };
