@@ -308,12 +308,17 @@ void ViewSearchHistory(search_history& Search_History, AVL& root, string& def_di
                     Node<wstring>* word = Search_History.Find(num);
                     system("cls");
                     wcout << L"----------------------------------------------------" << endl;
-                    wcout << word->data << L':' << endl;
                     bNode* temp = root.search(word->data);
-                    vector<wstring> temp1 = search_for_def(temp, def_dir);
-                    for (int i = 0; i < temp1.size() - 1; ++i)
-                    {
-                        wcout << setw(tap) << i + 1 << L". " << temp1[i] << endl;
+                    if (!temp) {
+                        wcout << L"No result !" << endl;
+                    }
+                    else {
+                        vector<wstring> temp1 = search_for_def(temp, def_dir);
+                        wcout << word->data << L':' << endl;
+                        for (int i = 0; i < temp1.size() - 1; ++i)
+                        {
+                            wcout << setw(tap) << i + 1 << L". " << temp1[i] << endl;
+                        }
                     }
                     wcout << L"----------------------------------------------------" << endl;
                     system("pause");
