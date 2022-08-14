@@ -82,7 +82,7 @@ int main()
             break;
 
         case 4: //delete search history
-            DeleteSearchHistory(Search_History);
+            DeleteSearchHistory(Search_History, def_dir);
             break;
 
         case 5://favorite word
@@ -101,7 +101,7 @@ int main()
             break;
 
         case 9: //remove a word
-            RemoveAWord();
+            RemoveAWord(tree, def_dir);
             break;
         case 10:
             ViewRandomWord(tree, def_dir);
@@ -136,9 +136,6 @@ int main()
 }
 
 void RemoveAWord(AVL& tree, string def_dir) {
-    setmode(_fileno(stdout), _O_U16TEXT);
-    _setmode(_fileno(stdin), _O_U16TEXT);
-
     vector<wstring> definitions;
     wstring word_x;
     int i = 1;
@@ -173,11 +170,12 @@ void RemoveAWord(AVL& tree, string def_dir) {
             wcout << L"----------------------------------------------------" << endl;
             wcout << setw(tap) << L"---> y or n : ";
             wcin >> check;
+            while (wcin.get() != L'\n');
         } while (check != 'y' && check != 'n');
 
         //change the definition
         if (check == 'y') {
-            remove_a_word(word_x, def_dir);
+            remove_a_word(word_x, tree, def_dir);
             wcout << setw(tap) << L"Word removed ! " << endl;
         }
         else {
