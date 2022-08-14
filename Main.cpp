@@ -100,7 +100,7 @@ int main()
             break;
 
         case 9: //remove a word
-
+            RemoveAWord();
             break;
         case 10:
             ViewRandomWord(tree, def_dir);
@@ -132,6 +132,10 @@ int main()
         }
     } while (i != 0);
     return 0;
+}
+
+void RemoveAWord() {
+
 }
 
 void EditDefinition(AVL& tree, string def_dir) {
