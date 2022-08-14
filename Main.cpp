@@ -964,7 +964,10 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
         system("pause");
         return;
     }
-    search_history.Add(k);
+    //add to search history
+    string history_dist = search_history.Dist(dir);
+    search_history.Add(k, history_dist);
+    
     //search definition (done)
     vector<wstring> strs = search_for_def(temp, dir);
     //options
