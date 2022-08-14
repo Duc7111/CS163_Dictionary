@@ -101,7 +101,7 @@ int main()
             break;
 
         case 9: //remove a word
-
+            RemoveAWord();
             break;
         case 10:
             ViewRandomWord(tree, def_dir);
@@ -133,6 +133,59 @@ int main()
         }
     } while (i != 0);
     return 0;
+}
+
+void RemoveAWord(AVL& tree, string def_dir) {
+    setmode(_fileno(stdout), _O_U16TEXT);
+    _setmode(_fileno(stdin), _O_U16TEXT);
+
+    vector<wstring> definitions;
+    wstring word_x;
+    int i = 1;
+    do {
+        system("cls");
+        //searching
+        //while (wcin.get() != L'\n');
+        wcout << L"Enter a word (0 to quit): ";
+        getline(wcin, word_x);
+        if (word_x == L"0") return;
+        bNode* word = tree.search(word_x);
+        if (!word)
+        {
+            wcout << L"No result" << endl;
+            system("pause");
+            continue;
+        }
+        //search definition
+        definitions = search_for_def(word, def_dir);
+
+        wchar_t check;
+        do { //ask the user to confirm
+            system("cls");
+            wcout << setw(tap) << L"Do you want to remove this word from the dictionary?" << endl;
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << word_x << ':' << endl;
+            for (int j = 0; j < definitions.size() - 1; j++)
+            {
+                wcout << setw(tap) << L"[" << j + 1 << L"]" << L". " << definitions[j] << endl;
+            }
+            //while (wcin.get() != L'\n');
+            wcout << L"----------------------------------------------------" << endl;
+            wcout << setw(tap) << L"---> y or n : ";
+            wcin >> check;
+        } while (check != 'y' && check != 'n');
+
+        //change the definition
+        if (check == 'y') {
+            remove_a_word()
+                wcout << setw(tap) << L"Definition changed ! " << endl;
+        }
+        else {
+            wcout << setw(tap) << L"Nothing changed ! " << endl;
+        }
+        wcout << L"----------------------------------------------------" << endl;
+        system("pause");
+    } while (word_x != L"0");
 }
 
 void EditDefinition(AVL& tree, string def_dir) {
