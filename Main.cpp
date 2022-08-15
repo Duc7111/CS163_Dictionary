@@ -99,7 +99,7 @@ int main()
             break;
 
         case 8: //edit a word definition
-            EditDefinition(tree, def_dir);
+            EditDefinition(tree, def_dir, key_hash);
             break;
 
         case 9: //remove a word
@@ -195,7 +195,7 @@ void RemoveAWord(AVL& tree, string def_dir) {
     } while (word_x != L"0");
 }
 
-void EditDefinition(AVL& tree, string def_dir) {
+void EditDefinition(AVL& tree, string def_dir, c_hash& key_hash) {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
 
@@ -259,6 +259,9 @@ void EditDefinition(AVL& tree, string def_dir) {
             //change the definition
             if (check == 'y') {
                 edit_definition(word, ord - 1, new_def, definitions, def_dir);
+                vector<wstring> kw = getKeyWord(new_def);
+                for (wstring s : kw)
+                    key_hash.add(s, word_x);
                 wcout << setw(tap) << L"Definition changed ! " << endl;
             }
             else {
