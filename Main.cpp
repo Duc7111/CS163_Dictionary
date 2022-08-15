@@ -93,7 +93,7 @@ int main()
             Quizz(tree, def_dir);
             break;
         case 7:
-            Add(tree, def_dir);
+            Add(tree, def_dir,key_hash);
             break;
 
         case 8: //edit a word definition
@@ -1278,7 +1278,7 @@ void Quizz(AVL& tree, string dir)
     } while (1);
 }
 
-void Add(AVL& tree, string& def_dir)
+void Add(AVL& tree, string& def_dir, c_hash& key_hash)
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
@@ -1292,7 +1292,7 @@ void Add(AVL& tree, string& def_dir)
         int num;
         wcout << L"Input number of definition : "; wcin >> num;
         wcin.ignore();
-        int i = tree.Add(tree, key, def_dir, num);
+        int i = tree.Add(tree, key, def_dir, num,key_hash);
         switch (i)
         {
         case -2:

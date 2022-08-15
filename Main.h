@@ -29,7 +29,7 @@ void F_screen(FL&, string def_dir);
 
 void Quizz(AVL&, string);
 
-void Add(AVL& tree, string& def_dir);
+void Add(AVL& tree, string& def_dir, c_hash& key_hash);
 
 void ViewRandomWord(AVL& tree, string def_dir);
 
