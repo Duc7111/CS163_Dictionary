@@ -8,14 +8,16 @@ int main()
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
     int i = 1, size;
+    string def_dir; // bin file that save the tree (based on mode of dictionary)
+    string struct_dir; // bin file that save the tree (based on mode of dictionary)
+    string hash_dir;
+    c_hash key_hash;
     AVL tree;
     FL fl(0);
     do
     {
-        string def_dir; // bin file that save the tree (based on mode of dictionary)
-        string struct_dir; // bin file that save the tree (based on mode of dictionary)
-        string hash_dir;
-        c_hash key_hash;
+        tree = AVL();
+        key_hash = c_hash();
         system("cls");
         //choose language
         if (i == 1)
@@ -132,6 +134,13 @@ int main()
             break;
         }
     } while (i != 0);
+    ofstream fout(struct_dir, ios_base::binary);
+    fl.save(fout);
+    tree.save(fout);
+    fout.close();
+    fout.open(hash_dir, ios_base::binary);
+    key_hash.save(fout);
+    fout.close();
     return 0;
 }
 
