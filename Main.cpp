@@ -507,7 +507,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -527,7 +527,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -547,7 +547,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -567,7 +567,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -602,7 +602,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -622,7 +622,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -642,7 +642,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -662,7 +662,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -697,7 +697,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -717,7 +717,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -737,7 +737,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -757,7 +757,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -792,7 +792,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -812,7 +812,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -832,7 +832,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -852,7 +852,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\emotional\\emotional.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -887,7 +887,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\vie-eng\\3Vietnamese-English.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -907,7 +907,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-vie\\2English-Vietnamese.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -927,7 +927,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\eng-eng\\1English definitions.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
@@ -947,7 +947,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
                 return size;
             }
             fin.close();
-            tree.DeleteRoot();
+            tree = AVL();
             wcout << L"Wait for the program..." << endl;
             return tree.maketree("database\\slang\\slang.txt", def_dir, struct_dir, hash_dir, key_hash);
         }
