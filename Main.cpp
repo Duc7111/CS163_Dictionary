@@ -503,6 +503,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
         wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        system("cls");
         if (choice == 1)
         {
             def_dir = "database\\vie-eng\\def.bin";
@@ -598,6 +599,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
         wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        system("cls");
         if (choice == 1)
         {
             def_dir = "database\\eng-vie\\def.bin";
@@ -693,6 +695,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         wcout << L"[3].Change to slang mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
         wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        system("cls");
         if (choice == 1)
         {
             def_dir = "database\\vie-eng\\def.bin";
@@ -788,6 +791,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         wcout << L"[3].Change to eng-eng mode" << endl;
         wcout << L"[4].Change to emotional mode" << endl;
         wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        system("cls");
         if (choice == 1)
         {
             def_dir = "database\\vie-eng\\def.bin";
@@ -883,6 +887,7 @@ int Switch_data_set(string& struct_dir, string& def_dir, c_hash& key_hash, strin
         wcout << L"[3].Change to eng-eng mode" << endl;
         wcout << L"[4].Change to slang mode" << endl;
         wcout << L"Please input your choice = "; wcin >> choice; wcin.ignore(1000, L'\n');
+        system("cls");
         if (choice == 1)
         {
             def_dir = "database\\vie-eng\\def.bin";
