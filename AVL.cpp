@@ -320,7 +320,3 @@ void AVL::num_of_words(bNode* root, int& a)
     num_of_words(root->right, a);
     a += 1;
 }
-void AVL::DeleteRoot()
-{
-    root = NULL;
-}
