@@ -1296,10 +1296,12 @@ void Add(AVL& tree, string& def_dir)
         switch (i)
         {
         case -2:
+            system("cls");
             wcout << L"Can not open the distionary that you want to add to" << endl;
             system("pause");
             break;
         default:
+            system("cls");
             wcout << L"Add succesfully" << endl;
             system("pause");
             break;

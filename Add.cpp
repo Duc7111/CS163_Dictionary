@@ -4,6 +4,7 @@ using namespace std;
 
 int AVL::Add(AVL& tree, wstring key, string def_dir, int numb)
 {
+	system("cls");
 	wstring def;
 	ofstream fout(def_dir, ios_base::binary | ios_base::app | ios_base::ate);
 	if (!fout.is_open()) return -2;
