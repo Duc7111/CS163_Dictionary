@@ -999,22 +999,22 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
     int i;
     do
     {
-        system("cls");
+        clear_screen();
         wcout << L"number of result: " << strs.size() << L" in " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
         wcout << k << ':' << endl;
         for (int j = 0; j < strs.size() - 1; j++)
         {
             wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
         }
-        
-        wcout << L"----------------------------------------------------" << endl;
+        system("pause");
+        clear_screen();
         wcout << L"your options: " << endl;
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
         wcout << setw(tap) << L"[1]";
         if (temp->f) wcout << L" Unlike" << endl;
         else wcout << L" Like" << endl;
         wcout << setw(tap) << L"[2]" << L" Modify" << endl;
-        wcout << setw(tap) << L"[3]" << L" Delete word" << endl;
+        wcout << setw(tap) << L"[3]" << L" Remove word" << endl;
         wcout << L"Enter your choice: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
