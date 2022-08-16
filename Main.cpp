@@ -1037,6 +1037,11 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             clear_screen();
             break;
         }
+                
+        case 3:
+        {
+            RemoveAWord(tree, dir);
+        }
         default:
             wcout << L"Invalid input, please try again" << endl;
             system("pause");
