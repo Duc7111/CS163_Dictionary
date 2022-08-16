@@ -1284,7 +1284,9 @@ void Quizz(AVL& tree, string dir)
             {
                 random_words.clear();
                 random_words = random_word(tree, dir, num);
-
+                auto start = chrono::steady_clock::now();
+                random_def_game(random_words);
+                auto end = chrono::steady_clock::now();
                 wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count()
                 << L" sec" << endl;
                 wcout << L"Try again?" << endl;
