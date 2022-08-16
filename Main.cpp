@@ -16,8 +16,6 @@ int main()
     FL fl(0);
     do
     {
-        tree = AVL();
-        key_hash = c_hash();
         system("cls");
         //choose language
         if (i == 1)
@@ -359,6 +357,8 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
+    tree = AVL();
+    key_hash = c_hash();
     int i;
     do
     {
