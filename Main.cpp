@@ -992,17 +992,21 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
     search_history.Add(k, history_dist);
     
     //search definition (done)
+    auto start = chrono::steady_clock::now();
     vector<wstring> strs = search_for_def(temp, dir);
+    auto end = chrono::steady_clock::now();
     //options
     int i;
     do
     {
         system("cls");
+        wcout << L"number of result: " << strs.size() << L" in " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
         wcout << k << ':' << endl;
         for (int j = 0; j < strs.size() - 1; j++)
         {
             wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
         }
+        
         wcout << L"----------------------------------------------------" << endl;
         wcout << L"your options: " << endl;
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
@@ -1265,8 +1269,7 @@ void Quizz(AVL& tree, string dir)
                 auto start = chrono::steady_clock::now();
                 random_game(random_words);
                 auto end = chrono::steady_clock::now();
-                wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count()
-                << L" sec" << endl;
+                wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
                 wcout << L"Try again?" << endl;
                 wcout << setw(tap) << L"[1]" << L" Yes." << endl;
                 wcout << setw(tap) << L"[2]" << L" Back to game's menu." << endl;
@@ -1287,8 +1290,7 @@ void Quizz(AVL& tree, string dir)
                 auto start = chrono::steady_clock::now();
                 random_def_game(random_words);
                 auto end = chrono::steady_clock::now();
-                wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count()
-                << L" sec" << endl;
+                wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
                 wcout << L"Try again?" << endl;
                 wcout << setw(tap) << L"[1]" << L" Yes." << endl;
                 wcout << setw(tap) << L"[2]" << L" Back to game's menu." << endl;
