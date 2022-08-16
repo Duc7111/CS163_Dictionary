@@ -140,7 +140,7 @@ bool random_def_game (vector<vector<wstring>> lists)
     vector<bool> is_visited;
     is_visited.resize(4);
     fill (is_visited.begin(),is_visited.end(),false);
-    int random = rand() % 4 , tmp , ctmp, choice;
+    int rkey = rand() % 4 , tmp , ctmp, choice;
     wcout << L"Can you guess the meaning of "<< L"\"" << lists[random][1] << L"\"" << L" ?" << endl;
     for (int i = 0 ; i<4 ; i++)
     {
@@ -149,7 +149,7 @@ bool random_def_game (vector<vector<wstring>> lists)
             ctmp = rand()%4;
         }while (is_visited[ctmp] == true);
         is_visited[ctmp] = true;
-        if (ctmp == random)
+        if (ctmp == rkey)
         {
             tmp = i+1;
         }
@@ -168,7 +168,7 @@ bool random_def_game (vector<vector<wstring>> lists)
     else
     {
         wcout << L"you've lost" << endl;
-        wcout << L"correct answer: " << lists[random][0] << endl;
+        wcout << L"correct answer: " << lists[rkey][0] << endl;
         return false;
     }
 }
