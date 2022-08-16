@@ -1010,6 +1010,7 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
         if (temp->f) wcout << L" Unlike" << endl;
         else wcout << L" Like" << endl;
         wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+        wcout << setw(tap) << L"[3]" << L" Delete word" << endl;
         wcout << L"Enter your choice: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
