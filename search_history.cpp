@@ -17,6 +17,7 @@ string search_history::Dist(string def_dir) {
 	if (def_dir == "database\\vie-eng\\def.bin") return "database\\vie-eng\\search_history.txt";
 	if (def_dir == "database\\slang\\def.bin") return "database\\slang\\search_history.txt";
 	if (def_dir == "database\\emotional\\def.bin") return "database\\emotional\\search_history.txt";
+	return "Error";
 }
 
 

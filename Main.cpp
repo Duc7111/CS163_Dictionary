@@ -16,8 +16,6 @@ int main()
     FL fl(0);
     do
     {
-        tree = AVL();
-        key_hash = c_hash();
         system("cls");
         //choose language
         if (i == 1)
@@ -359,6 +357,8 @@ int Init_screen(AVL& tree, FL& fl, c_hash& key_hash, string& def_dir, string& st
 {
     _setmode(_fileno(stdout), _O_U16TEXT);
     _setmode(_fileno(stdin), _O_U16TEXT);
+    tree = AVL();
+    key_hash = c_hash();
     int i;
     do
     {
@@ -1012,24 +1012,29 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
     search_history.Add(k, history_dist);
     
     //search definition (done)
+    auto start = chrono::steady_clock::now();
     vector<wstring> strs = search_for_def(temp, dir);
+    auto end = chrono::steady_clock::now();
     //options
     int i;
     do
     {
-        system("cls");
+        clear_screen();
+        wcout << L"number of result: " << strs.size() << L" in " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
         wcout << k << ':' << endl;
         for (int j = 0; j < strs.size() - 1; j++)
         {
             wcout << setw(tap) << j + 1 << L". " << strs[j] << endl;
         }
-        wcout << L"----------------------------------------------------" << endl;
+        system("pause");
+        clear_screen();
         wcout << L"your options: " << endl;
         wcout << setw(tap) << L"[0]" << L" Quit" << endl;
         wcout << setw(tap) << L"[1]";
         if (temp->f) wcout << L" Unlike" << endl;
         else wcout << L" Like" << endl;
         wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+        wcout << setw(tap) << L"[3]" << L" Remove word" << endl;
         wcout << L"Enter your choice: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
@@ -1055,6 +1060,11 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             edit_definition(temp, order, t, strs, dir);
             clear_screen();
             break;
+        }
+                
+        case 3:
+        {
+            RemoveAWord(tree, dir);
         }
         default:
             wcout << L"Invalid input, please try again" << endl;
@@ -1276,7 +1286,10 @@ void Quizz(AVL& tree, string dir)
             {
                 random_words.clear();
                 random_words = random_word(tree, dir, num);
+                auto start = chrono::steady_clock::now();
                 random_game(random_words);
+                auto end = chrono::steady_clock::now();
+                wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
                 wcout << L"Try again?" << endl;
                 wcout << setw(tap) << L"[1]" << L" Yes." << endl;
                 wcout << setw(tap) << L"[2]" << L" Back to game's menu." << endl;
@@ -1294,7 +1307,10 @@ void Quizz(AVL& tree, string dir)
             {
                 random_words.clear();
                 random_words = random_word(tree, dir, num);
+                auto start = chrono::steady_clock::now();
                 random_def_game(random_words);
+                auto end = chrono::steady_clock::now();
+                wcout << L"Timer: " << chrono::duration_cast<chrono::seconds>(end - start).count() << L" sec" << endl;
                 wcout << L"Try again?" << endl;
                 wcout << setw(tap) << L"[1]" << L" Yes." << endl;
                 wcout << setw(tap) << L"[2]" << L" Back to game's menu." << endl;
