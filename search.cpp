@@ -141,7 +141,7 @@ bool random_def_game (vector<vector<wstring>> lists)
     is_visited.resize(4);
     fill (is_visited.begin(),is_visited.end(),false);
     int rkey = rand() % 4 , tmp , ctmp, choice;
-    wcout << L"Can you guess the meaning of "<< L"\"" << lists[random][1] << L"\"" << L" ?" << endl;
+    wcout << L"Can you guess the meaning of "<< L"\"" << lists[rkey][1] << L"\"" << L" ?" << endl;
     for (int i = 0 ; i<4 ; i++)
     {
         do

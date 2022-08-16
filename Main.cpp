@@ -1033,8 +1033,8 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
         wcout << setw(tap) << L"[1]";
         if (temp->f) wcout << L" Unlike" << endl;
         else wcout << L" Like" << endl;
-        wcout << setw(tap) << L"[2]" << L" Modify" << endl;
-        wcout << setw(tap) << L"[3]" << L" Remove word" << endl;
+        //wcout << setw(tap) << L"[2]" << L" Modify" << endl;
+        //wcout << setw(tap) << L"[3]" << L" Remove word" << endl;
         wcout << L"Enter your choice: ";
         wcin >> i;
         wcin.ignore(1000, L'\n');
@@ -1045,11 +1045,11 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
             break;
 
         case 1:
-            temp->f = !temp->f;
+            //temp->f = !temp->f;
             fl.AoR(temp);
             break;
 
-        case 2://modifying functions
+        /* case 2://modifying functions
         {
             int order;
             wstring t;
@@ -1065,7 +1065,7 @@ void S(AVL& tree, FL& fl, c_hash& key_hash, search_history& search_history, stri
         case 3:
         {
             RemoveAWord(tree, dir);
-        }
+        } */
         default:
             wcout << L"Invalid input, please try again" << endl;
             system("pause");
@@ -1217,6 +1217,7 @@ void F_screen(FL& fl, string def_dir)
         wcout << L"Enter an index (0 to quit): ";
         wcin >> t;
         wcin.ignore(1000, L'\n');
+        if(t == 0) continue;
         if (t < 0 || t > size)
         {
             wcout << L"Invalid input, please try again!" << endl;
@@ -1227,9 +1228,9 @@ void F_screen(FL& fl, string def_dir)
         do
         {
             system("cls");
-            wcout << fl[t]->key << L':' << endl;
-            vector<wstring> temp = search_for_def(fl[t], def_dir);
-            for (int i = 0; i < temp.size(); ++i)
+            wcout << fl[t - 1]->key << L':' << endl;
+            vector<wstring> temp = search_for_def(fl[t - 1], def_dir);
+            for (int i = 0; i < temp.size() - 1; ++i)
             {
                 wcout << setw(tap) << i + 1 << L". " << temp[i] << endl;
             }
@@ -1244,7 +1245,7 @@ void F_screen(FL& fl, string def_dir)
                 break;
 
             case 1:
-                fl.remove(t);
+                fl.remove(t-1);
                 break;
 
             default:
